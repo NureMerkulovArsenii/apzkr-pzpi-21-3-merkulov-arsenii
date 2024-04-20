@@ -1,0 +1,19 @@
+version: '3.4'
+
+
+name: hospitality-hub
+
+services:
+  hospitality-hub.api:
+    container_name: hospitality-hub-api
+    image: ${DOCKER_REGISTRY-}hospitality-hub-api
+    build:
+      context: .
+      dockerfile: src/HospitalityHub.API/Dockerfile
+    depends_on:
+    - hospitality-hub.db
+
+  hospitality-hub.db:
+    container_name: hospitality-hub-db
+    image: postgres:16.2-alpine
+
