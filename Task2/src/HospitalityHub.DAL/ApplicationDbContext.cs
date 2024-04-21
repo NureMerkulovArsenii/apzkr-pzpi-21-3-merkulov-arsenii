@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using HospitalityHub.Core.Entites;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalityHub.DAL;
@@ -10,4 +11,6 @@ public class ApplicationDbContext : IdentityDbContext
     {
 
     }
+
+    public DbSet<User> User { get; set; }
 }
