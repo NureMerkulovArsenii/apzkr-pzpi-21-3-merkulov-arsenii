@@ -1,7 +1,10 @@
-using HospitalityHub.Core.Entites;
+using HospitalityHub.Core.Entities;
 using HospitalityHub.DAL;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Events;
+using Serilog.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +15,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
     
+    if(builder.Environment.IsDevelopment())
+        options.UseLoggerFactory(new SerilogLoggerFactory());
 });
 
 
@@ -48,6 +53,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSerilogRequestLogging();
+
 app.UseHttpsRedirection();
 
 app.MapIdentityApi<User>();
@@ -56,9 +63,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGet("/hello", (HttpContext httpContext) => "Hello")
-    .WithName("GetWeatherForecast")
-    .WithOpenApi()
-    .RequireAuthorization();
 
 app.Run();
