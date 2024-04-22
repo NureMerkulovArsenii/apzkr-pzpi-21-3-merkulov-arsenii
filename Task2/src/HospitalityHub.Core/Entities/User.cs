@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace HospitalityHub.Core.Entites;
+namespace HospitalityHub.Core.Entities;
 
 public class User : IdentityUser
 {
