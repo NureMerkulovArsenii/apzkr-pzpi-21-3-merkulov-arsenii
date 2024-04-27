@@ -31,7 +31,6 @@ public class DiModule : Module
         builder.RegisterAssemblyTypes(handlersAssembly)
             .Where(t => t.Name.EndsWith("Handler"))
             .AsImplementedInterfaces()
-            .AsSelf() //Todo: remove this line
             .InstancePerDependency();
     }
     
