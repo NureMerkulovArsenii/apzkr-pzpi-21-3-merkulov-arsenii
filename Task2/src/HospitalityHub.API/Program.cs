@@ -3,6 +3,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using HospitalityHub.API;
 using HospitalityHub.API.Extensions;
+using HospitalityHub.API.Infrastructure;
 using HospitalityHub.BLL.Handlers;
 using HospitalityHub.Core.Entities;
 using HospitalityHub.DAL;
@@ -54,6 +55,9 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 builder.Services.ConfigureLocalization(configuration);
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -75,6 +79,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseExceptionHandler();
+
 app.UseHttpsRedirection();
 
 app.UseRequestLocalization();
@@ -83,9 +89,9 @@ app.MapIdentityApi<User>();
 
 app.UseAuthorization();
 
-app.UseSerilogRequestLogging();
-
 app.MapControllers();
+
+app.UseSerilogRequestLogging();
 
 app.MapGet("/test", (TestHandler testHandler) => testHandler.Test());
 
