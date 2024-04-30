@@ -5,28 +5,29 @@ namespace HospitalityHub.API.Extensions;
 
 internal static class LocalizationConfigExtension
 {
+    private const string DEFAULT_CULTURE = "uk-UA";
+    
     internal static void ConfigureLocalization(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddLocalization(x => x.ResourcesPath = "Resources");
         
-        // const string defaultCulture = "uk-UA";
-        //
-        // var supportedCultures = new[]
-        // {
-        //     new CultureInfo(defaultCulture),
-        //     new CultureInfo("en-US")
-        // };
-        //
-        // services.Configure<RequestLocalizationOptions>(options =>
-        // {
-        //     options.DefaultRequestCulture = new RequestCulture(defaultCulture);
-        //     options.SupportedCultures = supportedCultures;
-        //     options.SupportedUICultures = supportedCultures;
-        //
-        //     options.RequestCultureProviders = new List<IRequestCultureProvider>
-        //     {
-        //         new AcceptLanguageHeaderRequestCultureProvider()
-        //     };
-        // });
+        var supportedCultures = new[]
+        {
+            new CultureInfo(DEFAULT_CULTURE),
+            new CultureInfo("en-US")
+        };
+        
+        services.Configure<RequestLocalizationOptions>(options =>
+        {
+            options.DefaultRequestCulture = new RequestCulture(DEFAULT_CULTURE, DEFAULT_CULTURE);
+            options.SupportedCultures = supportedCultures;
+            options.SupportedUICultures = supportedCultures;
+        
+            options.RequestCultureProviders = new List<IRequestCultureProvider>
+            {
+                new AcceptLanguageHeaderRequestCultureProvider()
+            };
+        });
 
     }
 }
