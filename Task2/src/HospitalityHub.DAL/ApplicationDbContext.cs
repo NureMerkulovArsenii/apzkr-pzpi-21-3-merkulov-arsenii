@@ -4,20 +4,41 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HospitalityHub.DAL;
 
-public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext(options)
+public class ApplicationDbContext : IdentityDbContext
 {
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+    {
+    }
+
     public DbSet<User> User { get; set; }
-    
-    public DbSet<Booking> Booking { get; set; }
-    
-    public DbSet<Customer> Customer { get; set; }
-    
-    public DbSet<Room> Room { get; set; }
-    
-    public DbSet<RoomPlace> RoomPlace { get; set; }
-    
-    public DbSet<CustomerBooking> CustomerBooking { get; set; }
 
     public DbSet<Hotel> Hotel { get; set; }
-    
+
+    public DbSet<Room> Room { get; set; }
+
+    public DbSet<Booking> Booking { get; set; }
+
+    public DbSet<RoomPlace> RoomPlace { get; set; }
+
+    public DbSet<Photo> Photo { get; set; }
+
+    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
+        CancellationToken cancellationToken = new())
+    {
+        var entries = ChangeTracker
+            .Entries()
+            .Where(e => e is { Entity: BaseEntity, State: EntityState.Added or EntityState.Modified });
+
+        foreach (var entityEntry in entries)
+        {
+            ((BaseEntity)entityEntry.Entity).DateUpdated = DateTime.Now;
+
+            if (entityEntry.State == EntityState.Added)
+            {
+                ((BaseEntity)entityEntry.Entity).DateCreated = DateTime.Now;
+            }
+        }
+
+        return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+    }
 }
