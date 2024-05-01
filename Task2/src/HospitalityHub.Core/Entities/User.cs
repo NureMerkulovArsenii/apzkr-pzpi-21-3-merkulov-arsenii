@@ -2,7 +2,7 @@
 
 namespace HospitalityHub.Core.Entities;
 
-public class User : IdentityUser
+public class User : IdentityUser, IBaseEntity
 {
     public string Email { get; set; }
 
@@ -11,4 +11,6 @@ public class User : IdentityUser
     public string LastName { get; set; }
 
     public bool IsEnabled { get; set; }
+
+    public virtual ICollection<Booking> Bookings { get; set; }
 }
