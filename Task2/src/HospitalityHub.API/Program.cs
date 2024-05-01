@@ -1,4 +1,3 @@
-using System.Globalization;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using HospitalityHub.API;
@@ -8,7 +7,6 @@ using HospitalityHub.BLL.Handlers;
 using HospitalityHub.Core.Entities;
 using HospitalityHub.DAL;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
@@ -51,6 +49,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = true;
     options.Password.RequiredLength = 6;
+    options.User.RequireUniqueEmail = true;
 });
 
 builder.Services.ConfigureLocalization(configuration);
