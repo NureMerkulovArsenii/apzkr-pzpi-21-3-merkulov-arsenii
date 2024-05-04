@@ -19,6 +19,8 @@ public class Room : BaseEntity
     public decimal DiscountPercent { get; set; }
 
     public int Stage { get; set; }
+    
+    public ERoomType RoomType { get; set; }
 
     public int HotelId { get; set; }
 
