@@ -13,6 +13,6 @@ public class DeleteRoomHandler
 
     public async Task HandleAsync(int id)
     {
-        await _unitOfWork.RoomRepository.DeleteByConditionAsync(r => r.Id == id);
+        await _unitOfWork.RoomRepository.ExecuteDeleteAsync(r => r.Id == id);
     }
 }
