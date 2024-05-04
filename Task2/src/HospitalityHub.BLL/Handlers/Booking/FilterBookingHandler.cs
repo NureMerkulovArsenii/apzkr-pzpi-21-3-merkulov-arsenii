@@ -19,10 +19,10 @@ public class FilterBookingHandler : BaseHandler
         var bookings = _unitOfWork.BookingRepository.GetAll();
 
         if (request.CheckIn.HasValue)
-            bookings = bookings.Where(b => b.CheckIn.Date >= request.CheckIn.Value.Date);
+            bookings = bookings.Where(b => b.CheckInBooking.Date >= request.CheckIn.Value.Date);
 
         if (request.CheckOut.HasValue)
-            bookings = bookings.Where(b => b.CheckOut.Date <= request.CheckOut.Value.Date);
+            bookings = bookings.Where(b => b.CheckOutBooking.Date <= request.CheckOut.Value.Date);
 
         if (request.HotelId.HasValue)
             bookings = bookings.Where(b => b.Room.HotelId == request.HotelId.Value);
@@ -35,8 +35,8 @@ public class FilterBookingHandler : BaseHandler
             BookingId = b.Id,
             CustomerId = b.CustomerId,
             RoomId = b.RoomId,
-            CheckIn = b.CheckIn,
-            CheckOut = b.CheckOut,
+            CheckIn = b.CheckInBooking,
+            CheckOut = b.CheckOutBooking,
             TotalPrice = b.TotalPrice,
             TotalDiscountPercent = b.TotalDiscountPercent,
             IsPaid = b.IsPaid,

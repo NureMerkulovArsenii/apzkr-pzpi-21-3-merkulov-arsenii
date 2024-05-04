@@ -11,6 +11,9 @@ public interface IUnitOfWork
     public IGenericRepository<Room> RoomRepository { get; }
     public IGenericRepository<Photo> PhotoRepository { get; }
     public IGenericRepository<RoomPlace> RoomPlaceRepository { get; }
+    public IGenericRepository<TodoTask> TodoTaskRepository { get; }
+    public IGenericRepository<Customer> CustomerRepository { get; }
+    
 
     Task<IDbContextTransaction> CreateTransactionAsync();
 

@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using HospitalityHub.Core.Entities;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace HospitalityHub.DAL.Repositories;
 
@@ -116,6 +117,20 @@ public interface IGenericRepository<TEntity> where TEntity : IBaseEntity
     /// <summary>
     /// Removes entities by query from database. 
     /// </summary>
-    Task DeleteByConditionAsync(Expression<Func<TEntity, bool>> predicate,
+    /// <returns>Number of rows affected.</returns>
+    Task<int> ExecuteDeleteAsync(Expression<Func<TEntity, bool>> predicate,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Executes update of entities that fall under the <paramref name="predicate"/>
+    /// condition against database and updates the properties of the entity with the values
+    /// <paramref name="setPropertyCalls"/>
+    /// </summary>
+    /// <param name="predicate">Condition to filter rows for update.</param>
+    /// <param name="setPropertyCalls">Property calls set</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Number of rows modified.</returns>
+    Task<int> ExecuteUpdateAsync(Expression<Func<TEntity, bool>> predicate,
+        Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> setPropertyCalls,
         CancellationToken cancellationToken = default);
 }

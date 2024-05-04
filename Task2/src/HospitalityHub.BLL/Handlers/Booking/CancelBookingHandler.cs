@@ -19,7 +19,7 @@ public class CancelBookingHandler : BaseHandler
         if (booking == null)
             throw new Exception("Booking not found");
 
-        if (booking.CustomerId != userId)
+        if (booking.Customer.UserId != userId)
             throw new Exception("Unauthorized");
 
         _unitOfWork.BookingRepository.Delete(booking);

@@ -50,4 +50,21 @@ public class BookingController : BaseApiController
 
         return Ok(booking);
     }
+    
+    [HttpGet("checkin/{bookingId:int}")]
+    public async Task<IActionResult> CheckIn([FromQuery] int bookingId)
+    {
+        var res = await Resolve<CheckInHandler>().HandleAsync(UserId, bookingId);
+
+        return Ok(res);
+    }
+    
+    [HttpGet("checkout/{bookingId:int}")]
+    public async Task<IActionResult> CheckOut([FromQuery] int bookingId)
+    {
+        var res = await Resolve<CheckOutHandler>().HandleAsync(UserId, bookingId);
+
+        return Ok(res);
+    }
+    
 }

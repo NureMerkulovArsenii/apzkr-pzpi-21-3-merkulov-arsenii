@@ -11,7 +11,6 @@ public class User : IdentityUser<int>, IBaseEntity
     [MaxLength(50)]
     public string LastName { get; set; }
 
-    public bool IsEnabled { get; set; }
+    public virtual Customer Customer { get; set; }
 
-    public virtual ICollection<Booking> Bookings { get; set; }
 }

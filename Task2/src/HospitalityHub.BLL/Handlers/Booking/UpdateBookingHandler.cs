@@ -19,8 +19,13 @@ public class UpdateBookingHandler : BaseHandler
 
         if (booking == null)
             throw new Exception("Booking not found");
+        
+        var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(userId);
+        
+        if (customer == null)
+            throw new Exception("Customer not found");
 
-        if (booking.CustomerId != userId)
+        if (booking.CustomerId != customer.Id)
             throw new Exception("Unauthorized");
 
         var room = await _unitOfWork.RoomRepository.GetByIdAsync(booking.RoomId);
@@ -28,13 +33,13 @@ public class UpdateBookingHandler : BaseHandler
         if (room == null)
             throw new Exception("Room not found");
 
-        var isRoomAvailable = room.Bookings.Any(x => x.CheckIn >= request.CheckIn && x.CheckOut <= request.CheckOut && x.Id != request.BookingId);
+        var isRoomAvailable = room.Bookings.Any(x => x.CheckInBooking >= request.CheckIn && x.CheckOutBooking <= request.CheckOut && x.Id != request.BookingId);
         
         if (isRoomAvailable)
             throw new Exception("Room is not available");
 
-        booking.CheckIn = request.CheckIn;
-        booking.CheckOut = request.CheckOut;
+        booking.CheckInBooking = request.CheckIn;
+        booking.CheckOutBooking = request.CheckOut;
         booking.NumberOfAdults = request.NumberOfAdults;
         booking.NumberOfChildren = request.NumberOfChildren;
 

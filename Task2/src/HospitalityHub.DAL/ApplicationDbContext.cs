@@ -23,6 +23,10 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<int>, i
 
     public DbSet<Photo> Photo { get; set; }
 
+    public DbSet<TodoTask> TodoTasks { get; set; }
+    
+    public DbSet<Customer> Customer { get; set; }
+
     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
         CancellationToken cancellationToken = new())
     {

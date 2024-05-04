@@ -1,13 +1,14 @@
 using System.Linq.Expressions;
 using HospitalityHub.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace HospitalityHub.DAL.Repositories;
 
 public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IBaseEntity
 {
     private readonly ApplicationDbContext _appContext;
-    
+
     public GenericRepository(ApplicationDbContext appContext)
     {
         _appContext = appContext;
@@ -143,12 +144,26 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
 
         return deletedRows;
     }
-    
+
     /// <inheritdoc />
-    public async Task DeleteByConditionAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
+    public async Task<int> ExecuteDeleteAsync(Expression<Func<TEntity, bool>> predicate,
+        CancellationToken cancellationToken = default)
     {
         var entities = _appContext.Set<TEntity>().Where(predicate);
 
-        await entities.ExecuteDeleteAsync(cancellationToken);
+        var deletedRowsCount = await entities.ExecuteDeleteAsync(cancellationToken);
+
+        return deletedRowsCount;
+    }
+
+    /// <inheritdoc />
+    public async Task<int> ExecuteUpdateAsync(Expression<Func<TEntity, bool>> predicate,
+        Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> setPropertyCalls,
+        CancellationToken cancellationToken = default)
+    {
+        var entities = _appContext.Set<TEntity>().Where(predicate);
+        var updatedRowsCount = await entities.ExecuteUpdateAsync(setPropertyCalls, cancellationToken);
+
+        return updatedRowsCount;
     }
 }

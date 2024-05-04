@@ -20,14 +20,17 @@ public class CreateBookingHandler : BaseHandler
         if (hotel == null)
             throw new Exception("Hotel not found");
         
+        var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(userId);
+        
+        if (customer == null)
+            throw new Exception("Customer not found");
 
         var room = await _unitOfWork.RoomRepository.GetByIdAsync(request.RoomId);
 
         if (room == null)
             throw new Exception("Room not found");
-        
 
-        var isRoomAvailable = room.Bookings.Any(x => x.CheckIn >= request.CheckIn && x.CheckOut <= request.CheckOut);
+        var isRoomAvailable = room.Bookings.Any(x => x.CheckInBooking >= request.CheckIn && x.CheckOutBooking <= request.CheckOut);
         
         if (isRoomAvailable)
             throw new Exception("Room is not available");
@@ -35,9 +38,9 @@ public class CreateBookingHandler : BaseHandler
         var booking = new Core.Entities.Booking
         {
             Room = room,
-            CustomerId = userId,
-            CheckIn = request.CheckIn,
-            CheckOut = request.CheckOut,
+            CustomerId = customer.Id,
+            CheckInBooking = request.CheckIn,
+            CheckOutBooking = request.CheckOut,
             NumberOfAdults = request.NumberOfAdults,
             NumberOfChildren = request.NumberOfChildren,
         };

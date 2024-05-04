@@ -14,7 +14,7 @@ public class DeleteHotelHandler
     
     public async Task HandleAsync(int id)
     {
-       await _unitOfWork.HotelRepository.DeleteByConditionAsync(h => h.Id == id);
+       await _unitOfWork.HotelRepository.ExecuteDeleteAsync(h => h.Id == id);
     }
     
 }

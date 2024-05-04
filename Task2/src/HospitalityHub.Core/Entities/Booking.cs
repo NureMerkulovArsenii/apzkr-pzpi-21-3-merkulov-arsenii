@@ -6,14 +6,18 @@ public class Booking : BaseEntity
 {
     public int CustomerId { get; set; }
     
-    public virtual User Customer { get; set; }
+    public virtual Customer Customer { get; set; }
 
     public int RoomId { get; set; }
     public virtual Room Room { get; set; }
+    
+    public DateTime CheckInDate { get; set; }
+    
+    public DateTime CheckOutDate { get; set; }
 
-    public DateTime CheckIn { get; set; }
+    public DateTime CheckInBooking { get; set; }
 
-    public DateTime CheckOut { get; set; }
+    public DateTime CheckOutBooking { get; set; }
 
     public decimal TotalPrice { get; set; }
 
