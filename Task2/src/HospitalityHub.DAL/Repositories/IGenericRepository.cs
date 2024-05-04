@@ -39,7 +39,7 @@ public interface IGenericRepository<TEntity> where TEntity : IBaseEntity
     /// </summary>
     /// <param name="id">Parameter that represents id of the entity ib database.</param>
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-    Task<TEntity> GetByIdAsync(int id);
+    Task<TEntity> GetByIdAsync<T>(T id);
 
     /// <summary>
     /// Asynchronously returns IEnumerable of entities that pass the predicate condition.
@@ -112,4 +112,10 @@ public interface IGenericRepository<TEntity> where TEntity : IBaseEntity
     /// </summary>
     /// <returns>Number of deleted entities.</returns>
     Task<int> DeleteAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Removes entities by query from database. 
+    /// </summary>
+    Task DeleteByConditionAsync(Expression<Func<TEntity, bool>> predicate,
+        CancellationToken cancellationToken = default);
 }

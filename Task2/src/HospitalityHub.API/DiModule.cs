@@ -30,7 +30,6 @@ public class DiModule : Module
         var handlersAssembly = typeof(BLL.IAssemblyMarker).Assembly;
         builder.RegisterAssemblyTypes(handlersAssembly)
             .Where(t => t.Name.EndsWith("Handler"))
-            .AsImplementedInterfaces()
             .InstancePerDependency();
     }
     

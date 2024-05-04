@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace HospitalityHub.Core.Entities;
 
-public class User : IdentityUser, IBaseEntity
+public class User : IdentityUser<int>, IBaseEntity
 {
-    public string Email { get; set; }
-
+    [MaxLength(50)]
     public string FirstName { get; set; }
-
+    
+    [MaxLength(50)]
     public string LastName { get; set; }
 
     public bool IsEnabled { get; set; }

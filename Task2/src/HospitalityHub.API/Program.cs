@@ -37,7 +37,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddControllers();
 
 builder.Services.AddIdentityApiEndpoints<User>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddAuthorization();
 
@@ -84,15 +85,13 @@ app.UseHttpsRedirection();
 
 app.UseRequestLocalization();
 
-app.MapIdentityApi<User>();
-
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.UseSerilogRequestLogging();
 
-app.MapGet("/test", (TestHandler testHandler) => testHandler.Test());
+app.MapGroup("api/Account").MapIdentityApi<User>();;
 
 app.Run();
 

@@ -6,8 +6,12 @@ namespace HospitalityHub.DAL.UnitOfWork;
 
 public interface IUnitOfWork
 {
-    public IGenericRepository<User> UserRepository { get; }
-    
+    public IGenericRepository<Booking> BookingRepository { get; }
+    public IGenericRepository<Hotel> HotelRepository { get; }
+    public IGenericRepository<Room> RoomRepository { get; }
+    public IGenericRepository<Photo> PhotoRepository { get; }
+    public IGenericRepository<RoomPlace> RoomPlaceRepository { get; }
+
     Task<IDbContextTransaction> CreateTransactionAsync();
 
     IDbContextTransaction CreateTransaction();

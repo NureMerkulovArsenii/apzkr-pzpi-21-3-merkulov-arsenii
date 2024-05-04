@@ -42,7 +42,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
 
 
     /// <inheritdoc />
-    public async Task<TEntity> GetByIdAsync(int id)
+    public async Task<TEntity> GetByIdAsync<T>(T id)
     {
         return await _appContext.Set<TEntity>().FindAsync(id);
     }
@@ -142,5 +142,13 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         var deletedRows = await entities.ExecuteDeleteAsync(cancellationToken);
 
         return deletedRows;
+    }
+    
+    /// <inheritdoc />
+    public async Task DeleteByConditionAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
+    {
+        var entities = _appContext.Set<TEntity>().Where(predicate);
+
+        await entities.ExecuteDeleteAsync(cancellationToken);
     }
 }
