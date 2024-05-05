@@ -26,6 +26,8 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<int>, i
     public DbSet<TodoTask> TodoTasks { get; set; }
     
     public DbSet<Customer> Customer { get; set; }
+    
+    public DbSet<Staff> Staff { get; set; }
 
     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
         CancellationToken cancellationToken = new())

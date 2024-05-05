@@ -13,6 +13,7 @@ public interface IUnitOfWork
     public IGenericRepository<RoomPlace> RoomPlaceRepository { get; }
     public IGenericRepository<TodoTask> TodoTaskRepository { get; }
     public IGenericRepository<Customer> CustomerRepository { get; }
+    public IGenericRepository<Staff> StaffRepository { get; }
     
 
     Task<IDbContextTransaction> CreateTransactionAsync();

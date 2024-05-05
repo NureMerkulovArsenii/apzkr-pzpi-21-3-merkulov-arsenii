@@ -12,5 +12,7 @@ public class User : IdentityUser<int>, IBaseEntity
     public string LastName { get; set; }
 
     public virtual Customer Customer { get; set; }
+    
+    public virtual Staff Staff { get; set; }
 
 }

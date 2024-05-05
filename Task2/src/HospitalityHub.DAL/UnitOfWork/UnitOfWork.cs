@@ -14,6 +14,7 @@ public class UnitOfWork : IUnitOfWork
     private readonly Lazy<IGenericRepository<RoomPlace>> _roomPlaceRepository;
     private readonly Lazy<IGenericRepository<TodoTask>> _todoTaskRepository;
     private readonly Lazy<IGenericRepository<Customer>> _customerRepository;
+    private readonly Lazy<IGenericRepository<Staff>> _staffRepository;
     private readonly ApplicationDbContext _context;
 
     public UnitOfWork(
@@ -24,6 +25,7 @@ public class UnitOfWork : IUnitOfWork
         Lazy<IGenericRepository<RoomPlace>> roomPlaceRepository,
         Lazy<IGenericRepository<TodoTask>> todoTaskRepository,
         Lazy<IGenericRepository<Customer>> customerRepository,
+        Lazy<IGenericRepository<Staff>> staffRepository,
         ApplicationDbContext context)
     {
         _roomRepository = roomRepository;
@@ -33,6 +35,7 @@ public class UnitOfWork : IUnitOfWork
         _roomPlaceRepository = roomPlaceRepository;
         _todoTaskRepository = todoTaskRepository;
         _customerRepository = customerRepository;
+        _staffRepository = staffRepository;
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
@@ -43,6 +46,7 @@ public class UnitOfWork : IUnitOfWork
     public IGenericRepository<RoomPlace> RoomPlaceRepository => _roomPlaceRepository.Value;
     public IGenericRepository<TodoTask> TodoTaskRepository => _todoTaskRepository.Value;
     public IGenericRepository<Customer> CustomerRepository => _customerRepository.Value;
+    public IGenericRepository<Staff> StaffRepository => _staffRepository.Value;
 
 
     public Task<IDbContextTransaction> CreateTransactionAsync()
