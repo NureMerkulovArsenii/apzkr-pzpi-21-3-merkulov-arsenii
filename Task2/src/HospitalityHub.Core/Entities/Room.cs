@@ -1,4 +1,5 @@
-﻿using HospitalityHub.Core.Enums;
+﻿using System.Diagnostics.CodeAnalysis;
+using HospitalityHub.Core.Enums;
 
 namespace HospitalityHub.Core.Entities;
 
@@ -21,6 +22,10 @@ public class Room : BaseEntity
     public int Stage { get; set; }
     
     public ERoomType RoomType { get; set; }
+
+    public string BaseLockUri { get; set; }
+
+    public string ApiKey { get; set; }
 
     public int HotelId { get; set; }
 

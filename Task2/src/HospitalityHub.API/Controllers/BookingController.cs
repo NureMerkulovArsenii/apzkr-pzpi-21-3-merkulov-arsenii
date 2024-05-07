@@ -52,7 +52,7 @@ public class BookingController : BaseApiController
     }
     
     [HttpGet("checkin/{bookingId:int}")]
-    public async Task<IActionResult> CheckIn([FromQuery] int bookingId)
+    public async Task<IActionResult> CheckIn([FromRoute] int bookingId)
     {
         var res = await Resolve<CheckInHandler>().HandleAsync(UserId, bookingId);
 
@@ -60,7 +60,7 @@ public class BookingController : BaseApiController
     }
     
     [HttpGet("checkout/{bookingId:int}")]
-    public async Task<IActionResult> CheckOut([FromQuery] int bookingId)
+    public async Task<IActionResult> CheckOut([FromRoute] int bookingId)
     {
         var res = await Resolve<CheckOutHandler>().HandleAsync(UserId, bookingId);
 
