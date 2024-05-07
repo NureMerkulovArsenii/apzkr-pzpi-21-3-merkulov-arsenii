@@ -2,7 +2,6 @@
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
 
-
 #define WIFI_SSID "Wokwi-GUEST"
 #define WIFI_PASSWORD ""
 // Defining the WiFi channel speeds up the connection:
@@ -96,7 +95,6 @@ void loop() {
     }
   }
 
-  // put your main code here, to run repeatedly:
   delay(10); // this speeds up the simulation
 }
 
@@ -105,28 +103,52 @@ void connectToWifi()
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD, WIFI_CHANNEL);
   Serial.println("Connecting to WiFi...");
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
     Serial.print(".");
+    delay(500);
   }
+  Serial.println("");
   Serial.println("WiFi connected");
 }
 
 
+String apiKey; // Variable to store the API key
+
 void setupEndPoints()
 {
+  server.on("/set-api-key", HTTP_POST, [](AsyncWebServerRequest* request) {
+    apiKey = request->getParam("api-key")->value(); // Save the API key to the variable
+    request->send(200, "text/plain", "API key set successfully");
+  });
+
+  server.on("/get-api-key", HTTP_GET, [](AsyncWebServerRequest* request) {
+    request->send(200, "text/plain", apiKey); // Send the API key stored in the variable
+  });
+
   server.on("/", HTTP_GET, [](AsyncWebServerRequest* request) {
     request->send(200, "text/plain", "Hello, ESP32!");
-    });
+  });
 
-  server.on("/key", HTTP_GET, [](AsyncWebServerRequest* request) {
-    char key = keypad.getKey();
-    if (key != NO_KEY) {
-      request->send(200, "text/plain", String(key));
+  server.on("/set-doorlock-code", HTTP_POST, [](AsyncWebServerRequest* request) {
+    String apiKeyHeader = request->header("x-api-key");
+    if (apiKeyHeader == apiKey) {
+      String newCode = request->getParam("code")->value();
+      roomAccessCode = newCode;
+      request->send(200, "text/plain", "Door lock code set successfully");
+    } else {
+      request->send(401, "text/plain", "Unauthorized");
     }
-    else {
-      request->send(200, "text/plain", "No key pressed");
+  });
+
+  server.on("/reset-doorlock-code", HTTP_POST, [](AsyncWebServerRequest* request) {
+    String apiKeyHeader = request->header("x-api-key");
+    if (apiKeyHeader == apiKey) {
+      roomAccessCode = "abcdef";
+      request->send(200, "text/plain", "Door lock code reset successfully");
+    } else {
+      request->send(401, "text/plain", "Unauthorized");
     }
-    });
+  });
+
 }
 
 
