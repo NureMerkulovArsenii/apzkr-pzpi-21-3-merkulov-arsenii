@@ -117,15 +117,11 @@ void setupEndPoints()
 {
   server.on("/set-api-key", HTTP_POST, [](AsyncWebServerRequest* request) {
     apiKey = request->getParam("api-key")->value(); // Save the API key to the variable
-    request->send(200, "text/plain", "API key set successfully");
+    request->send(200, "text/plain", "true");
   });
 
   server.on("/get-api-key", HTTP_GET, [](AsyncWebServerRequest* request) {
-    request->send(200, "text/plain", apiKey); // Send the API key stored in the variable
-  });
-
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest* request) {
-    request->send(200, "text/plain", "Hello, ESP32!");
+    request->send(200, "application/json", apiKey);
   });
 
   server.on("/set-doorlock-code", HTTP_POST, [](AsyncWebServerRequest* request) {
@@ -133,7 +129,7 @@ void setupEndPoints()
     if (apiKeyHeader == apiKey) {
       String newCode = request->getParam("code")->value();
       roomAccessCode = newCode;
-      request->send(200, "text/plain", "Door lock code set successfully");
+      request->send(200, "text/plain", "true");
     } else {
       request->send(401, "text/plain", "Unauthorized");
     }
@@ -143,7 +139,7 @@ void setupEndPoints()
     String apiKeyHeader = request->header("x-api-key");
     if (apiKeyHeader == apiKey) {
       roomAccessCode = "abcdef";
-      request->send(200, "text/plain", "Door lock code reset successfully");
+      request->send(200, "text/plain", "true");
     } else {
       request->send(401, "text/plain", "Unauthorized");
     }
