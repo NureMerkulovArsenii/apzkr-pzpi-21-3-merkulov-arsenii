@@ -2,9 +2,12 @@
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
 
+#include <Esp32Servo.h>
+
+#define SERVO_PIN 32
+
 #define WIFI_SSID "Wokwi-GUEST"
 #define WIFI_PASSWORD ""
-// Defining the WiFi channel speeds up the connection:
 #define WIFI_CHANNEL 6
 
 #define ADMIN_PASSWORD "1234"
@@ -32,6 +35,9 @@ Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
 bool isAdmin = false;
 bool amdinLedState = false;
 
+Servo servo;
+
+
 
 void connectToWifi();
 void startWebServer();
@@ -43,6 +49,9 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
   Serial.println("Hello, ESP32!");
+  servo.attach(SERVO_PIN);
+  servo.write(-90);
+
 
   connectToWifi();
 
@@ -55,38 +64,45 @@ String keyPadSequence = "";
 
 String roomAccessCode = "123456";
 
+void unlockDoor();
+void lockDoor();
+
 void loop() {
   char key = keypad.getKey();
 
   if (key != NO_KEY) {
-    Serial.println(key);    
+    Serial.println(key);
 
-    if(key == '#')
+    if (key == '#')
     {
       Serial.println("Checking password");
       Serial.println(keyPadSequence);
       Serial.println(ADMIN_PASSWORD);
 
-      if(checkPassword(keyPadSequence, ADMIN_PASSWORD))
+      if (checkPassword(keyPadSequence, ADMIN_PASSWORD))
       {
         isAdmin = true;
         Serial.println("Admin mode activated");
       }
-      else if(checkPassword(keyPadSequence, roomAccessCode))
+      else if (checkPassword(keyPadSequence, roomAccessCode))
       {
-        Serial.println("Room access granted");
+        unlockDoor();
       }
       else
       {
-        Serial.println("Access denied");
-      }      
+        lockDoor();
+      }
 
       keyPadSequence = "";
     }
-    else if(key == '*')
+    else if (key == '*')
     {
-      isAdmin = false;
-      Serial.println("Admin mode deactivated");
+      if (isAdmin)\
+      {
+        isAdmin = false;
+        Serial.println("Admin mode deactivated");
+      }
+      lockDoor();
       keyPadSequence = "";
     }
     else
@@ -97,6 +113,27 @@ void loop() {
 
   delay(10); // this speeds up the simulation
 }
+
+
+
+void unlockDoor()
+{
+  Serial.println("Unlocking door");
+
+  servo.write(180);
+
+}
+
+
+
+void lockDoor()
+{
+  Serial.println("Locking door");
+
+  servo.write(-90);
+}
+
+
 
 void connectToWifi()
 {
@@ -118,11 +155,11 @@ void setupEndPoints()
   server.on("/set-api-key", HTTP_POST, [](AsyncWebServerRequest* request) {
     apiKey = request->getParam("api-key")->value(); // Save the API key to the variable
     request->send(200, "text/plain", "true");
-  });
+    });
 
   server.on("/get-api-key", HTTP_GET, [](AsyncWebServerRequest* request) {
     request->send(200, "application/json", apiKey);
-  });
+    });
 
   server.on("/set-doorlock-code", HTTP_POST, [](AsyncWebServerRequest* request) {
     String apiKeyHeader = request->header("x-api-key");
@@ -130,20 +167,22 @@ void setupEndPoints()
       String newCode = request->getParam("code")->value();
       roomAccessCode = newCode;
       request->send(200, "text/plain", "true");
-    } else {
+    }
+    else {
       request->send(401, "text/plain", "Unauthorized");
     }
-  });
+    });
 
   server.on("/reset-doorlock-code", HTTP_POST, [](AsyncWebServerRequest* request) {
     String apiKeyHeader = request->header("x-api-key");
     if (apiKeyHeader == apiKey) {
       roomAccessCode = "abcdef";
       request->send(200, "text/plain", "true");
-    } else {
+    }
+    else {
       request->send(401, "text/plain", "Unauthorized");
     }
-  });
+    });
 
 }
 
