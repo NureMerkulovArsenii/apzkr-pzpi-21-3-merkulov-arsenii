@@ -3,7 +3,6 @@ using Autofac.Extensions.DependencyInjection;
 using HospitalityHub.API;
 using HospitalityHub.API.Extensions;
 using HospitalityHub.API.Infrastructure;
-using HospitalityHub.BLL.Handlers;
 using HospitalityHub.Core.Entities;
 using HospitalityHub.DAL;
 using Microsoft.AspNetCore.Identity;
@@ -95,6 +94,14 @@ app.MapControllers();
 app.UseSerilogRequestLogging();
 
 app.MapGroup("api/Account").MapIdentityApi<User>();;
+
+await app.MigrateDatabaseAsync();
+
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<DbSeeder>();
+    await seeder.SeedIfNeededAsync();
+}
 
 app.Run();
 

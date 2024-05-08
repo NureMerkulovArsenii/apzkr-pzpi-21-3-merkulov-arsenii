@@ -25,7 +25,9 @@ public class GetRoomHandler
             room.DiscountPercent,
             room.Stage,
             room.RoomType,
-            room.HotelId
+            room.HotelId,
+            room.BaseLockUri,
+            room.ApiKey
         );
     }
 }

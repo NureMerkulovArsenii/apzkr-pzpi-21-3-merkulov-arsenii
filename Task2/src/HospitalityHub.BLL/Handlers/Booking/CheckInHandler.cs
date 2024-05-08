@@ -16,16 +16,15 @@ public class CheckInHandler : BaseHandler
         _doorLockServiceProxy = doorLockServiceProxy;
     }
 
-    public async Task<bool> HandleAsync(int userId, int bookingId)
+    public async Task<bool> HandleAsync(int userId, int bookingId, string code)
     {
         var res = await _unitOfWork.BookingRepository.ExecuteUpdateAsync(
             x => x.Id == bookingId && x.Customer.UserId == userId,
             calls => calls
                 .SetProperty(booking => booking.CheckInDate, DateTime.Now));
 
-        //Todo: remove hardcoded value
         if (res > 0)
-            await SetDoorLockCodeAsync(bookingId, "1234");
+            await SetDoorLockCodeAsync(bookingId, code);
 
         return res > 0;
     }
@@ -42,7 +41,7 @@ public class CheckInHandler : BaseHandler
             .AsNoTracking()
             .FirstOrDefaultAsync();
 
-        if (room.ApiKey != null) return await _doorLockServiceProxy.SetDoorLockCodeAsync(room.BaseLockUri, code);
+        if (!string.IsNullOrEmpty(room.ApiKey)) return await _doorLockServiceProxy.SetDoorLockCodeAsync(room.BaseLockUri, code);
         
         var apiKey = Guid.NewGuid().ToString();
         
@@ -53,4 +52,6 @@ public class CheckInHandler : BaseHandler
 
         return await _doorLockServiceProxy.SetDoorLockCodeAsync(room.BaseLockUri, code);
     }
+    
+    
 }

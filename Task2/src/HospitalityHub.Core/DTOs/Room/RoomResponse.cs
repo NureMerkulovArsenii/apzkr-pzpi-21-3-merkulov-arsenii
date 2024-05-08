@@ -10,5 +10,7 @@ public record RoomResponse(
     decimal DiscountPercent,
     int Stage,
     ERoomType RoomType,
-    int HotelId
+    int HotelId,
+    string BaseLockUri,
+    string ApiKey
 );

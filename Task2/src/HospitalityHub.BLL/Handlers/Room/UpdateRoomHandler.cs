@@ -23,7 +23,9 @@ public class UpdateRoomHandler
             DiscountPercent = request.DiscountPercent,
             Stage = request.Stage,
             RoomType = request.RoomType,
-            HotelId = request.HotelId
+            HotelId = request.HotelId,
+            BaseLockUri = request.BaseLockUri,
+            ApiKey = request.ApiKey
         });
         
         await _unitOfWork.SaveAsync();

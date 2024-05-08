@@ -51,10 +51,10 @@ public class BookingController : BaseApiController
         return Ok(booking);
     }
     
-    [HttpGet("checkin/{bookingId:int}")]
-    public async Task<IActionResult> CheckIn([FromRoute] int bookingId)
+    [HttpGet("checkin/{bookingId:int}/code/{code}")]
+    public async Task<IActionResult> CheckIn([FromRoute] int bookingId, string code)
     {
-        var res = await Resolve<CheckInHandler>().HandleAsync(UserId, bookingId);
+        var res = await Resolve<CheckInHandler>().HandleAsync(UserId, bookingId, code);
 
         return Ok(res);
     }

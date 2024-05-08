@@ -1,4 +1,5 @@
 using Autofac;
+using HospitalityHub.DAL;
 using HospitalityHub.DAL.Repositories;
 using HospitalityHub.DAL.UnitOfWork;
 using HospitalityHub.DoorLockServiceProxy;
@@ -23,9 +24,7 @@ public class DiModule : Module
         
         RegisterServiceProxies(builder);
 
-        // builder.RegisterType<Seeder>()
-        //     .As<ISeeder>()
-        //     .SingleInstance();
+        builder.RegisterType<DbSeeder>().AsSelf().SingleInstance();
     }
 
     private void RegisterHandlers(ContainerBuilder builder)
