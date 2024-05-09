@@ -11,7 +11,21 @@
       "left": 67.5,
       "attrs": { "columns": "3" }
     },
-    { "type": "wokwi-servo", "id": "servo1", "top": -98, "left": -230.4, "attrs": {} }
+    { "type": "wokwi-servo", "id": "servo1", "top": -242, "left": -240, "attrs": {} },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -99.6,
+      "left": -226.6,
+      "attrs": { "color": "red" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led2",
+      "top": -99.6,
+      "left": -178.6,
+      "attrs": { "color": "green" }
+    }
   ],
   "connections": [
     [ "esp:TX", "$serialMonitor:RX", "", [] ],
@@ -23,9 +37,13 @@
     [ "keypad1:C1", "esp:21", "green", [ "v0" ] ],
     [ "keypad1:C2", "esp:22", "green", [ "v0" ] ],
     [ "keypad1:C3", "esp:23", "green", [ "v0" ] ],
-    [ "servo1:V+", "esp:5V", "red", [ "h-38.4", "v278.5", "h134.25" ] ],
-    [ "servo1:GND", "esp:GND.1", "black", [ "h-67.2", "v240", "h163.05" ] ],
-    [ "servo1:PWM", "esp:32", "green", [ "h-19.2", "v144.2" ] ]
+    [ "servo1:V+", "esp:5V", "red", [ "h-38.4", "v422.5", "h143.85" ] ],
+    [ "servo1:GND", "esp:GND.1", "black", [ "h-67.2", "v384", "h172.65" ] ],
+    [ "servo1:PWM", "esp:32", "green", [ "h-19.2", "v144.2" ] ],
+    [ "led1:C", "esp:GND.1", "black", [ "h0.4", "v220.8", "h0", "v28.8" ] ],
+    [ "led2:C", "esp:GND.1", "black", [ "v0" ] ],
+    [ "led1:A", "esp:27", "green", [ "v0" ] ],
+    [ "led2:A", "esp:26", "green", [ "v0" ] ]
   ],
   "dependencies": {}
 }
