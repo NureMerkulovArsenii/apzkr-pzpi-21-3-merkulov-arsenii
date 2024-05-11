@@ -3,9 +3,11 @@ using Autofac.Extensions.DependencyInjection;
 using HospitalityHub.API;
 using HospitalityHub.API.Extensions;
 using HospitalityHub.API.Infrastructure;
+using HospitalityHub.BLL.Services;
 using HospitalityHub.Core.Entities;
 using HospitalityHub.DAL;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
@@ -32,10 +34,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseLoggerFactory(new SerilogLoggerFactory());
 });
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 
 builder.Services.AddControllers();
 
 builder.Services.AddIdentityApiEndpoints<User>()
+    .AddRoles<IdentityRole<int>>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
@@ -51,6 +56,10 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredLength = 6;
     options.User.RequireUniqueEmail = true;
 });
+
+
+
+builder.Services.AddTransient<IEmailSender<User>, EmailSender>();
 
 builder.Services.ConfigureLocalization(configuration);
 

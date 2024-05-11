@@ -11,6 +11,16 @@ namespace HospitalityHub.API.Controllers;
 [Route("api/[controller]")]
 public class AccountController : BaseApiController
 {
+    private readonly UserManager<User> _userManager;
+    private readonly RoleManager<IdentityRole<int>> _roleManager;
+
+    public AccountController(UserManager<User> userManager, RoleManager<IdentityRole<int>> roleManager)
+    {
+        _userManager = userManager;
+        _roleManager = roleManager;
+    }
+
+    
     [Authorize]
     [HttpPatch("update-profile")]
     public async Task<IActionResult> UpdateProfile([FromBody] UpdateUserProfileRequest request)
@@ -20,12 +30,96 @@ public class AccountController : BaseApiController
         return Ok(result);
     }
 
-    [HttpGet("logout")]
+
+    [Authorize(Roles = "Admin")]
+    [HttpPost("assign-role")]
+    public async Task<IActionResult> AssignRole([FromBody] AssignRoleRequest request)
+    {
+        var user = await _userManager.FindByEmailAsync(request.Email);
+        var role = await _roleManager.FindByNameAsync(request.RoleName);
+
+        if (user == null || role == null)
+        {
+            return BadRequest();
+        }
+
+        var result = await _userManager.AddToRoleAsync(user, role.Name);
+
+        if (result.Succeeded)
+        {
+            return Ok();
+        }
+
+        return BadRequest();
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpPost("remove-role")]
+    public async Task<IActionResult> RemoveRole([FromBody] AssignRoleRequest request)
+    {
+        var user = await _userManager.FindByEmailAsync(request.Email);
+        var role = await _roleManager.FindByNameAsync(request.RoleName);
+
+        if (user == null || role == null)
+        {
+            return BadRequest();
+        }
+
+        var result = await _userManager.RemoveFromRoleAsync(user, role.Name);
+
+        if (result.Succeeded)
+        {
+            return Ok();
+        }
+
+        return BadRequest();
+    }
+    
+    [Authorize(Roles = "Admin")]
+    [HttpPost("add-role")]
+    public async Task<IActionResult> AddRole([FromBody] AddRoleRequest request)
+    {
+        var role = new IdentityRole<int>(request.RoleName);
+
+        var result = await _roleManager.CreateAsync(role);
+
+        if (result.Succeeded)
+        {
+            return Ok();
+        }
+
+        return BadRequest();
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpPost("delete-role")]
+    public async Task<IActionResult> RemoveRole([FromBody] AddRoleRequest request)
+    {
+        var role = await _roleManager.FindByNameAsync(request.RoleName);
+
+        if (role == null)
+        {
+            return BadRequest();
+        }
+
+        var result = await _roleManager.DeleteAsync(role);
+
+        if (result.Succeeded)
+        {
+            return Ok();
+        }
+
+        return BadRequest();
+    }
+
+
     [Authorize]
+    [HttpGet("logout")]
     public async Task<IActionResult> Logout()
     {
         await Resolve<SignInManager<User>>().SignOutAsync();
 
         return Ok();
     }
+    
 }

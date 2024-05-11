@@ -11,12 +11,17 @@ public class DbSeeder
     private readonly ILogger<DbSeeder> _logger;
     private readonly ApplicationDbContext _context;
     private readonly UserManager<User> _userManager;
+    private readonly RoleManager<IdentityRole<int>> _roleManager;
 
-    public DbSeeder(ILogger<DbSeeder> logger, ApplicationDbContext context, UserManager<User> userManager)
+    public DbSeeder(ILogger<DbSeeder> logger,
+        ApplicationDbContext context,
+        UserManager<User> userManager,
+        RoleManager<IdentityRole<int>> roleManager)
     {
         _logger = logger;
         _context = context;
         _userManager = userManager;
+        _roleManager = roleManager;
     }
 
     public async Task SeedIfNeededAsync()
@@ -24,18 +29,54 @@ public class DbSeeder
         _logger.LogInformation("Seeder: Checking if seed is needed");
 
         // Check if the database is empty
-        if (!_context.Room.Any())
+        if (!_context.Hotel.Any())
         {
             _logger.LogInformation("Seeder: Seeding initial data");
 
+            await SeedRolesAsync();
+            await SeedUserAsync();
+
+            await SeedHotelsAsync();
             await SeedRoomsAsync();
             await SeedRoomPlaces();
-            await SeedHotelsAsync();
         }
         else
         {
             _logger.LogInformation("Seeder: No seeding needed");
         }
+    }
+
+    private async Task SeedRolesAsync()
+    {
+        _logger.LogInformation("Seeder: Seeding roles");
+
+        await _roleManager.CreateAsync(new IdentityRole<int>("Admin"));
+
+        await _context.SaveChangesAsync();
+
+        _logger.LogInformation("Seeder: Seeded roles");
+    }
+
+
+    private async Task SeedUserAsync()
+    {
+        _logger.LogInformation("Seeder: Seeding users");
+
+        await _userManager.CreateAsync(new User()
+        {
+            FirstName = "Arsenii",
+            LastName = "Merkulov",
+            Email = "arsenii.vm@gmail.com",
+            UserName = "arsenii.vm@gmail.com",
+            NormalizedEmail = "ARSENII.VM@GMAIL.COM",
+            NormalizedUserName = "ARSENII.VM@GMAIL.COM",
+        }, "Arsik123456");
+
+        var user = await _userManager.FindByEmailAsync("arsenii.vm@gmail.com");
+
+        await _userManager.AddToRoleAsync(user, "Admin");
+
+        await _context.SaveChangesAsync();
     }
 
     private async Task SeedRoomsAsync()
