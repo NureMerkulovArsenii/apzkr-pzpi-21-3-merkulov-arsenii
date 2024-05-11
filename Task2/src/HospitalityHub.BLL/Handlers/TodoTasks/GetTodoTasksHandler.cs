@@ -25,8 +25,9 @@ public class GetTodoTasksHandler : BaseHandler
                 DueDate = x.DueDate,
                 IssuedDate = x.IssuedDate,
                 IsCompleted = x.IsCompleted,
+                IsFinished = x.IsFinished,
                 CompletedDate = x.CompletedDate,
-                UserFullName = x.Staff.User.LastName + " " + x.Staff.User.FirstName,
+                UserFullName = $"{x.Staff.SecondName} {x.Staff.FirstName} {x.Staff.LastName}",
                 StaffId = x.StaffId
             })
             .ToListAsync();

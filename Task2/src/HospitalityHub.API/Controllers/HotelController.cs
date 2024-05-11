@@ -8,14 +8,14 @@ namespace HospitalityHub.API.Controllers;
 [Route("api/[controller]")]
 public class HotelController : BaseApiController
 {
-    [HttpPost("create")]
-    public async Task<IActionResult> CreateHotel([FromBody] CreateHotelRequest request)
+    [HttpGet]
+    public async Task<IActionResult> GetHotels()
     {
-        await Resolve<CreateHotelHandler>().HandleAsync(request);
+        var hotels = await Resolve<GetHotelsListHandler>().HandleAsync();
 
-        return Ok();
+        return Ok(hotels);
     }
-
+    
     [HttpGet("{id}")]
     public async Task<IActionResult> GetHotel(int id)
     {
@@ -24,10 +24,20 @@ public class HotelController : BaseApiController
         return Ok(hotel);
     }
 
-    [HttpPut("update")]
-    public async Task<IActionResult> UpdateHotel([FromBody] UpdateHotelRequest request)
+
+    [HttpPost("create")]
+    public async Task<IActionResult> CreateHotel([FromBody] CreateHotelRequest request)
     {
-        await Resolve<UpdateHotelHandler>().HandleAsync(request);
+        await Resolve<CreateHotelHandler>().HandleAsync(request);
+
+        return Ok();
+    }
+
+
+    [HttpPut("update/{id}")]
+    public async Task<IActionResult> UpdateHotel(int id, [FromBody] UpdateHotelRequest request)
+    {
+        await Resolve<UpdateHotelHandler>().HandleAsync(id, request);
 
         return Ok();
     }

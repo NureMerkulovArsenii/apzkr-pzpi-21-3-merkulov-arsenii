@@ -41,6 +41,14 @@ public class RoomController : BaseApiController
         return Ok();
     }
     
+    [HttpGet("{roomId}/roomplace/")]
+    public async Task<IActionResult> GetRoomPlaces(int roomId)
+    {
+        var res = await Resolve<GetRoomPlacesHandler>().HandleAsync(roomId);
+
+        return Ok(res);
+    }
+    
     [HttpPost("{roomId}/roomplace/add")]
     public async Task<IActionResult> AddRoomPlace(int roomId, [FromBody] CreateRoomPlaceRequest request)
     {

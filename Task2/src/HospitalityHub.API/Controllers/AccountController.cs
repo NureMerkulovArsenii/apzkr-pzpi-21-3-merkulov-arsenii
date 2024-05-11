@@ -1,6 +1,8 @@
 using HospitalityHub.BLL.Handlers.AccountManagement;
+using HospitalityHub.Core;
 using HospitalityHub.Core.DTOs.Account;
 using HospitalityHub.Core.Entities;
+using HospitalityHub.Core.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +22,7 @@ public class AccountController : BaseApiController
         _roleManager = roleManager;
     }
 
-    
+
     [Authorize]
     [HttpPatch("update-profile")]
     public async Task<IActionResult> UpdateProfile([FromBody] UpdateUserProfileRequest request)
@@ -50,7 +52,8 @@ public class AccountController : BaseApiController
             return Ok();
         }
 
-        return BadRequest();
+        throw new HospitalityHubException(result.Errors.Select(x => x.Description)
+            .ToList().JoinBy("; "));
     }
 
     [Authorize(Roles = "Admin")]
@@ -72,9 +75,10 @@ public class AccountController : BaseApiController
             return Ok();
         }
 
-        return BadRequest();
+        throw new HospitalityHubException(result.Errors.Select(x => x.Description)
+            .ToList().JoinBy("; "));
     }
-    
+
     [Authorize(Roles = "Admin")]
     [HttpPost("add-role")]
     public async Task<IActionResult> AddRole([FromBody] AddRoleRequest request)
@@ -88,7 +92,8 @@ public class AccountController : BaseApiController
             return Ok();
         }
 
-        return BadRequest();
+        throw new HospitalityHubException(result.Errors.Select(x => x.Description)
+            .ToList().JoinBy("; "));
     }
 
     [Authorize(Roles = "Admin")]
@@ -109,7 +114,8 @@ public class AccountController : BaseApiController
             return Ok();
         }
 
-        return BadRequest();
+        throw new HospitalityHubException(result.Errors.Select(x => x.Description)
+            .ToList().JoinBy("; "));
     }
 
 
@@ -121,5 +127,4 @@ public class AccountController : BaseApiController
 
         return Ok();
     }
-    
 }

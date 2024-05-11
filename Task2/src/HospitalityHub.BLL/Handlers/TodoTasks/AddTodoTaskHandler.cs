@@ -27,7 +27,7 @@ public class AddTodoTaskHandler : BaseHandler
             StaffId = staffId,
             Description = request.Description,
             DueDate = request.DueDate,
-            IssuedDate = request.IssuedDate,
+            IssuedDate = DateTime.Now,
         };
 
         await _unitOfWork.TodoTaskRepository.AddAsync(todoTask);
