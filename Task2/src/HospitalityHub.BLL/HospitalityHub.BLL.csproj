@@ -18,4 +18,8 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Handlers\TestHandler.cs" />
+  </ItemGroup>
+
 </Project>

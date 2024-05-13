@@ -80,8 +80,8 @@ public class AccountController : BaseApiController
     }
 
     [Authorize(Roles = "Admin")]
-    [HttpPost("add-role")]
-    public async Task<IActionResult> AddRole([FromBody] AddRoleRequest request)
+    [HttpPost("create-role")]
+    public async Task<IActionResult> CreateRole([FromBody] AddRoleRequest request)
     {
         var role = new IdentityRole<int>(request.RoleName);
 
@@ -103,10 +103,8 @@ public class AccountController : BaseApiController
         var role = await _roleManager.FindByNameAsync(request.RoleName);
 
         if (role == null)
-        {
-            return BadRequest();
-        }
-
+            return BadRequest("Role not found");    
+        
         var result = await _roleManager.DeleteAsync(role);
 
         if (result.Succeeded)

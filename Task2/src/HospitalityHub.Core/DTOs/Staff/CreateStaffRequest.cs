@@ -11,4 +11,6 @@ public class CreateStaffRequest
     public string Position { get; set; }
     
     public int UserId { get; set; }
+    
+    public int HotelId { get; set; }
 }

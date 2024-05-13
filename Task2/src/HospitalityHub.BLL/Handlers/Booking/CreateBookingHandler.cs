@@ -1,5 +1,6 @@
 using HospitalityHub.BLL.Handlers.Base;
 using HospitalityHub.Core.DTOs.Booking;
+using HospitalityHub.Core.Entities;
 using HospitalityHub.DAL.UnitOfWork;
 
 namespace HospitalityHub.BLL.Handlers.Booking;
@@ -20,25 +21,27 @@ public class CreateBookingHandler : BaseHandler
         if (hotel == null)
             throw new Exception("Hotel not found");
         
-        var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(userId);
-        
-        if (customer == null)
-            throw new Exception("Customer not found");
-
         var room = await _unitOfWork.RoomRepository.GetByIdAsync(request.RoomId);
 
         if (room == null)
             throw new Exception("Room not found");
 
-        var isRoomAvailable = room.Bookings.Any(x => x.CheckInBooking >= request.CheckIn && x.CheckOutBooking <= request.CheckOut);
+        var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(userId) ?? new Customer()
+        {
+            UserId = userId,
+            IsEnabled = true
+        };
         
+        var isRoomAvailable =
+            room.Bookings.Any(x => x.CheckInBooking >= request.CheckIn && x.CheckOutBooking <= request.CheckOut);
+
         if (isRoomAvailable)
             throw new Exception("Room is not available");
 
         var booking = new Core.Entities.Booking
         {
             Room = room,
-            CustomerId = customer.Id,
+            Customer = customer,
             CheckInBooking = request.CheckIn,
             CheckOutBooking = request.CheckOut,
             NumberOfAdults = request.NumberOfAdults,

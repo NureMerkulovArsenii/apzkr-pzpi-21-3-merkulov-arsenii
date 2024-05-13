@@ -1,10 +1,12 @@
 using HospitalityHub.BLL.Handlers.Booking;
 using HospitalityHub.Core.DTOs.Booking;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalityHub.API.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class BookingController : BaseApiController
 {

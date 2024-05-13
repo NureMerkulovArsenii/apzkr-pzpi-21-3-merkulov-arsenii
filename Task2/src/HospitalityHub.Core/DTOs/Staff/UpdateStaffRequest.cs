@@ -10,4 +10,6 @@ public class UpdateStaffRequest
     
     public string Position { get; set; }
     
+    public int HotelId { get; set; }
+    
 }

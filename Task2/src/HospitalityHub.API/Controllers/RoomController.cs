@@ -73,4 +73,12 @@ public class RoomController : BaseApiController
         return Ok(res);
     }
     
+    [HttpPost("{roomId:int}/set-api-key")]
+    public async Task<IActionResult> SetApiKey(int roomId)
+    {
+        await Resolve<SetApiKeyHandler>().HandleAsync(roomId);
+
+        return Ok();
+    }
+    
 }

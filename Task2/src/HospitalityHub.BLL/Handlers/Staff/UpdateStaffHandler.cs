@@ -18,6 +18,7 @@ public class UpdateStaffHandler : BaseHandler
         var affectedRows = await _unitOfWork.StaffRepository.ExecuteUpdateAsync(x => x.Id == staffId,
             calls => calls.SetProperty(staff => staff.FirstName, request.FirstName)
                 .SetProperty(staff => staff.SecondName, request.SecondName)
+                .SetProperty(staff => staff.HotelId, request.HotelId)
                 .SetProperty(staff => staff.LastName, request.LastName)
                 .SetProperty(staff => staff.Position, request.Position));
         
