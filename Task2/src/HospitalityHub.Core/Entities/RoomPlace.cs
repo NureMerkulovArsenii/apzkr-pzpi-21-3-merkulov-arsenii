@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using HospitalityHub.Core.Enums;
 
 namespace HospitalityHub.Core.Entities;

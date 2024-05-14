@@ -1,6 +1,7 @@
 using HospitalityHub.BLL.Handlers.Base;
 using HospitalityHub.Core.DTOs.Staff;
 using HospitalityHub.DAL.UnitOfWork;
+using HospitalityHub.Localization;
 
 namespace HospitalityHub.BLL.Handlers.Staff;
 
@@ -18,7 +19,7 @@ public class GetStaffHandler : BaseHandler
         var staff = await _unitOfWork.StaffRepository.GetByIdAsync(staffId);
 
         if (staff == null)
-            throw new Exception("Staff not found.");
+            throw new Exception(Resources.Get("STAFF_NOT_FOUND"));
 
         return new StaffResponse
         {

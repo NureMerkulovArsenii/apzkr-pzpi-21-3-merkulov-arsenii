@@ -1,5 +1,6 @@
 using HospitalityHub.Core.DTOs.Room;
 using HospitalityHub.DAL.UnitOfWork;
+using HospitalityHub.Localization;
 
 namespace HospitalityHub.BLL.Handlers.Room;
 
@@ -15,6 +16,9 @@ public class GetRoomHandler
     public async Task<RoomResponse> HandleAsync(int id)
     {
         var room = await _unitOfWork.RoomRepository.GetByIdAsync(id);
+        
+        if(room == null)
+            throw new Exception(Resources.Get("ROOM_NOT_FOUND"));
 
         return new RoomResponse
         (

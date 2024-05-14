@@ -1,6 +1,7 @@
 using HospitalityHub.BLL.Handlers.Base;
 using HospitalityHub.Core.DTOs.Booking;
 using HospitalityHub.DAL.UnitOfWork;
+using HospitalityHub.Localization;
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalityHub.BLL.Handlers.Booking;
@@ -36,7 +37,7 @@ public class GetBookingHandler : BaseHandler
 
         if (booking == null)
         {
-            throw new Exception("Booking not found");
+            throw new Exception(Resources.Get("BOOKING_NOT_FOUND"));
         }
 
         return booking;

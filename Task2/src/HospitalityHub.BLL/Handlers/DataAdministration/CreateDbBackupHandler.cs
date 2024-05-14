@@ -33,7 +33,7 @@ public class CreateDbBackupHandler : BaseHandler
         using (var process = new Process())
         {
             process.StartInfo.FileName = "cmd.exe";
-            process.StartInfo.Arguments = $"/C docker exec -i {containerName} pg_dump --dbname={databaseName} --username={userId} --host={host} --port={port} --no-password --format=custom > {backupFilePath}";
+            process.StartInfo.Arguments = $"/C docker exec -i {containerName} pg_dump --dbname={databaseName} --username={userId} --host={host} --port={port} --format=plain --no-password --format=custom > {backupFilePath}";
             process.StartInfo.Environment["PGPASSWORD"] = password;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardError = true;

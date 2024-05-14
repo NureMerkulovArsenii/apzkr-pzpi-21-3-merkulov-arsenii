@@ -3,6 +3,7 @@ using HospitalityHub.Core;
 using HospitalityHub.Core.DTOs.Account;
 using HospitalityHub.Core.Entities;
 using HospitalityHub.Core.Exceptions;
+using HospitalityHub.Core.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

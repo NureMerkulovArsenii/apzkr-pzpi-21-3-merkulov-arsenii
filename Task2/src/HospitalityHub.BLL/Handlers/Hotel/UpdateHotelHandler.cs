@@ -1,6 +1,7 @@
 using HospitalityHub.Core.DTOs.Hotel;
 using HospitalityHub.Core.Exceptions;
 using HospitalityHub.DAL.UnitOfWork;
+using HospitalityHub.Localization;
 
 namespace HospitalityHub.BLL.Handlers.Hotel;
 
@@ -18,7 +19,7 @@ public class UpdateHotelHandler
         var hotelExists = await _unitOfWork.HotelRepository.ExistAsync(x => x.Id == hotelId);
 
         if (!hotelExists)
-            throw new HospitalityHubException("Hotel does not exist.");
+            throw new HospitalityHubException(Resources.Get("HOTEL_NOT_FOUND"));
 
         await _unitOfWork.HotelRepository.ExecuteUpdateAsync(x => x.Id == hotelId,
             calls => calls.SetProperty(x => x.Name, request.Name)

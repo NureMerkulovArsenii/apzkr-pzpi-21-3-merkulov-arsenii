@@ -2,6 +2,7 @@ using HospitalityHub.BLL.Handlers.Base;
 using HospitalityHub.Core.Exceptions;
 using HospitalityHub.DAL.UnitOfWork;
 using HospitalityHub.DoorLockServiceProxy;
+using HospitalityHub.Localization;
 
 namespace HospitalityHub.BLL.Handlers.Room;
 
@@ -24,7 +25,7 @@ public class SetApiKeyHandler : BaseHandler
             
             if (room == null)
             {
-                throw new HospitalityHubException("Room not found");
+                throw new HospitalityHubException(Resources.Get("ROOM_NOT_FOUND"));
             }
 
             var guidKey = Guid.NewGuid().ToString();
@@ -37,7 +38,7 @@ public class SetApiKeyHandler : BaseHandler
         }
         catch (Exception e)
         {
-            throw new HospitalityHubException("Error while setting api key", e);
+            throw new HospitalityHubException(Resources.Get("API_KEY_NOT_SET"), e);
         }
     }
 }

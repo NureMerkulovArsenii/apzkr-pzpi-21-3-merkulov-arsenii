@@ -2,6 +2,7 @@ using HospitalityHub.BLL.Handlers.Base;
 using HospitalityHub.Core.DTOs.RoomPlace;
 using HospitalityHub.Core.Entities;
 using HospitalityHub.DAL.UnitOfWork;
+using HospitalityHub.Localization;
 
 namespace HospitalityHub.BLL.Handlers.Room;
 
@@ -20,7 +21,7 @@ public class AddRoomPlaceHandler : BaseHandler
         
         if (!isRoomExists)
         {
-            throw new Exception("Room does not exist.");
+            throw new Exception(Resources.Get("ROOM_NOT_FOUND"));
         }
         
         var roomPlace = new RoomPlace

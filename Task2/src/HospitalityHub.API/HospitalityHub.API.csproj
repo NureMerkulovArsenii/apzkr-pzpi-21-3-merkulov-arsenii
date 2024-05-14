@@ -34,6 +34,7 @@
     <ProjectReference Include="..\HospitalityHub.BLL\HospitalityHub.BLL.csproj" />
     <ProjectReference Include="..\HospitalityHub.Core\HospitalityHub.Core.csproj" />
     <ProjectReference Include="..\HospitalityHub.DAL\HospitalityHub.DAL.csproj" />
+    <ProjectReference Include="..\HospitalityHub.Localization\HospitalityHub.Localization.csproj" />
   </ItemGroup>
 
 </Project>

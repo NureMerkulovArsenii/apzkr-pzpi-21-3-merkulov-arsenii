@@ -1,6 +1,8 @@
 using HospitalityHub.BLL.Handlers.Base;
+using HospitalityHub.Core.Exceptions;
 using HospitalityHub.DAL.UnitOfWork;
 using HospitalityHub.DoorLockServiceProxy;
+using HospitalityHub.Localization;
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalityHub.BLL.Handlers.Booking;
@@ -18,6 +20,10 @@ public class CheckOutHandler : BaseHandler
 
     public async Task<bool> HandleAsync(int userId, int bookingId)
     {
+        var bookingExists = await _unitOfWork.BookingRepository.ExistAsync(x => x.Id == bookingId && x.Customer.UserId == userId);
+        if (!bookingExists)
+            throw new HospitalityHubException(Resources.Get("BOOKING_NOT_FOUND"));
+        
         var res = await _unitOfWork.BookingRepository.ExecuteUpdateAsync(
             x => x.Id == bookingId && x.Customer.UserId == userId,
             calls => calls

@@ -1,6 +1,7 @@
 using HospitalityHub.BLL.Handlers.Base;
 using HospitalityHub.Core.DTOs.TodoTasks;
 using HospitalityHub.DAL.UnitOfWork;
+using HospitalityHub.Localization;
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalityHub.BLL.Handlers.TodoTasks;
@@ -33,7 +34,7 @@ public class GetTodoTasksHandler : BaseHandler
             .ToListAsync();
         
         if (todoTasks == null)
-            throw new Exception("Staff does not have any todo tasks.");
+            throw new Exception(Resources.Get("TODO_TASKS_NOT_FOUND"));
         
         return todoTasks;
     }

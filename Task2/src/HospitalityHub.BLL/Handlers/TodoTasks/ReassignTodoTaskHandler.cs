@@ -1,5 +1,6 @@
 using HospitalityHub.BLL.Handlers.Base;
 using HospitalityHub.DAL.UnitOfWork;
+using HospitalityHub.Localization;
 
 namespace HospitalityHub.BLL.Handlers.TodoTasks;
 
@@ -17,12 +18,12 @@ public class ReassignTodoTaskHandler : BaseHandler
         var oldStaffExists = await _unitOfWork.StaffRepository.ExistAsync(x => x.Id == oldStaffId);
 
         if (!oldStaffExists)
-            throw new Exception("Staff not found.");
+            throw new Exception(Resources.Get("STAFF_NOT_FOUND"));
         
         var newStaffExists = await _unitOfWork.StaffRepository.ExistAsync(x => x.Id == newStaffId);
         
         if (!newStaffExists)
-            throw new Exception("Staff not found.");
+            throw new Exception(Resources.Get("STAFF_NOT_FOUND"));
 
         var res = await _unitOfWork.TodoTaskRepository.ExecuteUpdateAsync(
             x => x.Id == todoTaskId,

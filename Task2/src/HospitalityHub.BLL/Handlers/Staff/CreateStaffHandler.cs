@@ -3,6 +3,7 @@ using HospitalityHub.Core.DTOs.Staff;
 using HospitalityHub.Core.Entities;
 using HospitalityHub.Core.Exceptions;
 using HospitalityHub.DAL.UnitOfWork;
+using HospitalityHub.Localization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,11 +24,11 @@ public class CreateStaffHandler : BaseHandler
     {
         var userExists = await _userManager.Users.AnyAsync(x => x.Id == request.UserId);
         if (!userExists)
-            throw new HospitalityHubException("User not found");
+            throw new HospitalityHubException(Resources.Get("USER_NOT_FOUND"));
         
         var hotelExists = await _unitOfWork.HotelRepository.ExistAsync(x => x.Id == request.HotelId);
         if (!hotelExists)
-            throw new HospitalityHubException("Hotel not found");
+            throw new HospitalityHubException(Resources.Get("HOTEL_NOT_FOUND"));
         
         var staff = new Core.Entities.Staff
         {

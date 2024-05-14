@@ -34,6 +34,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseLoggerFactory(new SerilogLoggerFactory());
 });
 
+//Todo: figure out how to save DateTime with Local Kind in PostgreSQL
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 
@@ -48,7 +49,6 @@ builder.Services.AddAuthorization();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
-    // Default Password settings.
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireNonAlphanumeric = false;
@@ -56,8 +56,6 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredLength = 6;
     options.User.RequireUniqueEmail = true;
 });
-
-
 
 builder.Services.AddTransient<IEmailSender<User>, EmailSender>();
 

@@ -1,4 +1,5 @@
 using HospitalityHub.DAL.UnitOfWork;
+using HospitalityHub.Localization;
 
 namespace HospitalityHub.BLL.Handlers.Room;
 
@@ -15,9 +16,9 @@ public class RemoveRoomPlaceHandler
     {
         var roomPlace = await _unitOfWork.RoomPlaceRepository.GetByIdAsync(roomPlaceId);
 
-        if (roomPlace.RoomId != roomId)
+        if (roomPlace == null || roomPlace.RoomId != roomId)
         {
-            throw new Exception("RoomId in the path and in the room place do not match.");
+            throw new Exception(Resources.Get("ROOM_PLACE_NOT_FOUND"));
         }
 
         _unitOfWork.RoomPlaceRepository.Delete(roomPlace);

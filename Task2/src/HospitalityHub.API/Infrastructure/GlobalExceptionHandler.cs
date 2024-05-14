@@ -1,3 +1,4 @@
+using HospitalityHub.Localization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,12 +19,13 @@ public class GlobalExceptionHandler : IExceptionHandler
         CancellationToken cancellationToken)
     {
         _logger.LogError(
-            exception, "Exception occurred: {Message}", exception.Message);
+            exception,  Resources.Get("UNEXPECTED_EXCEPTION_OCCURED"), exception.Message);
+        
 
         var problemDetails = new ProblemDetails
         {
             Status = StatusCodes.Status500InternalServerError,
-            Title = "Server error",
+            Title = "Internal Server Error",
             Detail = exception.Message + exception.InnerException?.Message
         };
 

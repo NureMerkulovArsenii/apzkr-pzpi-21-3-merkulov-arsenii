@@ -1,5 +1,6 @@
 using HospitalityHub.BLL.Handlers.Base;
 using HospitalityHub.DAL.UnitOfWork;
+using HospitalityHub.Localization;
 
 namespace HospitalityHub.BLL.Handlers.TodoTasks;
 
@@ -17,7 +18,7 @@ public class MarkFinishedTodoTaskHandler : BaseHandler
         var todoTask = await _unitOfWork.TodoTaskRepository.GetByIdAsync(todoTaskId);
 
         if (todoTask.StaffId != staffId)
-            throw new Exception("StaffId in the path and in the todo task do not match.");
+            throw new Exception(Resources.Get("TODO_TASKS_NOT_FOUND"));
         
         todoTask.IsCompleted = isCompleted;
         todoTask.IsFinished = true;

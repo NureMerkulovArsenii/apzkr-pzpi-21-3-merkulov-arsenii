@@ -1,6 +1,6 @@
-namespace HospitalityHub.Core;
+namespace HospitalityHub.Core.Extensions;
 
-public static class Extensions
+public static class EnumerableExtensions
 {
     public static string JoinBy(this IEnumerable<string> source, string separator)
     {
