@@ -70,7 +70,14 @@ export class AppShellComponent implements OnInit {
   }
 
   isUserAuthenticated(): boolean {
+    const accessToken = localStorage.getItem('access_token');
+    if (!accessToken) {
+      this.isAuthenticated = false;
+      return false;
+    }
+
     this.isAuthenticated = true;
+
     return true;
   }
 
