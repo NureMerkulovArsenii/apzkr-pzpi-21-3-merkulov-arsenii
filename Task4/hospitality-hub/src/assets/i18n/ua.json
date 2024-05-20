@@ -1,0 +1,11 @@
+{
+  "users": "Користувачі",
+  "home": "Головна",
+  "roles": "Ролі",
+  "administration": "Адміністрування",
+  "name": "Ім'я",
+  "number": "Номер",
+  "enabled": "Увімкнено",
+  "deviceUri": "URI пристрою",
+  "actions": "Дії"
+}

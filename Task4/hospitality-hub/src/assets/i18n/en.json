@@ -1,0 +1,11 @@
+{
+  "users": "Users",
+  "roles": "Roles",
+  "home": "Main",
+  "administration": "Administration",
+  "name": "Name",
+  "number": "Number",
+  "enabled": "Enabled",
+  "deviceUri": "Device URI",
+  "actions": "Actions"
+}

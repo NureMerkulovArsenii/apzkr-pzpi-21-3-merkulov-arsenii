@@ -402,3 +402,7 @@ FodyWeavers.xsd
 .env
 
 appsettings.Development.json
+
+#ignore all .css where there is mathching .scss
+*.css
+*.css.map
