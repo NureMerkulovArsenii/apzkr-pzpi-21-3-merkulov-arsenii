@@ -11,29 +11,33 @@ import {AccountModule} from "../modules/account/account.module";
 import {MatButtonModule} from "@angular/material/button";
 import {TranslateModule} from "@ngx-translate/core";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 
 @NgModule({
     declarations: [
-        AppShellComponent
+        AppShellComponent,
+        ConfirmDialogComponent
     ],
     exports: [
         AppShellComponent
     ],
-  imports: [
-    CommonModule,
-    MatButtonToggleModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatListModule,
-    RouterLink,
-    RouterOutlet,
-    AccountModule,
-    MatButtonModule,
-    TranslateModule,
-    FontAwesomeModule
-  ]
+    imports: [
+        CommonModule,
+        MatButtonToggleModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatListModule,
+        RouterLink,
+        RouterOutlet,
+        AccountModule,
+        MatButtonModule,
+        TranslateModule,
+        FontAwesomeModule,
+        MatDialogModule
+    ]
 })
 export class SharedModule { }

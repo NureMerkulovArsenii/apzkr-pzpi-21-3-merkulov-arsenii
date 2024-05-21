@@ -14,7 +14,7 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {ToastrModule} from "ngx-toastr";
 import {MAT_DIALOG_DEFAULT_OPTIONS} from "@angular/material/dialog";
-import {authGuard} from "./core/guards/auth.guard";
+import {I18nInterceptor} from "./core/interceptors/i18n.interceptor";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -49,7 +49,9 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     ),
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false,}},
+    {provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

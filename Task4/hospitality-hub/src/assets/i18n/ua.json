@@ -7,5 +7,17 @@
   "number": "Номер",
   "enabled": "Увімкнено",
   "deviceUri": "URI пристрою",
-  "actions": "Дії"
+  "actions": "Дії",
+  "edit": "Редагувати",
+  "delete": "Видалити",
+  "add": "Додати",
+  "save": "Зберегти",
+  "cancel": "Скасувати",
+  "city": "Місто",
+  "address": "Адреса",
+  "country": "Країна",
+  "zipCode": "Поштовий індекс",
+  "phone": "Телефон",
+  "lockServiceUri": "URI сервісу замків",
+  "title": "Назва"
 }

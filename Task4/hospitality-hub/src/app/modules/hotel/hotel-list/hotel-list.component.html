@@ -1,0 +1,65 @@
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="hotels$" class="mat-elevation-z8">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>{{ 'title' | translate }}</th>
+      <td mat-cell *matCellDef="let element"> {{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="city">
+      <th mat-header-cell *matHeaderCellDef>{{ 'city' | translate }}</th>
+      <td mat-cell
+          *matCellDef="let element"> {{ element.city }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef>{{ 'country' | translate }}</th>
+      <td mat-cell
+          *matCellDef="let element"> {{ element.country }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef>{{ 'address' | translate }}</th>
+      <td mat-cell
+          *matCellDef="let element"> {{ element.address }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="zipCode">
+      <th mat-header-cell *matHeaderCellDef>{{ 'zipCode' | translate }}</th>
+      <td mat-cell
+          *matCellDef="let element"> {{ element.zipCode }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lockServiceUri">
+      <th mat-header-cell *matHeaderCellDef>{{ 'lockServiceUri' | translate }}</th>
+      <td mat-cell
+          *matCellDef="let element"> {{ element.lockServiceUri }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>{{ 'actions' | translate }}</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button (click)="editHotel(element.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-button (click)="deleteHotel(element.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+  </table>
+</div>
+
+<button mat-raised-button color="primary" class="add-button" (click)="addHotel()">
+  <mat-icon>add</mat-icon>
+  Add
+</button>

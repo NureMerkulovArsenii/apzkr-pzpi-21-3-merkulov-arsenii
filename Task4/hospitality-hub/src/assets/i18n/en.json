@@ -7,5 +7,17 @@
   "number": "Number",
   "enabled": "Enabled",
   "deviceUri": "Device URI",
-  "actions": "Actions"
+  "actions": "Дії",
+  "edit": "Edit",
+  "delete": "Delete",
+  "add": "Add",
+  "save": "Save",
+  "cancel": "Cancel",
+  "city": "City",
+  "address": "Address",
+  "country": "Country",
+  "zipCode": "Zip code",
+  "phone": "Phone",
+  "lockServiceUri": "Lock service URI",
+  "title": "Title"
 }
