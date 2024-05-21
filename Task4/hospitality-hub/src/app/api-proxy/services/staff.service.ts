@@ -13,14 +13,18 @@ import { apiStaffCreatePost } from '../fn/staff/api-staff-create-post';
 import { ApiStaffCreatePost$Params } from '../fn/staff/api-staff-create-post';
 import { apiStaffOldStaffIdTasksTodoTaskIdReassignNewStaffIdPut } from '../fn/staff/api-staff-old-staff-id-tasks-todo-task-id-reassign-new-staff-id-put';
 import { ApiStaffOldStaffIdTasksTodoTaskIdReassignNewStaffIdPut$Params } from '../fn/staff/api-staff-old-staff-id-tasks-todo-task-id-reassign-new-staff-id-put';
-import { apiStaffStaffIdGet } from '../fn/staff/api-staff-staff-id-get';
-import { ApiStaffStaffIdGet$Params } from '../fn/staff/api-staff-staff-id-get';
+import { apiStaffStaffIdGet$Json } from '../fn/staff/api-staff-staff-id-get-json';
+import { ApiStaffStaffIdGet$Json$Params } from '../fn/staff/api-staff-staff-id-get-json';
+import { apiStaffStaffIdGet$Plain } from '../fn/staff/api-staff-staff-id-get-plain';
+import { ApiStaffStaffIdGet$Plain$Params } from '../fn/staff/api-staff-staff-id-get-plain';
 import { apiStaffStaffIdRemoveDelete } from '../fn/staff/api-staff-staff-id-remove-delete';
 import { ApiStaffStaffIdRemoveDelete$Params } from '../fn/staff/api-staff-staff-id-remove-delete';
 import { apiStaffStaffIdTasksAddPost } from '../fn/staff/api-staff-staff-id-tasks-add-post';
 import { ApiStaffStaffIdTasksAddPost$Params } from '../fn/staff/api-staff-staff-id-tasks-add-post';
-import { apiStaffStaffIdTasksGet } from '../fn/staff/api-staff-staff-id-tasks-get';
-import { ApiStaffStaffIdTasksGet$Params } from '../fn/staff/api-staff-staff-id-tasks-get';
+import { apiStaffStaffIdTasksGet$Json } from '../fn/staff/api-staff-staff-id-tasks-get-json';
+import { ApiStaffStaffIdTasksGet$Json$Params } from '../fn/staff/api-staff-staff-id-tasks-get-json';
+import { apiStaffStaffIdTasksGet$Plain } from '../fn/staff/api-staff-staff-id-tasks-get-plain';
+import { ApiStaffStaffIdTasksGet$Plain$Params } from '../fn/staff/api-staff-staff-id-tasks-get-plain';
 import { apiStaffStaffIdTasksTodoTaskIdFinishPut } from '../fn/staff/api-staff-staff-id-tasks-todo-task-id-finish-put';
 import { ApiStaffStaffIdTasksTodoTaskIdFinishPut$Params } from '../fn/staff/api-staff-staff-id-tasks-todo-task-id-finish-put';
 import { apiStaffStaffIdTasksTodoTaskIdRemoveDelete } from '../fn/staff/api-staff-staff-id-tasks-todo-task-id-remove-delete';
@@ -29,6 +33,8 @@ import { apiStaffStaffIdTasksTodoTaskIdUpdatePut } from '../fn/staff/api-staff-s
 import { ApiStaffStaffIdTasksTodoTaskIdUpdatePut$Params } from '../fn/staff/api-staff-staff-id-tasks-todo-task-id-update-put';
 import { apiStaffStaffIdUpdatePut } from '../fn/staff/api-staff-staff-id-update-put';
 import { ApiStaffStaffIdUpdatePut$Params } from '../fn/staff/api-staff-staff-id-update-put';
+import { StaffResponse } from '../models/staff-response';
+import { TodoTasksResponse } from '../models/todo-tasks-response';
 
 @Injectable({ providedIn: 'root' })
 export class StaffService extends BaseService {
@@ -41,23 +47,45 @@ export class StaffService extends BaseService {
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiStaffStaffIdGet()` instead.
+   * To access only the response body, use `apiStaffStaffIdGet$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiStaffStaffIdGet$Response(params: ApiStaffStaffIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return apiStaffStaffIdGet(this.http, this.rootUrl, params, context);
+  apiStaffStaffIdGet$Plain$Response(params: ApiStaffStaffIdGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<StaffResponse>> {
+    return apiStaffStaffIdGet$Plain(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiStaffStaffIdGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiStaffStaffIdGet$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiStaffStaffIdGet(params: ApiStaffStaffIdGet$Params, context?: HttpContext): Observable<void> {
-    return this.apiStaffStaffIdGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+  apiStaffStaffIdGet$Plain(params: ApiStaffStaffIdGet$Plain$Params, context?: HttpContext): Observable<StaffResponse> {
+    return this.apiStaffStaffIdGet$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<StaffResponse>): StaffResponse => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiStaffStaffIdGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiStaffStaffIdGet$Json$Response(params: ApiStaffStaffIdGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<StaffResponse>> {
+    return apiStaffStaffIdGet$Json(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `apiStaffStaffIdGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiStaffStaffIdGet$Json(params: ApiStaffStaffIdGet$Json$Params, context?: HttpContext): Observable<StaffResponse> {
+    return this.apiStaffStaffIdGet$Json$Response(params, context).pipe(
+      map((r: StrictHttpResponse<StaffResponse>): StaffResponse => r.body)
     );
   }
 
@@ -241,23 +269,45 @@ export class StaffService extends BaseService {
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiStaffStaffIdTasksGet()` instead.
+   * To access only the response body, use `apiStaffStaffIdTasksGet$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiStaffStaffIdTasksGet$Response(params: ApiStaffStaffIdTasksGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return apiStaffStaffIdTasksGet(this.http, this.rootUrl, params, context);
+  apiStaffStaffIdTasksGet$Plain$Response(params: ApiStaffStaffIdTasksGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<TodoTasksResponse>>> {
+    return apiStaffStaffIdTasksGet$Plain(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiStaffStaffIdTasksGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiStaffStaffIdTasksGet$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiStaffStaffIdTasksGet(params: ApiStaffStaffIdTasksGet$Params, context?: HttpContext): Observable<void> {
-    return this.apiStaffStaffIdTasksGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+  apiStaffStaffIdTasksGet$Plain(params: ApiStaffStaffIdTasksGet$Plain$Params, context?: HttpContext): Observable<Array<TodoTasksResponse>> {
+    return this.apiStaffStaffIdTasksGet$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<TodoTasksResponse>>): Array<TodoTasksResponse> => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiStaffStaffIdTasksGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiStaffStaffIdTasksGet$Json$Response(params: ApiStaffStaffIdTasksGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<TodoTasksResponse>>> {
+    return apiStaffStaffIdTasksGet$Json(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `apiStaffStaffIdTasksGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiStaffStaffIdTasksGet$Json(params: ApiStaffStaffIdTasksGet$Json$Params, context?: HttpContext): Observable<Array<TodoTasksResponse>> {
+    return this.apiStaffStaffIdTasksGet$Json$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<TodoTasksResponse>>): Array<TodoTasksResponse> => r.body)
     );
   }
 

@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HospitalityHubApiService} from "../../api-proxy/services/hospitality-hub-api.service";
 import {LoginRequest} from "../../api-proxy/models/login-request";
 import {ApiAccountLoginPost$Params} from "../../api-proxy/fn/hospitality-hub-api/api-account-login-post";
 import {Observable} from "rxjs";
+import {HospitalityHubApiService} from "../../api-proxy/services/hospitality-hub-api.service";
 import {AccessTokenResponse} from "../../api-proxy/models/access-token-response";
 
 @Injectable({

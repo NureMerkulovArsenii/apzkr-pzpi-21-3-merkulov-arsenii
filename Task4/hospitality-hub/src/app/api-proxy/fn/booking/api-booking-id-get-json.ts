@@ -6,25 +6,26 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { FilterBookingResponse } from '../../models/filter-booking-response';
 
-export interface ApiRoomIdGet$Params {
+export interface ApiBookingIdGet$Json$Params {
   id: number;
 }
 
-export function apiRoomIdGet(http: HttpClient, rootUrl: string, params: ApiRoomIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, apiRoomIdGet.PATH, 'get');
+export function apiBookingIdGet$Json(http: HttpClient, rootUrl: string, params: ApiBookingIdGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<FilterBookingResponse>> {
+  const rb = new RequestBuilder(rootUrl, apiBookingIdGet$Json.PATH, 'get');
   if (params) {
     rb.path('id', params.id, {"style":"simple"});
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: '*/*', context })
+    rb.build({ responseType: 'json', accept: 'text/json', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      return r as StrictHttpResponse<FilterBookingResponse>;
     })
   );
 }
 
-apiRoomIdGet.PATH = '/api/Room/{id}';
+apiBookingIdGet$Json.PATH = '/api/Booking/{id}';

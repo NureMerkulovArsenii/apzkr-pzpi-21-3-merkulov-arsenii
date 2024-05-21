@@ -17,12 +17,17 @@ import { apiBookingCheckoutBookingIdGet } from '../fn/booking/api-booking-checko
 import { ApiBookingCheckoutBookingIdGet$Params } from '../fn/booking/api-booking-checkout-booking-id-get';
 import { apiBookingCreatePost } from '../fn/booking/api-booking-create-post';
 import { ApiBookingCreatePost$Params } from '../fn/booking/api-booking-create-post';
-import { apiBookingFilterGet } from '../fn/booking/api-booking-filter-get';
-import { ApiBookingFilterGet$Params } from '../fn/booking/api-booking-filter-get';
-import { apiBookingIdGet } from '../fn/booking/api-booking-id-get';
-import { ApiBookingIdGet$Params } from '../fn/booking/api-booking-id-get';
+import { apiBookingFilterGet$Json } from '../fn/booking/api-booking-filter-get-json';
+import { ApiBookingFilterGet$Json$Params } from '../fn/booking/api-booking-filter-get-json';
+import { apiBookingFilterGet$Plain } from '../fn/booking/api-booking-filter-get-plain';
+import { ApiBookingFilterGet$Plain$Params } from '../fn/booking/api-booking-filter-get-plain';
+import { apiBookingIdGet$Json } from '../fn/booking/api-booking-id-get-json';
+import { ApiBookingIdGet$Json$Params } from '../fn/booking/api-booking-id-get-json';
+import { apiBookingIdGet$Plain } from '../fn/booking/api-booking-id-get-plain';
+import { ApiBookingIdGet$Plain$Params } from '../fn/booking/api-booking-id-get-plain';
 import { apiBookingUpdatePut } from '../fn/booking/api-booking-update-put';
 import { ApiBookingUpdatePut$Params } from '../fn/booking/api-booking-update-put';
+import { FilterBookingResponse } from '../models/filter-booking-response';
 
 @Injectable({ providedIn: 'root' })
 export class BookingService extends BaseService {
@@ -110,23 +115,45 @@ export class BookingService extends BaseService {
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiBookingFilterGet()` instead.
+   * To access only the response body, use `apiBookingFilterGet$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiBookingFilterGet$Response(params?: ApiBookingFilterGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return apiBookingFilterGet(this.http, this.rootUrl, params, context);
+  apiBookingFilterGet$Plain$Response(params?: ApiBookingFilterGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<FilterBookingResponse>>> {
+    return apiBookingFilterGet$Plain(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiBookingFilterGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiBookingFilterGet$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiBookingFilterGet(params?: ApiBookingFilterGet$Params, context?: HttpContext): Observable<void> {
-    return this.apiBookingFilterGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+  apiBookingFilterGet$Plain(params?: ApiBookingFilterGet$Plain$Params, context?: HttpContext): Observable<Array<FilterBookingResponse>> {
+    return this.apiBookingFilterGet$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<FilterBookingResponse>>): Array<FilterBookingResponse> => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiBookingFilterGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiBookingFilterGet$Json$Response(params?: ApiBookingFilterGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<FilterBookingResponse>>> {
+    return apiBookingFilterGet$Json(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `apiBookingFilterGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiBookingFilterGet$Json(params?: ApiBookingFilterGet$Json$Params, context?: HttpContext): Observable<Array<FilterBookingResponse>> {
+    return this.apiBookingFilterGet$Json$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<FilterBookingResponse>>): Array<FilterBookingResponse> => r.body)
     );
   }
 
@@ -135,23 +162,45 @@ export class BookingService extends BaseService {
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiBookingIdGet()` instead.
+   * To access only the response body, use `apiBookingIdGet$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiBookingIdGet$Response(params: ApiBookingIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return apiBookingIdGet(this.http, this.rootUrl, params, context);
+  apiBookingIdGet$Plain$Response(params: ApiBookingIdGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<FilterBookingResponse>> {
+    return apiBookingIdGet$Plain(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiBookingIdGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiBookingIdGet$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiBookingIdGet(params: ApiBookingIdGet$Params, context?: HttpContext): Observable<void> {
-    return this.apiBookingIdGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+  apiBookingIdGet$Plain(params: ApiBookingIdGet$Plain$Params, context?: HttpContext): Observable<FilterBookingResponse> {
+    return this.apiBookingIdGet$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<FilterBookingResponse>): FilterBookingResponse => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiBookingIdGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiBookingIdGet$Json$Response(params: ApiBookingIdGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<FilterBookingResponse>> {
+    return apiBookingIdGet$Json(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `apiBookingIdGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiBookingIdGet$Json(params: ApiBookingIdGet$Json$Params, context?: HttpContext): Observable<FilterBookingResponse> {
+    return this.apiBookingIdGet$Json$Response(params, context).pipe(
+      map((r: StrictHttpResponse<FilterBookingResponse>): FilterBookingResponse => r.body)
     );
   }
 

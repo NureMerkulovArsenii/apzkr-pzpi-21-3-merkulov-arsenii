@@ -13,12 +13,16 @@ import { apiRoomCreatePost } from '../fn/room/api-room-create-post';
 import { ApiRoomCreatePost$Params } from '../fn/room/api-room-create-post';
 import { apiRoomIdDelete } from '../fn/room/api-room-id-delete';
 import { ApiRoomIdDelete$Params } from '../fn/room/api-room-id-delete';
-import { apiRoomIdGet } from '../fn/room/api-room-id-get';
-import { ApiRoomIdGet$Params } from '../fn/room/api-room-id-get';
+import { apiRoomIdGet$Json } from '../fn/room/api-room-id-get-json';
+import { ApiRoomIdGet$Json$Params } from '../fn/room/api-room-id-get-json';
+import { apiRoomIdGet$Plain } from '../fn/room/api-room-id-get-plain';
+import { ApiRoomIdGet$Plain$Params } from '../fn/room/api-room-id-get-plain';
 import { apiRoomRoomIdRoomplaceAddPost } from '../fn/room/api-room-room-id-roomplace-add-post';
 import { ApiRoomRoomIdRoomplaceAddPost$Params } from '../fn/room/api-room-room-id-roomplace-add-post';
-import { apiRoomRoomIdRoomplaceGet } from '../fn/room/api-room-room-id-roomplace-get';
-import { ApiRoomRoomIdRoomplaceGet$Params } from '../fn/room/api-room-room-id-roomplace-get';
+import { apiRoomRoomIdRoomplaceGet$Json } from '../fn/room/api-room-room-id-roomplace-get-json';
+import { ApiRoomRoomIdRoomplaceGet$Json$Params } from '../fn/room/api-room-room-id-roomplace-get-json';
+import { apiRoomRoomIdRoomplaceGet$Plain } from '../fn/room/api-room-room-id-roomplace-get-plain';
+import { ApiRoomRoomIdRoomplaceGet$Plain$Params } from '../fn/room/api-room-room-id-roomplace-get-plain';
 import { apiRoomRoomIdRoomplaceRemoveRoomPlaceIdDelete } from '../fn/room/api-room-room-id-roomplace-remove-room-place-id-delete';
 import { ApiRoomRoomIdRoomplaceRemoveRoomPlaceIdDelete$Params } from '../fn/room/api-room-room-id-roomplace-remove-room-place-id-delete';
 import { apiRoomRoomIdRoomplaceRoomPlaceIdUpdatePut } from '../fn/room/api-room-room-id-roomplace-room-place-id-update-put';
@@ -27,6 +31,8 @@ import { apiRoomRoomIdSetApiKeyPost } from '../fn/room/api-room-room-id-set-api-
 import { ApiRoomRoomIdSetApiKeyPost$Params } from '../fn/room/api-room-room-id-set-api-key-post';
 import { apiRoomUpdatePut } from '../fn/room/api-room-update-put';
 import { ApiRoomUpdatePut$Params } from '../fn/room/api-room-update-put';
+import { RoomPlaceResponse } from '../models/room-place-response';
+import { RoomResponse } from '../models/room-response';
 
 @Injectable({ providedIn: 'root' })
 export class RoomService extends BaseService {
@@ -39,23 +45,45 @@ export class RoomService extends BaseService {
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiRoomIdGet()` instead.
+   * To access only the response body, use `apiRoomIdGet$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiRoomIdGet$Response(params: ApiRoomIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return apiRoomIdGet(this.http, this.rootUrl, params, context);
+  apiRoomIdGet$Plain$Response(params: ApiRoomIdGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<RoomResponse>> {
+    return apiRoomIdGet$Plain(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiRoomIdGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiRoomIdGet$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiRoomIdGet(params: ApiRoomIdGet$Params, context?: HttpContext): Observable<void> {
-    return this.apiRoomIdGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+  apiRoomIdGet$Plain(params: ApiRoomIdGet$Plain$Params, context?: HttpContext): Observable<RoomResponse> {
+    return this.apiRoomIdGet$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<RoomResponse>): RoomResponse => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiRoomIdGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiRoomIdGet$Json$Response(params: ApiRoomIdGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<RoomResponse>> {
+    return apiRoomIdGet$Json(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `apiRoomIdGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiRoomIdGet$Json(params: ApiRoomIdGet$Json$Params, context?: HttpContext): Observable<RoomResponse> {
+    return this.apiRoomIdGet$Json$Response(params, context).pipe(
+      map((r: StrictHttpResponse<RoomResponse>): RoomResponse => r.body)
     );
   }
 
@@ -139,23 +167,45 @@ export class RoomService extends BaseService {
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiRoomRoomIdRoomplaceGet()` instead.
+   * To access only the response body, use `apiRoomRoomIdRoomplaceGet$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiRoomRoomIdRoomplaceGet$Response(params: ApiRoomRoomIdRoomplaceGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return apiRoomRoomIdRoomplaceGet(this.http, this.rootUrl, params, context);
+  apiRoomRoomIdRoomplaceGet$Plain$Response(params: ApiRoomRoomIdRoomplaceGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<RoomPlaceResponse>>> {
+    return apiRoomRoomIdRoomplaceGet$Plain(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiRoomRoomIdRoomplaceGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiRoomRoomIdRoomplaceGet$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiRoomRoomIdRoomplaceGet(params: ApiRoomRoomIdRoomplaceGet$Params, context?: HttpContext): Observable<void> {
-    return this.apiRoomRoomIdRoomplaceGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+  apiRoomRoomIdRoomplaceGet$Plain(params: ApiRoomRoomIdRoomplaceGet$Plain$Params, context?: HttpContext): Observable<Array<RoomPlaceResponse>> {
+    return this.apiRoomRoomIdRoomplaceGet$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<RoomPlaceResponse>>): Array<RoomPlaceResponse> => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiRoomRoomIdRoomplaceGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiRoomRoomIdRoomplaceGet$Json$Response(params: ApiRoomRoomIdRoomplaceGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<RoomPlaceResponse>>> {
+    return apiRoomRoomIdRoomplaceGet$Json(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `apiRoomRoomIdRoomplaceGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiRoomRoomIdRoomplaceGet$Json(params: ApiRoomRoomIdRoomplaceGet$Json$Params, context?: HttpContext): Observable<Array<RoomPlaceResponse>> {
+    return this.apiRoomRoomIdRoomplaceGet$Json$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<RoomPlaceResponse>>): Array<RoomPlaceResponse> => r.body)
     );
   }
 
