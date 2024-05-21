@@ -20,6 +20,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const diffInSeconds = diff / 1000;
 
   if (diffInSeconds > expiresIn) {
+    localStorage.removeItem('access_token');
     return false;
   }
 

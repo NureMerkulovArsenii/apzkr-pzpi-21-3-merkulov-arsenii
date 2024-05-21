@@ -71,7 +71,8 @@ export class LoginPageComponent implements OnInit {
             }
           },
           error: (error) => {
-            this.toastr.error(error.error.error, 'Error');
+            console.log(error)
+            this.toastr.error(error.statusText);
           }
         });
 
