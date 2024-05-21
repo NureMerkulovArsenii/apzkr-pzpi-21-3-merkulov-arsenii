@@ -9,6 +9,7 @@ namespace HospitalityHub.API.Controllers;
 public class StatsController : BaseApiController
 {
     [HttpPost("occupancy-report/{hotelId:int}/")]
+    [ProducesResponseType<List<OccupancyReportResult>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetOccupancyReport(int hotelId, [FromBody] ReportTimeBoundaryRequest request)
     {
         var report = await Resolve<GenerateOccupancyReportHandler>()

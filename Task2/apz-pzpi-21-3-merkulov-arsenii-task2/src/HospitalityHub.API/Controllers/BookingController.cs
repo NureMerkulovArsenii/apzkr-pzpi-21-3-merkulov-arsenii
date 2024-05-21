@@ -38,6 +38,8 @@ public class BookingController : BaseApiController
     
     
     [HttpGet("filter")]
+    [ProducesResponseType<IEnumerable<FilterBookingResponse>>(StatusCodes.Status200OK)]
+    
     public async Task<IActionResult> FilterBookings([FromQuery] FilterBookingRequest request)
     {
         var bookings = await Resolve<FilterBookingHandler>().HandleAsync(request);
@@ -46,6 +48,7 @@ public class BookingController : BaseApiController
     }
     
     [HttpGet("{id:int}")]
+    [ProducesResponseType<FilterBookingResponse>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetBooking(int id)
     {
         var booking = await Resolve<GetBookingHandler>().HandleAsync(id);

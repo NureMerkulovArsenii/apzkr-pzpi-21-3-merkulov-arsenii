@@ -9,6 +9,7 @@ namespace HospitalityHub.API.Controllers;
 public class HotelController : BaseApiController
 {
     [HttpGet]
+    [ProducesResponseType<IEnumerable<HotelResponse>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetHotels()
     {
         var hotels = await Resolve<GetHotelsListHandler>().HandleAsync();
@@ -17,6 +18,7 @@ public class HotelController : BaseApiController
     }
     
     [HttpGet("{id}")]
+    [ProducesResponseType<HotelResponse>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetHotel(int id)
     {
         var hotel = await Resolve<GetHotelHandler>().HandleAsync(id);

@@ -40,10 +40,13 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 builder.Services.AddControllers();
 
+
 builder.Services.AddIdentityApiEndpoints<User>()
     .AddRoles<IdentityRole<int>>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
+
 
 builder.Services.AddAuthorization();
 
@@ -93,6 +96,8 @@ app.UseExceptionHandler();
 app.UseHttpsRedirection();
 
 app.UseRequestLocalization();
+
+app.UseCors(x => x.AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader());
 
 app.UseAuthorization();
 

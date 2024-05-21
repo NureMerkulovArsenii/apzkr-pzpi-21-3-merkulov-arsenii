@@ -13,6 +13,7 @@ namespace HospitalityHub.API.Controllers
     public class StaffController : BaseApiController
     {
         [HttpGet("{staffId}")]
+        [ProducesResponseType<StaffResponse>(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetStaff(int staffId)
         {
             var staff = await Resolve<GetStaffHandler>().HandleAsync(staffId);
@@ -81,6 +82,7 @@ namespace HospitalityHub.API.Controllers
         }
 
         [HttpGet("{staffId}/tasks")]
+        [ProducesResponseType<List<TodoTasksResponse>>(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetTasks(int staffId)
         {
             var tasks = await Resolve<GetTodoTasksHandler>().HandleAsync(staffId);
