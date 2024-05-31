@@ -11,6 +11,10 @@ const routes: Routes = [
     path: 'hotel',
     loadChildren: () => import('./modules/hotel/hotel.module').then(m => m.HotelModule),
    //canActivate: [authGuard]
+  },
+  {
+    path: 'room',
+    loadChildren: () => import('./modules/room/room.module').then(m => m.RoomModule),
   }
 ];
 

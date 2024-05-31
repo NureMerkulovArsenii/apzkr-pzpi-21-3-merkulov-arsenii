@@ -9,6 +9,15 @@ namespace HospitalityHub.API.Controllers;
 [Route("api/[controller]")]
 public class RoomController : BaseApiController
 {
+    [HttpGet("hotel/{hotelId:int}")]
+    [ProducesResponseType<IEnumerable<RoomResponse>>(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetRoomsList(int hotelId)
+    {
+        var room = await Resolve<GetRoomsListHandler>().HandleAsync(hotelId);
+
+        return Ok(room);
+    }
+    
     [HttpGet("{id}")]
     [ProducesResponseType<RoomResponse>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetRoom(int id)

@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export enum ERoomStatus {
-  $0 = 0,
-  $1 = 1,
-  $2 = 2,
-  $3 = 3
+  Available = 0,
+  Occupied = 1,
+  Reserved = 2,
+  Maintenance = 3
 }

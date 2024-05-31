@@ -64,7 +64,7 @@ export class HotelListComponent implements OnInit {
   deleteHotel(id: number) {
     this.dialogService.openDialog({
       data: {
-        title: "Delete ruleset",
+        title: "Delete hotel",
         message: "Are you sure you want to delete this hotel?",
         okButtonText: "Delete",
         cancelButtonText: "Cancel"

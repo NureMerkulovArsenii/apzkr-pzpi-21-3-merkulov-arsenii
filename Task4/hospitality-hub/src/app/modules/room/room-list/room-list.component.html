@@ -1,0 +1,87 @@
+<div class="col-9 row">
+  <form class="form" (ngSubmit)="applyFilter()">
+    <div class="row flex-row gap-3">
+      <div class="col-3">
+        <mat-form-field>
+          <mat-select [(value)]="selectedHotelId" class="hotel-toggle"
+                      style="font-size: 14px; width: fit-content; min-width: 150px">
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
+              {{ hotel.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-1" style="margin: 10px;">
+        <button mat-flat-button type="submit" color="primary">Apply Filter</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="rooms$" class="mat-elevation-z8">
+
+      <!-- number Column -->
+      <ng-container matColumnDef="number">
+        <th mat-header-cell *matHeaderCellDef> Number </th>
+        <td mat-cell *matCellDef="let element"> {{element.number}} </td>
+      </ng-container>
+
+      <!-- stage Column -->
+      <ng-container matColumnDef="stage">
+        <th mat-header-cell *matHeaderCellDef> Stage </th>
+        <td mat-cell *matCellDef="let element"> {{element.stage}} </td>
+      </ng-container>
+
+      <!-- roomType Column -->
+      <ng-container matColumnDef="roomType">
+        <th mat-header-cell *matHeaderCellDef> Room Type </th>
+        <td mat-cell *matCellDef="let element"> {{roomTypes[element.roomType]?.name}} </td>
+      </ng-container>
+
+      <!-- status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element"> {{roomStatuses[element.status]?.name}} </td>
+      </ng-container>
+
+      <!-- basePrice Column -->
+      <ng-container matColumnDef="basePrice">
+        <th mat-header-cell *matHeaderCellDef> Base Price </th>
+        <td mat-cell *matCellDef="let element"> {{element.basePrice}} </td>
+      </ng-container>
+
+      <!-- discountPercent Column -->
+      <ng-container matColumnDef="discountPercent">
+        <th mat-header-cell *matHeaderCellDef> Discount Percent </th>
+        <td mat-cell *matCellDef="let element"> {{element.discountPercent}} % </td>
+      </ng-container>
+
+      <!-- baseLockUri Column -->
+      <ng-container matColumnDef="baseLockUri">
+        <th mat-header-cell *matHeaderCellDef> Base Lock URI </th>
+        <td mat-cell *matCellDef="let element"> {{element.baseLockUri}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>{{ 'actions' | translate }}</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button (click)="editRoom(element.id)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-button (click)="deleteRoom(element.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+    </table>
+</div>
+
+<button mat-raised-button color="primary" class="add-button" (click)="addRoom()">
+  <mat-icon>add</mat-icon>
+  Add
+</button>

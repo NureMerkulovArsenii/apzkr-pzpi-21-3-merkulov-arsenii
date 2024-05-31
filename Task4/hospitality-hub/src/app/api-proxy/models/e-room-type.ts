@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export enum ERoomType {
-  $1 = 1,
-  $2 = 2,
-  $3 = 3
+  Economy = 1,
+  Standard = 2,
+  Deluxe = 3
 }

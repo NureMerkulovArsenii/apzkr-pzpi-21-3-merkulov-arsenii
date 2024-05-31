@@ -1,10 +1,11 @@
+using HospitalityHub.BLL.Handlers.Base;
 using HospitalityHub.Core.DTOs.Room;
 using HospitalityHub.DAL.UnitOfWork;
 using HospitalityHub.Localization;
 
 namespace HospitalityHub.BLL.Handlers.Room;
 
-public class GetRoomHandler
+public class GetRoomHandler : BaseHandler
 {
     private readonly IUnitOfWork _unitOfWork;
 

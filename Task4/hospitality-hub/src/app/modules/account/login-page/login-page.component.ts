@@ -67,6 +67,7 @@ export class LoginPageComponent implements OnInit {
               localStorage.setItem("refresh_token", response.refreshToken ?? "");
               localStorage.setItem("expires_in", response.expiresIn?.toString() ?? "");
               localStorage.setItem("login_time", new Date().toISOString());
+              localStorage.setItem("user_email", email);
               window.location.reload();
             }
           },

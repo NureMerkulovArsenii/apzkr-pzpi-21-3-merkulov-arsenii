@@ -11,6 +11,10 @@ import { StrictHttpResponse } from '../strict-http-response';
 
 import { apiRoomCreatePost } from '../fn/room/api-room-create-post';
 import { ApiRoomCreatePost$Params } from '../fn/room/api-room-create-post';
+import { apiRoomHotelIdGet$Json } from '../fn/room/api-room-hotel-id-get-json';
+import { ApiRoomHotelIdGet$Json$Params } from '../fn/room/api-room-hotel-id-get-json';
+import { apiRoomHotelIdGet$Plain } from '../fn/room/api-room-hotel-id-get-plain';
+import { ApiRoomHotelIdGet$Plain$Params } from '../fn/room/api-room-hotel-id-get-plain';
 import { apiRoomIdDelete } from '../fn/room/api-room-id-delete';
 import { ApiRoomIdDelete$Params } from '../fn/room/api-room-id-delete';
 import { apiRoomIdGet$Json } from '../fn/room/api-room-id-get-json';
@@ -38,6 +42,53 @@ import { RoomResponse } from '../models/room-response';
 export class RoomService extends BaseService {
   constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
+  }
+
+  /** Path part for operation `apiRoomHotelIdGet()` */
+  static readonly ApiRoomHotelIdGetPath = '/api/Room/hotel/{hotelId}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiRoomHotelIdGet$Plain()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiRoomHotelIdGet$Plain$Response(params: ApiRoomHotelIdGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<RoomResponse>>> {
+    return apiRoomHotelIdGet$Plain(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `apiRoomHotelIdGet$Plain$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiRoomHotelIdGet$Plain(params: ApiRoomHotelIdGet$Plain$Params, context?: HttpContext): Observable<Array<RoomResponse>> {
+    return this.apiRoomHotelIdGet$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<RoomResponse>>): Array<RoomResponse> => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiRoomHotelIdGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiRoomHotelIdGet$Json$Response(params: ApiRoomHotelIdGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<RoomResponse>>> {
+    return apiRoomHotelIdGet$Json(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `apiRoomHotelIdGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiRoomHotelIdGet$Json(params: ApiRoomHotelIdGet$Json$Params, context?: HttpContext): Observable<Array<RoomResponse>> {
+    return this.apiRoomHotelIdGet$Json$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<RoomResponse>>): Array<RoomResponse> => r.body)
+    );
   }
 
   /** Path part for operation `apiRoomIdGet()` */

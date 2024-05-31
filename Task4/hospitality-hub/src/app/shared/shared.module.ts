@@ -13,6 +13,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatSelectModule} from "@angular/material/select";
 
 
 
@@ -37,7 +38,8 @@ import {MatDialogModule} from "@angular/material/dialog";
         MatButtonModule,
         TranslateModule,
         FontAwesomeModule,
-        MatDialogModule
+        MatDialogModule,
+        MatSelectModule
     ]
 })
 export class SharedModule { }
