@@ -15,6 +15,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {ToastrModule} from "ngx-toastr";
 import {MAT_DIALOG_DEFAULT_OPTIONS} from "@angular/material/dialog";
 import {I18nInterceptor} from "./core/interceptors/i18n.interceptor";
+import {BearerTokenInterceptor} from "./core/interceptors/bearer-token.interceptor";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -51,7 +52,9 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false,}},
-    {provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true}],
+    {provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: BearerTokenInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -8,12 +8,12 @@ import { RequestBuilder } from '../../request-builder';
 
 import { AddRoleRequest } from '../../models/add-role-request';
 
-export interface ApiAccountCreateRolePost$Params {
+export interface ApiRoleCreateRolePost$Params {
       body?: AddRoleRequest
 }
 
-export function apiAccountCreateRolePost(http: HttpClient, rootUrl: string, params?: ApiAccountCreateRolePost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, apiAccountCreateRolePost.PATH, 'post');
+export function apiRoleCreateRolePost(http: HttpClient, rootUrl: string, params?: ApiRoleCreateRolePost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  const rb = new RequestBuilder(rootUrl, apiRoleCreateRolePost.PATH, 'post');
   if (params) {
     rb.body(params.body, 'application/*+json');
   }
@@ -28,4 +28,4 @@ export function apiAccountCreateRolePost(http: HttpClient, rootUrl: string, para
   );
 }
 
-apiAccountCreateRolePost.PATH = '/api/Account/create-role';
+apiRoleCreateRolePost.PATH = '/api/Role/create-role';

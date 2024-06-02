@@ -8,12 +8,12 @@ import { RequestBuilder } from '../../request-builder';
 
 import { AssignRoleRequest } from '../../models/assign-role-request';
 
-export interface ApiAccountRemoveRolePost$Params {
+export interface ApiRoleAssignRolePost$Params {
       body?: AssignRoleRequest
 }
 
-export function apiAccountRemoveRolePost(http: HttpClient, rootUrl: string, params?: ApiAccountRemoveRolePost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, apiAccountRemoveRolePost.PATH, 'post');
+export function apiRoleAssignRolePost(http: HttpClient, rootUrl: string, params?: ApiRoleAssignRolePost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  const rb = new RequestBuilder(rootUrl, apiRoleAssignRolePost.PATH, 'post');
   if (params) {
     rb.body(params.body, 'application/*+json');
   }
@@ -28,4 +28,4 @@ export function apiAccountRemoveRolePost(http: HttpClient, rootUrl: string, para
   );
 }
 
-apiAccountRemoveRolePost.PATH = '/api/Account/remove-role';
+apiRoleAssignRolePost.PATH = '/api/Role/assign-role';

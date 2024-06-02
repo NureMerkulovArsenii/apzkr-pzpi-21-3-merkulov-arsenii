@@ -9,18 +9,23 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
-import { apiAccountAssignRolePost } from '../fn/account/api-account-assign-role-post';
-import { ApiAccountAssignRolePost$Params } from '../fn/account/api-account-assign-role-post';
-import { apiAccountCreateRolePost } from '../fn/account/api-account-create-role-post';
-import { ApiAccountCreateRolePost$Params } from '../fn/account/api-account-create-role-post';
-import { apiAccountDeleteRolePost } from '../fn/account/api-account-delete-role-post';
-import { ApiAccountDeleteRolePost$Params } from '../fn/account/api-account-delete-role-post';
+import { apiAccountDeleteUserIdDelete } from '../fn/account/api-account-delete-user-id-delete';
+import { ApiAccountDeleteUserIdDelete$Params } from '../fn/account/api-account-delete-user-id-delete';
 import { apiAccountLogoutGet } from '../fn/account/api-account-logout-get';
 import { ApiAccountLogoutGet$Params } from '../fn/account/api-account-logout-get';
-import { apiAccountRemoveRolePost } from '../fn/account/api-account-remove-role-post';
-import { ApiAccountRemoveRolePost$Params } from '../fn/account/api-account-remove-role-post';
 import { apiAccountUpdateProfilePatch } from '../fn/account/api-account-update-profile-patch';
 import { ApiAccountUpdateProfilePatch$Params } from '../fn/account/api-account-update-profile-patch';
+import { apiAccountUsersGet$Json } from '../fn/account/api-account-users-get-json';
+import { ApiAccountUsersGet$Json$Params } from '../fn/account/api-account-users-get-json';
+import { apiAccountUsersGet$Plain } from '../fn/account/api-account-users-get-plain';
+import { ApiAccountUsersGet$Plain$Params } from '../fn/account/api-account-users-get-plain';
+import { apiAccountUsersUserIdGet$Json } from '../fn/account/api-account-users-user-id-get-json';
+import { ApiAccountUsersUserIdGet$Json$Params } from '../fn/account/api-account-users-user-id-get-json';
+import { apiAccountUsersUserIdGet$Plain } from '../fn/account/api-account-users-user-id-get-plain';
+import { ApiAccountUsersUserIdGet$Plain$Params } from '../fn/account/api-account-users-user-id-get-plain';
+import { apiAccountUsersUserIdPatch } from '../fn/account/api-account-users-user-id-patch';
+import { ApiAccountUsersUserIdPatch$Params } from '../fn/account/api-account-users-user-id-patch';
+import { UserResponseDto } from '../models/user-response-dto';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService extends BaseService {
@@ -53,102 +58,146 @@ export class AccountService extends BaseService {
     );
   }
 
-  /** Path part for operation `apiAccountAssignRolePost()` */
-  static readonly ApiAccountAssignRolePostPath = '/api/Account/assign-role';
+  /** Path part for operation `apiAccountUsersGet()` */
+  static readonly ApiAccountUsersGetPath = '/api/Account/users';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiAccountAssignRolePost()` instead.
+   * To access only the response body, use `apiAccountUsersGet$Plain()` instead.
    *
-   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   * This method doesn't expect any request body.
    */
-  apiAccountAssignRolePost$Response(params?: ApiAccountAssignRolePost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return apiAccountAssignRolePost(this.http, this.rootUrl, params, context);
+  apiAccountUsersGet$Plain$Response(params?: ApiAccountUsersGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<UserResponseDto>>> {
+    return apiAccountUsersGet$Plain(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiAccountAssignRolePost$Response()` instead.
+   * To access the full response (for headers, for example), `apiAccountUsersGet$Plain$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiAccountUsersGet$Plain(params?: ApiAccountUsersGet$Plain$Params, context?: HttpContext): Observable<Array<UserResponseDto>> {
+    return this.apiAccountUsersGet$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<UserResponseDto>>): Array<UserResponseDto> => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiAccountUsersGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiAccountUsersGet$Json$Response(params?: ApiAccountUsersGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<UserResponseDto>>> {
+    return apiAccountUsersGet$Json(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `apiAccountUsersGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiAccountUsersGet$Json(params?: ApiAccountUsersGet$Json$Params, context?: HttpContext): Observable<Array<UserResponseDto>> {
+    return this.apiAccountUsersGet$Json$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<UserResponseDto>>): Array<UserResponseDto> => r.body)
+    );
+  }
+
+  /** Path part for operation `apiAccountUsersUserIdGet()` */
+  static readonly ApiAccountUsersUserIdGetPath = '/api/Account/users/{userId}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiAccountUsersUserIdGet$Plain()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiAccountUsersUserIdGet$Plain$Response(params: ApiAccountUsersUserIdGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<UserResponseDto>> {
+    return apiAccountUsersUserIdGet$Plain(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `apiAccountUsersUserIdGet$Plain$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiAccountUsersUserIdGet$Plain(params: ApiAccountUsersUserIdGet$Plain$Params, context?: HttpContext): Observable<UserResponseDto> {
+    return this.apiAccountUsersUserIdGet$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<UserResponseDto>): UserResponseDto => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiAccountUsersUserIdGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiAccountUsersUserIdGet$Json$Response(params: ApiAccountUsersUserIdGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<UserResponseDto>> {
+    return apiAccountUsersUserIdGet$Json(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `apiAccountUsersUserIdGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiAccountUsersUserIdGet$Json(params: ApiAccountUsersUserIdGet$Json$Params, context?: HttpContext): Observable<UserResponseDto> {
+    return this.apiAccountUsersUserIdGet$Json$Response(params, context).pipe(
+      map((r: StrictHttpResponse<UserResponseDto>): UserResponseDto => r.body)
+    );
+  }
+
+  /** Path part for operation `apiAccountUsersUserIdPatch()` */
+  static readonly ApiAccountUsersUserIdPatchPath = '/api/Account/users/{userId}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiAccountUsersUserIdPatch()` instead.
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  apiAccountAssignRolePost(params?: ApiAccountAssignRolePost$Params, context?: HttpContext): Observable<void> {
-    return this.apiAccountAssignRolePost$Response(params, context).pipe(
+  apiAccountUsersUserIdPatch$Response(params: ApiAccountUsersUserIdPatch$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return apiAccountUsersUserIdPatch(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `apiAccountUsersUserIdPatch$Response()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  apiAccountUsersUserIdPatch(params: ApiAccountUsersUserIdPatch$Params, context?: HttpContext): Observable<void> {
+    return this.apiAccountUsersUserIdPatch$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 
-  /** Path part for operation `apiAccountRemoveRolePost()` */
-  static readonly ApiAccountRemoveRolePostPath = '/api/Account/remove-role';
+  /** Path part for operation `apiAccountDeleteUserIdDelete()` */
+  static readonly ApiAccountDeleteUserIdDeletePath = '/api/Account/delete-user/{id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiAccountRemoveRolePost()` instead.
+   * To access only the response body, use `apiAccountDeleteUserIdDelete()` instead.
    *
-   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   * This method doesn't expect any request body.
    */
-  apiAccountRemoveRolePost$Response(params?: ApiAccountRemoveRolePost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return apiAccountRemoveRolePost(this.http, this.rootUrl, params, context);
+  apiAccountDeleteUserIdDelete$Response(params: ApiAccountDeleteUserIdDelete$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return apiAccountDeleteUserIdDelete(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiAccountRemoveRolePost$Response()` instead.
+   * To access the full response (for headers, for example), `apiAccountDeleteUserIdDelete$Response()` instead.
    *
-   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   * This method doesn't expect any request body.
    */
-  apiAccountRemoveRolePost(params?: ApiAccountRemoveRolePost$Params, context?: HttpContext): Observable<void> {
-    return this.apiAccountRemoveRolePost$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
-    );
-  }
-
-  /** Path part for operation `apiAccountCreateRolePost()` */
-  static readonly ApiAccountCreateRolePostPath = '/api/Account/create-role';
-
-  /**
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiAccountCreateRolePost()` instead.
-   *
-   * This method sends `application/*+json` and handles request body of type `application/*+json`.
-   */
-  apiAccountCreateRolePost$Response(params?: ApiAccountCreateRolePost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return apiAccountCreateRolePost(this.http, this.rootUrl, params, context);
-  }
-
-  /**
-   * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiAccountCreateRolePost$Response()` instead.
-   *
-   * This method sends `application/*+json` and handles request body of type `application/*+json`.
-   */
-  apiAccountCreateRolePost(params?: ApiAccountCreateRolePost$Params, context?: HttpContext): Observable<void> {
-    return this.apiAccountCreateRolePost$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
-    );
-  }
-
-  /** Path part for operation `apiAccountDeleteRolePost()` */
-  static readonly ApiAccountDeleteRolePostPath = '/api/Account/delete-role';
-
-  /**
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiAccountDeleteRolePost()` instead.
-   *
-   * This method sends `application/*+json` and handles request body of type `application/*+json`.
-   */
-  apiAccountDeleteRolePost$Response(params?: ApiAccountDeleteRolePost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return apiAccountDeleteRolePost(this.http, this.rootUrl, params, context);
-  }
-
-  /**
-   * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiAccountDeleteRolePost$Response()` instead.
-   *
-   * This method sends `application/*+json` and handles request body of type `application/*+json`.
-   */
-  apiAccountDeleteRolePost(params?: ApiAccountDeleteRolePost$Params, context?: HttpContext): Observable<void> {
-    return this.apiAccountDeleteRolePost$Response(params, context).pipe(
+  apiAccountDeleteUserIdDelete(params: ApiAccountDeleteUserIdDelete$Params, context?: HttpContext): Observable<void> {
+    return this.apiAccountDeleteUserIdDelete$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );
   }

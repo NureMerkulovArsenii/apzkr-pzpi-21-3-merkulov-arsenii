@@ -6,15 +6,16 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { AddRoleRequest } from '../../models/add-role-request';
 
-export interface ApiAccountDeleteRolePost$Params {
-      body?: AddRoleRequest
+export interface ApiRoleUpdateRoleIdPatch$Params {
+  id: number;
+      body?: string
 }
 
-export function apiAccountDeleteRolePost(http: HttpClient, rootUrl: string, params?: ApiAccountDeleteRolePost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, apiAccountDeleteRolePost.PATH, 'post');
+export function apiRoleUpdateRoleIdPatch(http: HttpClient, rootUrl: string, params: ApiRoleUpdateRoleIdPatch$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  const rb = new RequestBuilder(rootUrl, apiRoleUpdateRoleIdPatch.PATH, 'patch');
   if (params) {
+    rb.path('id', params.id, {"style":"simple"});
     rb.body(params.body, 'application/*+json');
   }
 
@@ -28,4 +29,4 @@ export function apiAccountDeleteRolePost(http: HttpClient, rootUrl: string, para
   );
 }
 
-apiAccountDeleteRolePost.PATH = '/api/Account/delete-role';
+apiRoleUpdateRoleIdPatch.PATH = '/api/Role/update-role/{id}';

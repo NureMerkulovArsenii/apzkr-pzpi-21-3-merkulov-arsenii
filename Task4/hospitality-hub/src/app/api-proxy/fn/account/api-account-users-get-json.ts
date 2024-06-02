@@ -6,16 +6,14 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { RoomResponse } from '../../models/room-response';
+import { UserResponseDto } from '../../models/user-response-dto';
 
-export interface ApiRoomHotelIdGet$Json$Params {
-  hotelId: number;
+export interface ApiAccountUsersGet$Json$Params {
 }
 
-export function apiRoomHotelIdGet$Json(http: HttpClient, rootUrl: string, params: ApiRoomHotelIdGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<RoomResponse>>> {
-  const rb = new RequestBuilder(rootUrl, apiRoomHotelIdGet$Json.PATH, 'get');
+export function apiAccountUsersGet$Json(http: HttpClient, rootUrl: string, params?: ApiAccountUsersGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<UserResponseDto>>> {
+  const rb = new RequestBuilder(rootUrl, apiAccountUsersGet$Json.PATH, 'get');
   if (params) {
-    rb.path('hotelId', params.hotelId, {"style":"simple"});
   }
 
   return http.request(
@@ -23,9 +21,9 @@ export function apiRoomHotelIdGet$Json(http: HttpClient, rootUrl: string, params
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<Array<RoomResponse>>;
+      return r as StrictHttpResponse<Array<UserResponseDto>>;
     })
   );
 }
 
-apiRoomHotelIdGet$Json.PATH = '/api/Room/hotel/{hotelId}';
+apiAccountUsersGet$Json.PATH = '/api/Account/users';

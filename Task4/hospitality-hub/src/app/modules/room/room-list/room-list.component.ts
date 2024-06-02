@@ -5,12 +5,12 @@ import {RoomService} from "../../../api-proxy/services/room.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogService} from "../../../core/services/dialog.service";
 import {DialogData} from "../../../core/models/dialog-data";
-import {HotelService} from "../../../api-proxy/services/hotel.service";
 import {HotelResponse} from "../../../api-proxy/models/hotel-response";
 import {RoomDetailsComponent} from "../room-details/room-details.component";
 import {ERoomType} from "../../../api-proxy/models/e-room-type";
-import {ERoomStatus} from "../../../api-proxy/models/e-room-status";
 import {ToastrService} from "ngx-toastr";
+import {ERoomStatus} from "../../../api-proxy/models";
+import {HotelService} from "../../../api-proxy/services/hotel.service";
 
 @Component({
   selector: 'app-room-list',
@@ -63,10 +63,10 @@ export class RoomListComponent implements OnInit {
 
   getHotels() {
     this.hotelService.apiHotelGet$Json().subscribe({
-      next: (response) => {
+      next: (response:HotelResponse[]) => {
         this.hotels = response;
       },
-      error: (error) => {
+      error: (error:any) => {
         console.log(error)
       }
     });
@@ -77,7 +77,7 @@ export class RoomListComponent implements OnInit {
   }
 
   loadRooms(): void {
-    this.rooms$ = this.roomService.apiRoomHotelIdGet$Json({hotelId: this.selectedHotelId!});
+    this.rooms$ = this.roomService.apiRoomHotelHotelIdGet$Json({hotelId: this.selectedHotelId!});
   }
 
   addRoom() {

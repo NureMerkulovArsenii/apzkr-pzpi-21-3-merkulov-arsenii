@@ -6,11 +6,17 @@
     <h1>HospitalityHub</h1>
     <span class="spacer"></span>
     <div class="top-control-panel-group">
-      <mat-button-toggle-group name="language" [value]="currentLanguage" class="language-toggle">
+<!--        <mat-select [(value)]="selected" class="hotel-toggle" style="font-size: 14px; width: fit-content; min-width: 150px">-->
+<!--          <mat-option>&#45;&#45;</mat-option>-->
+<!--          <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">-->
+<!--            {{ hotel.name }}-->
+<!--          </mat-option>-->
+<!--        </mat-select>-->
+      <mat-button-toggle-group name="language" [value]="currentLanguage" class="language-toggle" style="font-size: 14px; width: fit-content">
         <mat-button-toggle class="language-item" value="en" (click)="changeLanguage('en')">EN</mat-button-toggle>
         <mat-button-toggle class="language-item" value="ua" (click)="changeLanguage('ua')">UA</mat-button-toggle>
       </mat-button-toggle-group>
-      <span style="font-size: 14px; margin: 0 20px">{{getCurrentUserName()}}</span>
+      <span style="font-size: 14px; margin: 0 15px">{{ getCurrentUserName() }}</span>
       <button mat-icon-button aria-label="Logout icon" class="logout-icon" (click)="logout()"
               *ngIf="isUserAuthenticated()">
         <mat-icon>exit_to_app</mat-icon>

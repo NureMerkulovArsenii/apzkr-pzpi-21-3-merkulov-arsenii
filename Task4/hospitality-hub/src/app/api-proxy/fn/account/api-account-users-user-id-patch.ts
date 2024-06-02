@@ -6,15 +6,17 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { AssignRoleRequest } from '../../models/assign-role-request';
+import { UpdateUserProfileRequest } from '../../models/update-user-profile-request';
 
-export interface ApiAccountAssignRolePost$Params {
-      body?: AssignRoleRequest
+export interface ApiAccountUsersUserIdPatch$Params {
+  userId: number;
+      body?: UpdateUserProfileRequest
 }
 
-export function apiAccountAssignRolePost(http: HttpClient, rootUrl: string, params?: ApiAccountAssignRolePost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, apiAccountAssignRolePost.PATH, 'post');
+export function apiAccountUsersUserIdPatch(http: HttpClient, rootUrl: string, params: ApiAccountUsersUserIdPatch$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  const rb = new RequestBuilder(rootUrl, apiAccountUsersUserIdPatch.PATH, 'patch');
   if (params) {
+    rb.path('userId', params.userId, {"style":"simple"});
     rb.body(params.body, 'application/*+json');
   }
 
@@ -28,4 +30,4 @@ export function apiAccountAssignRolePost(http: HttpClient, rootUrl: string, para
   );
 }
 
-apiAccountAssignRolePost.PATH = '/api/Account/assign-role';
+apiAccountUsersUserIdPatch.PATH = '/api/Account/users/{userId}';
