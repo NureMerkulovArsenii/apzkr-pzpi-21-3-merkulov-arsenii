@@ -1,12 +1,15 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {DialogData} from "../../../core/models/dialog-data";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ToastrService} from "ngx-toastr";
 import {AccountService} from "../../../api-proxy/services/account.service";
 import {RoleService} from "../../../api-proxy/services/role.service";
-import {Observable} from "rxjs";
 import {RecordResponseDto} from "../../../api-proxy/models/record-response-dto";
+import {ActivatedRoute} from "@angular/router";
+import {RoleSelectComponent} from "../role-select/role-select.component";
+import {DialogData} from "../../../core/models/dialog-data";
+import {RoleDetailsComponent} from "../role-details/role-details.component";
+import {DialogService} from "../../../core/services/dialog.service";
 
 @Component({
   selector: 'app-user-details',
@@ -25,32 +28,37 @@ export class UserDetailsComponent implements OnInit {
     roles: [''],
   });
 
+  protected roleDisplayedColumns: string[] = ['roleName', 'actions'];
+
   protected roles!: RecordResponseDto[];
+  private id!: number | null;
+  protected userRoles!: string[];
+  private userEmail!: string;
 
   constructor(
     private readonly formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<UserDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData<number, null>,
+    private readonly dialog: MatDialog,
+    private readonly dialogService: DialogService,
     private readonly roleService: RoleService,
     private readonly accountService: AccountService,
     private readonly toastr: ToastrService,
+    private route: ActivatedRoute
   ) {
   }
 
   ngOnInit(): void {
-    this.loadRoles();
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    //this.loadRoles();
     this.loadData();
   }
 
   loadData() {
-    if (!this.data.isEdit) {
-      return;
-    }
-
-    this.accountService.apiAccountUsersUserIdGet$Json({userId: this.data.data!})
+    this.accountService.apiAccountUsersUserIdGet$Json({userId: this.id!})
       .subscribe({
         next: (user) => {
           console.log(user);
+          this.userRoles = user.roles!;
+          this.userEmail = user.email!;
           this.userForm.patchValue(user)
         },
         error: (error) => {
@@ -60,18 +68,8 @@ export class UserDetailsComponent implements OnInit {
 
   }
 
-  loadRoles() {
-    this.roleService.apiRoleRolesGet$Json().subscribe((roles)=>{
-      this.roles = roles;
-    });
-  }
-
   apply() {
-    if (!this.data.isEdit) {
-      return;
-    }
-
-    this.accountService.apiAccountUsersUserIdPatch({userId: this.data.data!, body: this.userForm.value})
+    this.accountService.apiAccountUsersUserIdPatch({userId: this.id!, body: this.userForm.value})
       .subscribe({
         next: () => {
           this.toastr.success('User updated successfully');
@@ -81,28 +79,46 @@ export class UserDetailsComponent implements OnInit {
         }
       });
 
-    this.assignRole();
+    //this.assignRole();
+  }
+
+
+
+  addRole() {
+    const dialogRef = this.dialog.open(RoleSelectComponent, {
+      data: {data: this.userEmail, isEdit: false} as DialogData<string, null>,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadData();
+    });
 
   }
 
-  assignRole() {
-    this.roleService.apiRoleAssignRolePost({
-      body:
-        {
-          email: this.userForm.value.email,
-          roleName: this.userForm.value.roleName
-        }
-    }).subscribe({
-      next: () => {
-        this.toastr.success('User updated successfully');
-        this.dialogRef.close();
+  removeRole(roleName: string) {
+    this.dialogService.openDialog({
+      data: {
+        title: "Remove role",
+        message: "Are you sure you want to remove this role?",
+        okButtonText: "Remove",
+        cancelButtonText: "Cancel"
       },
-      error: (error) => {
-        this.toastr.error(error.statusText);
+      onClose: (result) => {
+        if (result) {
+          this.roleService.apiRoleRemoveRolePost({body: {roleName: roleName, email: this.userEmail}})
+            .subscribe({
+              next: () => {
+                this.toastr.success('Role removed successfully');
+                this.loadData();
+              },
+              error: (error) => {
+                this.toastr.error(error.statusText);
+              }
+            })
+        }
       }
-
-    })
-
+    });
   }
 
 }
+

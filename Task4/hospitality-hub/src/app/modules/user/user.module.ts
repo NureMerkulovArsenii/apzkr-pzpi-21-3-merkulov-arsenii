@@ -16,6 +16,7 @@ import {MatDividerModule} from "@angular/material/divider";
 import {MatInputModule} from "@angular/material/input";
 import { UserDetailsComponent } from './user-detail/user-details.component';
 import { RoleDetailsComponent } from './role-details/role-details.component';
+import { RoleSelectComponent } from './role-select/role-select.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { RoleDetailsComponent } from './role-details/role-details.component';
     UserListComponent,
     RoleListComponent,
     UserDetailsComponent,
-    RoleDetailsComponent
+    RoleDetailsComponent,
+    RoleSelectComponent
   ],
   imports: [
     CommonModule,

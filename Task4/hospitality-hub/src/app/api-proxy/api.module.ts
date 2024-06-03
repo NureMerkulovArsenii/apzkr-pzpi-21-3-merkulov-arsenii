@@ -9,6 +9,7 @@ import { BookingService } from './services/booking.service';
 import { DataAdministrationService } from './services/data-administration.service';
 import { HospitalityHubApiService } from './services/hospitality-hub-api.service';
 import { HotelService } from './services/hotel.service';
+import { RoleService } from './services/role.service';
 import { RoomService } from './services/room.service';
 import { StaffService } from './services/staff.service';
 import { StatsService } from './services/stats.service';
@@ -26,6 +27,7 @@ import { StatsService } from './services/stats.service';
     DataAdministrationService,
     HospitalityHubApiService,
     HotelService,
+    RoleService,
     RoomService,
     StaffService,
     StatsService,

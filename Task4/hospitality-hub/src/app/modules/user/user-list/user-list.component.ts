@@ -10,6 +10,7 @@ import {RecordResponseDto} from "../../../api-proxy/models/record-response-dto";
 import {UserResponseDto} from "../../../api-proxy/models/user-response-dto";
 import {AccountService} from "../../../api-proxy/services/account.service";
 import {UserDetailsComponent} from "../user-detail/user-details.component";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -38,6 +39,7 @@ export class UserListComponent implements OnInit {
     private readonly dialog: MatDialog,
     private readonly dialogService: DialogService,
     private readonly toastr: ToastrService,
+    private router: Router
   ) {
 
   }
@@ -60,13 +62,16 @@ export class UserListComponent implements OnInit {
   }
 
   editUser(id: number) {
-    const dialogRef = this.dialog.open(UserDetailsComponent, {
-      data: {data: id, isEdit: true} as DialogData<number, null>,
-    });
+    // const dialogRef = this.dialog.open(UserDetailsComponent, {
+    //   data: {data: id, isEdit: true} as DialogData<number, null>,
+    // });
+    //
+    // dialogRef.afterClosed().subscribe(result => {
+    //   this.loadUsers();
+    // });
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.loadUsers();
-    });
+    //go to route
+    this.router.navigate([`/users/${id}`]);
   }
 
   deleteUser(id: number) {

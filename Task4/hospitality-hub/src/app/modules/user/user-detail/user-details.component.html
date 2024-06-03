@@ -1,73 +1,83 @@
+<section class="container-fluid">
 
-<div class="d-flex justify-content-between m-3 h-25">
-  <h1 mat-dialog-title class="d-block">Room</h1>
-  <button mat-icon-button mat-dialog-close class="m-3">
-    <mat-icon>close</mat-icon>
-  </button>
-</div>
-
-<div mat-dialog-content class="form-container">
-  <form [formGroup]="userForm" class="section-detail-form row" #form="ngForm" name="jobForm">
-    <div class="row">
-      <mat-card-content>
-
-        <div class="row d-flex">
-
-          <div class="col-4">
-            <mat-form-field>
-              <mat-select class="role-toggle" formControlName="roles"
-                          style="font-size: 14px; width: fit-content; min-width: 150px" multiple>
-                <mat-option *ngFor="let role of roles" [value]="role.name">
-                  {{ role.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+  <div class="col-8">
+    <form [formGroup]="userForm" class="row" #form="ngForm" name="jobForm">
+      <div class="row">
+        <mat-card-content>
+          <div class="row">
+            <div class="col">
+              <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="mail@example.com" formControlName="email"/>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field>
+                <mat-label>Phone Number</mat-label>
+                <input matInput placeholder="123456789" formControlName="phoneNumber"/>
+              </mat-form-field>
+            </div>
           </div>
 
-          <div class="col-4">
-            <mat-form-field>
-              <mat-label>Email</mat-label>
-              <input matInput placeholder="mail@example.com" formControlName="email"/>
-            </mat-form-field>
+          <div class="row">
+            <div class="col">
+              <mat-form-field>
+                <mat-label>Last Name</mat-label>
+                <input matInput placeholder="Doe" formControlName="lastName"/>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field>
+                <mat-label>First Name</mat-label>
+                <input matInput placeholder="John" formControlName="firstName"/>
+              </mat-form-field>
+            </div>
           </div>
 
-          <div class="col-4">
-            <mat-form-field>
-              <mat-label>Phone Number</mat-label>
-              <input matInput placeholder="123456789" formControlName="phoneNumber"/>
-            </mat-form-field>
-          </div>
+        </mat-card-content>
 
+      </div>
+    </form>
+  </div>
 
-
-        </div>
-
-        <div class="row d-flex">
-
-          <div class="col-4">
-            <mat-form-field>
-              <mat-label>Last Name</mat-label>
-              <input matInput placeholder="Doe" formControlName="lastName"/>
-            </mat-form-field>
-          </div>
-
-          <div class="col-4">
-            <mat-form-field>
-              <mat-label>First Name</mat-label>
-              <input matInput placeholder="John" formControlName="firstName"/>
-            </mat-form-field>
-          </div>
-
-        </div>
-
-      </mat-card-content>
+  <div class="row">
+    <div [align]="'start'">
+      <button mat-raised-button color="primary" type="submit" class="col-2" [disabled]="!userForm.valid"
+              (click)="apply()">Apply
+      </button>
     </div>
-  </form>
-</div>
+  </div>
 
-<div mat-dialog-actions [align]="'end'">
-  <button mat-raised-button color="primary" type="submit" class="col-2" [disabled]="!userForm.valid"
-          (click)="apply()">Apply
-  </button>
-</div>
+  <!--create row and table with roles and buttons to add and remove role-->
+
+  <div class="row mt-5">
+    <div class="col-4">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th class="col-1">Role</th>
+          <th class="col-1">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let role of userRoles" class="d-table-row col-3">
+          <td class="col-2">{{ role }}</td>
+          <td class="col-1">
+            <button mat-icon-button (click)="removeRole(role)" >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <div class="col-12">
+      <button mat-raised-button color="primary" type="submit" class="col-2" [disabled]="!userForm.valid"
+              (click)="addRole()">Add Role
+      </button>
+    </div>
+  </div>
+</section>
+
 

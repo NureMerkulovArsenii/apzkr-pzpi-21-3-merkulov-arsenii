@@ -8,6 +8,9 @@ EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{5C5603C6-3122-4736-9FDF-13BD1C54AD7A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{555FFE91-E602-4BB0-A57D-47AED636F521}"
+	ProjectSection(SolutionItems) = preProject
+		.env = .env
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalityHub.API", "src\HospitalityHub.API\HospitalityHub.API.csproj", "{40C0319C-7FC2-4254-B4A2-B9B4F1003B99}"
 EndProject

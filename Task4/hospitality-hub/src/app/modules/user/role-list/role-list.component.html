@@ -17,9 +17,6 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>{{ 'actions' | translate }}</th>
       <td mat-cell *matCellDef="let element">
-<!--        <button mat-button (click)="editRole(element.id)">-->
-<!--          <mat-icon>edit</mat-icon>-->
-<!--        </button>-->
         <button mat-button (click)="deleteRole(element.name)">
           <mat-icon>delete</mat-icon>
         </button>
