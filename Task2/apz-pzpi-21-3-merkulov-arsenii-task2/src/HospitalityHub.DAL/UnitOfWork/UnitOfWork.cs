@@ -15,6 +15,9 @@ public class UnitOfWork : IUnitOfWork
     private readonly Lazy<IGenericRepository<TodoTask>> _todoTaskRepository;
     private readonly Lazy<IGenericRepository<Customer>> _customerRepository;
     private readonly Lazy<IGenericRepository<Staff>> _staffRepository;
+    private readonly Lazy<IGenericRepository<MenuItem>> _menuItemsRepository;
+    private readonly Lazy<IGenericRepository<User>> _userRepository;
+    private readonly Lazy<IGenericRepository<Role>> _roleRepository;
     private readonly ApplicationDbContext _context;
 
     public UnitOfWork(
@@ -26,6 +29,9 @@ public class UnitOfWork : IUnitOfWork
         Lazy<IGenericRepository<TodoTask>> todoTaskRepository,
         Lazy<IGenericRepository<Customer>> customerRepository,
         Lazy<IGenericRepository<Staff>> staffRepository,
+        Lazy<IGenericRepository<MenuItem>> menuItemsRepository,
+        Lazy<IGenericRepository<User>> userRepository,
+        Lazy<IGenericRepository<Role>> roleRepository,
         ApplicationDbContext context)
     {
         _roomRepository = roomRepository;
@@ -36,9 +42,14 @@ public class UnitOfWork : IUnitOfWork
         _todoTaskRepository = todoTaskRepository;
         _customerRepository = customerRepository;
         _staffRepository = staffRepository;
+        _menuItemsRepository = menuItemsRepository;
+        _userRepository = userRepository;
+        _roleRepository = roleRepository;
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
+    public IGenericRepository<User> UserRepository => _userRepository.Value;
+    public IGenericRepository<Role> RoleRepository => _roleRepository.Value;
     public IGenericRepository<Booking> BookingRepository => _bookingRepository.Value;
     public IGenericRepository<Hotel> HotelRepository => _hotelRepository.Value;
     public IGenericRepository<Room> RoomRepository => _roomRepository.Value;
@@ -47,6 +58,7 @@ public class UnitOfWork : IUnitOfWork
     public IGenericRepository<TodoTask> TodoTaskRepository => _todoTaskRepository.Value;
     public IGenericRepository<Customer> CustomerRepository => _customerRepository.Value;
     public IGenericRepository<Staff> StaffRepository => _staffRepository.Value;
+    public IGenericRepository<MenuItem> MenuItemsRepository => _menuItemsRepository.Value;
 
 
     public Task<IDbContextTransaction> CreateTransactionAsync()
@@ -100,5 +112,10 @@ public class UnitOfWork : IUnitOfWork
     public async Task ExecuteSqlRawAsync(string sql, params object[] parameters)
     {
         await _context.Database.ExecuteSqlRawAsync(sql, parameters);
+    }
+    
+    public async Task<List<TResult>> SqlRawQueryAsync<TResult>(FormattableString sql) where TResult : class, IBaseEntity
+    {
+        return await _context.Set<TResult>().FromSqlInterpolated(sql).ToListAsync();
     }
 }

@@ -76,6 +76,23 @@ namespace HospitalityHub.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MenuItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Title = table.Column<string>(type: "text", nullable: true),
+                    Url = table.Column<string>(type: "text", nullable: true),
+                    Icon = table.Column<string>(type: "text", nullable: true),
+                    DateUpdated = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MenuItems", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -265,6 +282,30 @@ namespace HospitalityHub.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MenuItemRole",
+                columns: table => new
+                {
+                    MenuItemsId = table.Column<int>(type: "integer", nullable: false),
+                    RolesId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MenuItemRole", x => new { x.MenuItemsId, x.RolesId });
+                    table.ForeignKey(
+                        name: "FK_MenuItemRole_AspNetRoles_RolesId",
+                        column: x => x.RolesId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MenuItemRole_MenuItems_MenuItemsId",
+                        column: x => x.MenuItemsId,
+                        principalTable: "MenuItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Booking",
                 columns: table => new
                 {
@@ -427,6 +468,11 @@ namespace HospitalityHub.DAL.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_MenuItemRole_RolesId",
+                table: "MenuItemRole",
+                column: "RolesId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Photo_RoomId",
                 table: "Photo",
                 column: "RoomId");
@@ -480,6 +526,9 @@ namespace HospitalityHub.DAL.Migrations
                 name: "Booking");
 
             migrationBuilder.DropTable(
+                name: "MenuItemRole");
+
+            migrationBuilder.DropTable(
                 name: "Photo");
 
             migrationBuilder.DropTable(
@@ -489,10 +538,13 @@ namespace HospitalityHub.DAL.Migrations
                 name: "TodoTasks");
 
             migrationBuilder.DropTable(
+                name: "Customer");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Customer");
+                name: "MenuItems");
 
             migrationBuilder.DropTable(
                 name: "Room");

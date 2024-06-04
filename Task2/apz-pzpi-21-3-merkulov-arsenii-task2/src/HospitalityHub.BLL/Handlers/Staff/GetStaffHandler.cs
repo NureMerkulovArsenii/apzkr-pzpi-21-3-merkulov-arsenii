@@ -14,20 +14,24 @@ public class GetStaffHandler : BaseHandler
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<StaffResponse> HandleAsync(int staffId)
+    public async Task<StaffDetailedResponseDto> HandleAsync(int staffId)
     {
         var staff = await _unitOfWork.StaffRepository.GetByIdAsync(staffId);
 
         if (staff == null)
             throw new Exception(Resources.Get("STAFF_NOT_FOUND"));
 
-        return new StaffResponse
+        return new StaffDetailedResponseDto
         {
             Id = staff.Id,
             UserId = staff.UserId,
-            UserFullName = staff.LastName + " " + staff.FirstName + " " + staff.SecondName,
+            HotelId = staff.HotelId,
+            FirstName = staff.FirstName,
+            LastName = staff.LastName,
+            SecondName = staff.SecondName,
+            UserEmail = staff.User.Email,
             Position = staff.Position,
-            ActiveTasksCount = staff.TodoTasks.Count(x => !x.IsCompleted)
+            ActiveTasksCount = staff.TodoTasks.Count(x => !x.IsCompleted),
         };
     }
     

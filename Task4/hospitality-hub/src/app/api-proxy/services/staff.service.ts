@@ -11,6 +11,10 @@ import { StrictHttpResponse } from '../strict-http-response';
 
 import { apiStaffCreatePost } from '../fn/staff/api-staff-create-post';
 import { ApiStaffCreatePost$Params } from '../fn/staff/api-staff-create-post';
+import { apiStaffHotelHotelIdGet$Json } from '../fn/staff/api-staff-hotel-hotel-id-get-json';
+import { ApiStaffHotelHotelIdGet$Json$Params } from '../fn/staff/api-staff-hotel-hotel-id-get-json';
+import { apiStaffHotelHotelIdGet$Plain } from '../fn/staff/api-staff-hotel-hotel-id-get-plain';
+import { ApiStaffHotelHotelIdGet$Plain$Params } from '../fn/staff/api-staff-hotel-hotel-id-get-plain';
 import { apiStaffOldStaffIdTasksTodoTaskIdReassignNewStaffIdPut } from '../fn/staff/api-staff-old-staff-id-tasks-todo-task-id-reassign-new-staff-id-put';
 import { ApiStaffOldStaffIdTasksTodoTaskIdReassignNewStaffIdPut$Params } from '../fn/staff/api-staff-old-staff-id-tasks-todo-task-id-reassign-new-staff-id-put';
 import { apiStaffStaffIdGet$Json } from '../fn/staff/api-staff-staff-id-get-json';
@@ -33,6 +37,7 @@ import { apiStaffStaffIdTasksTodoTaskIdUpdatePut } from '../fn/staff/api-staff-s
 import { ApiStaffStaffIdTasksTodoTaskIdUpdatePut$Params } from '../fn/staff/api-staff-staff-id-tasks-todo-task-id-update-put';
 import { apiStaffStaffIdUpdatePut } from '../fn/staff/api-staff-staff-id-update-put';
 import { ApiStaffStaffIdUpdatePut$Params } from '../fn/staff/api-staff-staff-id-update-put';
+import { StaffDetailedResponseDto } from '../models/staff-detailed-response-dto';
 import { StaffResponse } from '../models/staff-response';
 import { TodoTasksResponse } from '../models/todo-tasks-response';
 
@@ -40,6 +45,53 @@ import { TodoTasksResponse } from '../models/todo-tasks-response';
 export class StaffService extends BaseService {
   constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
+  }
+
+  /** Path part for operation `apiStaffHotelHotelIdGet()` */
+  static readonly ApiStaffHotelHotelIdGetPath = '/api/Staff/hotel/{hotelId}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiStaffHotelHotelIdGet$Plain()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiStaffHotelHotelIdGet$Plain$Response(params: ApiStaffHotelHotelIdGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<StaffResponse>>> {
+    return apiStaffHotelHotelIdGet$Plain(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `apiStaffHotelHotelIdGet$Plain$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiStaffHotelHotelIdGet$Plain(params: ApiStaffHotelHotelIdGet$Plain$Params, context?: HttpContext): Observable<Array<StaffResponse>> {
+    return this.apiStaffHotelHotelIdGet$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<StaffResponse>>): Array<StaffResponse> => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiStaffHotelHotelIdGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiStaffHotelHotelIdGet$Json$Response(params: ApiStaffHotelHotelIdGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<StaffResponse>>> {
+    return apiStaffHotelHotelIdGet$Json(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `apiStaffHotelHotelIdGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiStaffHotelHotelIdGet$Json(params: ApiStaffHotelHotelIdGet$Json$Params, context?: HttpContext): Observable<Array<StaffResponse>> {
+    return this.apiStaffHotelHotelIdGet$Json$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<StaffResponse>>): Array<StaffResponse> => r.body)
+    );
   }
 
   /** Path part for operation `apiStaffStaffIdGet()` */
@@ -51,7 +103,7 @@ export class StaffService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiStaffStaffIdGet$Plain$Response(params: ApiStaffStaffIdGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<StaffResponse>> {
+  apiStaffStaffIdGet$Plain$Response(params: ApiStaffStaffIdGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<StaffDetailedResponseDto>> {
     return apiStaffStaffIdGet$Plain(this.http, this.rootUrl, params, context);
   }
 
@@ -61,9 +113,9 @@ export class StaffService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiStaffStaffIdGet$Plain(params: ApiStaffStaffIdGet$Plain$Params, context?: HttpContext): Observable<StaffResponse> {
+  apiStaffStaffIdGet$Plain(params: ApiStaffStaffIdGet$Plain$Params, context?: HttpContext): Observable<StaffDetailedResponseDto> {
     return this.apiStaffStaffIdGet$Plain$Response(params, context).pipe(
-      map((r: StrictHttpResponse<StaffResponse>): StaffResponse => r.body)
+      map((r: StrictHttpResponse<StaffDetailedResponseDto>): StaffDetailedResponseDto => r.body)
     );
   }
 
@@ -73,7 +125,7 @@ export class StaffService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiStaffStaffIdGet$Json$Response(params: ApiStaffStaffIdGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<StaffResponse>> {
+  apiStaffStaffIdGet$Json$Response(params: ApiStaffStaffIdGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<StaffDetailedResponseDto>> {
     return apiStaffStaffIdGet$Json(this.http, this.rootUrl, params, context);
   }
 
@@ -83,9 +135,9 @@ export class StaffService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiStaffStaffIdGet$Json(params: ApiStaffStaffIdGet$Json$Params, context?: HttpContext): Observable<StaffResponse> {
+  apiStaffStaffIdGet$Json(params: ApiStaffStaffIdGet$Json$Params, context?: HttpContext): Observable<StaffDetailedResponseDto> {
     return this.apiStaffStaffIdGet$Json$Response(params, context).pipe(
-      map((r: StrictHttpResponse<StaffResponse>): StaffResponse => r.body)
+      map((r: StrictHttpResponse<StaffDetailedResponseDto>): StaffDetailedResponseDto => r.body)
     );
   }
 

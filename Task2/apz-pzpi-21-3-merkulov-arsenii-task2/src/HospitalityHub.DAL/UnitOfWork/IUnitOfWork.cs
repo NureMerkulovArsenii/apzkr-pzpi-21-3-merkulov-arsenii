@@ -6,6 +6,8 @@ namespace HospitalityHub.DAL.UnitOfWork;
 
 public interface IUnitOfWork
 {
+    public IGenericRepository<User> UserRepository { get; }
+    public IGenericRepository<Role> RoleRepository { get; }
     public IGenericRepository<Booking> BookingRepository { get; }
     public IGenericRepository<Hotel> HotelRepository { get; }
     public IGenericRepository<Room> RoomRepository { get; }
@@ -14,6 +16,8 @@ public interface IUnitOfWork
     public IGenericRepository<TodoTask> TodoTaskRepository { get; }
     public IGenericRepository<Customer> CustomerRepository { get; }
     public IGenericRepository<Staff> StaffRepository { get; }
+    
+    public IGenericRepository<MenuItem> MenuItemsRepository { get; }
     
 
     Task<IDbContextTransaction> CreateTransactionAsync();
@@ -33,4 +37,6 @@ public interface IUnitOfWork
     void RollbackTransaction();
 
     Task ExecuteSqlRawAsync(string sql, params object[] parameters);
+
+    Task<List<TResult>> SqlRawQueryAsync<TResult>(FormattableString sql)  where TResult : class, IBaseEntity;
 }

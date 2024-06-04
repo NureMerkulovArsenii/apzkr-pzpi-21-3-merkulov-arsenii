@@ -11,12 +11,12 @@ public class DbSeeder
     private readonly ILogger<DbSeeder> _logger;
     private readonly ApplicationDbContext _context;
     private readonly UserManager<User> _userManager;
-    private readonly RoleManager<IdentityRole<int>> _roleManager;
+    private readonly RoleManager<Role> _roleManager;
 
     public DbSeeder(ILogger<DbSeeder> logger,
         ApplicationDbContext context,
         UserManager<User> userManager,
-        RoleManager<IdentityRole<int>> roleManager)
+        RoleManager<Role> roleManager)
     {
         _logger = logger;
         _context = context;
@@ -34,6 +34,7 @@ public class DbSeeder
             _logger.LogInformation("Seeder: Seeding initial data");
 
             await SeedRolesAsync();
+            await SeedMenuItemsAsync();
             await SeedUserAsync();
 
             await SeedHotelsAsync();
@@ -50,11 +51,95 @@ public class DbSeeder
     {
         _logger.LogInformation("Seeder: Seeding roles");
 
-        await _roleManager.CreateAsync(new IdentityRole<int>("Admin"));
+        await _roleManager.CreateAsync(new Role("Admin")
+        {
+            NormalizedName = "ADMIN",
+        });
 
         await _context.SaveChangesAsync();
 
         _logger.LogInformation("Seeder: Seeded roles");
+    }
+
+    private async Task SeedMenuItemsAsync()
+    {
+        _logger.LogInformation("Seeder: Seeding menu items");
+
+        var roles = await _context.Roles
+            .Where(x => x.Name == "Admin")
+            .ToListAsync();
+        
+        var menuItems = new List<MenuItem>
+        {
+            new MenuItem
+            {
+                Title = "Hotels",
+                Url = "/hotel",
+                Icon = "fas fa-hotel",
+                Roles = roles
+            },
+            new MenuItem
+            {
+                Title = "Rooms",
+                Url = "/room",
+                Icon = "fas fa-bed",
+                Roles = roles
+
+            },
+            new MenuItem
+            {
+                Title = "Bookings",
+                Url = "/bookings",
+                Icon = "fas fa-calendar-alt",
+                Roles = roles
+
+            },
+            new MenuItem
+            {
+                Title = "Customers",
+                Url = "/customers",
+                Icon = "fas fa-users",
+                Roles = roles
+
+            },
+            new MenuItem
+            {
+                Title = "Staff",
+                Url = "/staff",
+                Icon = "fas fa-user-tie",
+                Roles = roles
+
+            },
+            new MenuItem
+            {
+                Title = "Menu",
+                Url = "/menu",
+                Icon = "fas fa-bars",
+                Roles = roles
+
+            },
+            new MenuItem
+            {
+                Title = "Users",
+                Url = "/users",
+                Icon = "fas fa-bars",
+                Roles = roles
+            },
+            new MenuItem
+            {
+                Title = "Roles",
+                Url = "/users/roles",
+                Icon = "fas fa-bars",
+                Roles = roles
+            }
+        };
+
+        _context.MenuItems.AddRange(menuItems);
+
+        await _context.SaveChangesAsync();
+
+        _logger.LogInformation("Seeder: Seeded menu items");
+        
     }
 
 

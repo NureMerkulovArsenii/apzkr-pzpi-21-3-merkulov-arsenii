@@ -16,11 +16,11 @@ namespace HospitalityHub.API.Controllers;
 public class AccountController : BaseApiController
 {
     private readonly UserManager<User> _userManager;
-    private readonly RoleManager<IdentityRole<int>> _roleManager;
+    private readonly RoleManager<Role> _roleManager;
 
     public AccountController(
         UserManager<User> userManager,
-        RoleManager<IdentityRole<int>> roleManager)
+        RoleManager<Role> roleManager)
     {
         _userManager = userManager;
         _roleManager = roleManager;

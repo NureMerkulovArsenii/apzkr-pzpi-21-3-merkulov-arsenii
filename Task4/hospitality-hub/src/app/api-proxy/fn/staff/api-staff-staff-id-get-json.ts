@@ -6,13 +6,13 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { StaffResponse } from '../../models/staff-response';
+import { StaffDetailedResponseDto } from '../../models/staff-detailed-response-dto';
 
 export interface ApiStaffStaffIdGet$Json$Params {
   staffId: number;
 }
 
-export function apiStaffStaffIdGet$Json(http: HttpClient, rootUrl: string, params: ApiStaffStaffIdGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<StaffResponse>> {
+export function apiStaffStaffIdGet$Json(http: HttpClient, rootUrl: string, params: ApiStaffStaffIdGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<StaffDetailedResponseDto>> {
   const rb = new RequestBuilder(rootUrl, apiStaffStaffIdGet$Json.PATH, 'get');
   if (params) {
     rb.path('staffId', params.staffId, {"style":"simple"});
@@ -23,7 +23,7 @@ export function apiStaffStaffIdGet$Json(http: HttpClient, rootUrl: string, param
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<StaffResponse>;
+      return r as StrictHttpResponse<StaffDetailedResponseDto>;
     })
   );
 }

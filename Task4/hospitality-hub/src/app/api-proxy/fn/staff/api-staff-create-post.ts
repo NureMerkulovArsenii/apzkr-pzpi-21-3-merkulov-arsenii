@@ -6,10 +6,10 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { CreateStaffRequest } from '../../models/create-staff-request';
+import { UpsertStaffRequest } from '../../models/upsert-staff-request';
 
 export interface ApiStaffCreatePost$Params {
-      body?: CreateStaffRequest
+      body?: UpsertStaffRequest
 }
 
 export function apiStaffCreatePost(http: HttpClient, rootUrl: string, params?: ApiStaffCreatePost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {

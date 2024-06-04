@@ -12,8 +12,18 @@ namespace HospitalityHub.API.Controllers
     [Authorize(Roles = "Admin,Manager,Staff")]
     public class StaffController : BaseApiController
     {
+        [HttpGet("hotel/{hotelId}")]
+        [ProducesResponseType<List<StaffResponse>>(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetStaffByHotel(int hotelId)
+        {
+            var staff = await Resolve<GetStaffByHotelHandler>().HandleAsync(hotelId);
+
+            return Ok(staff);
+        }
+        
+        
         [HttpGet("{staffId}")]
-        [ProducesResponseType<StaffResponse>(StatusCodes.Status200OK)]
+        [ProducesResponseType<StaffDetailedResponseDto>(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetStaff(int staffId)
         {
             var staff = await Resolve<GetStaffHandler>().HandleAsync(staffId);
@@ -22,7 +32,7 @@ namespace HospitalityHub.API.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateStaff([FromBody] CreateStaffRequest request)
+        public async Task<IActionResult> CreateStaff([FromBody] UpsertStaffRequest request)
         {
             await Resolve<CreateStaffHandler>().HandleAsync(request);
 
@@ -30,7 +40,7 @@ namespace HospitalityHub.API.Controllers
         }
 
         [HttpPut("{staffId}/update")]
-        public async Task<IActionResult> UpdateStaff(int staffId, [FromBody] UpdateStaffRequest request)
+        public async Task<IActionResult> UpdateStaff(int staffId, [FromBody] UpsertStaffRequest request)
         {
             await Resolve<UpdateStaffHandler>().HandleAsync(staffId, request);
 

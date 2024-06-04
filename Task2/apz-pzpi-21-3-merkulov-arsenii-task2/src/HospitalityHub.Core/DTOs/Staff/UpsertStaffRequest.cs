@@ -1,6 +1,6 @@
 namespace HospitalityHub.Core.DTOs.Staff;
 
-public class UpdateStaffRequest
+public class UpsertStaffRequest
 {
     public string FirstName { get; set; }
     
@@ -10,6 +10,7 @@ public class UpdateStaffRequest
     
     public string Position { get; set; }
     
-    public int HotelId { get; set; }
+    public int UserId { get; set; }
     
+    public int HotelId { get; set; }
 }

@@ -15,4 +15,6 @@ public class User : IdentityUser<int>, IBaseEntity
     
     public virtual Staff Staff { get; set; }
 
+    public virtual ICollection<Role> Roles { get; set; }
+
 }

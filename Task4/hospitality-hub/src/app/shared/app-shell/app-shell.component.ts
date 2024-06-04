@@ -1,9 +1,12 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
-import {TranslateService} from "@ngx-translate/core";
-import {BreakpointObserver} from "@angular/cdk/layout";
-import {MatSidenav} from "@angular/material/sidenav";
-import {MenuItem} from "../../core/models/menu-item";
-import {HotelResponse} from "../../api-proxy/models/hotel-response";
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { TranslateService } from "@ngx-translate/core";
+import { BreakpointObserver } from "@angular/cdk/layout";
+import { MatSidenav } from "@angular/material/sidenav";
+import { MenuItem } from "../../core/models/menu-item";
+import { HotelResponse } from "../../api-proxy/models/hotel-response";
+import { MenuService } from 'src/app/api-proxy/services';
+import { MenuNodeResponse } from 'src/app/api-proxy/models';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-app-shell',
@@ -20,41 +23,48 @@ export class AppShellComponent implements OnInit {
   currentLanguage: string = '';
   isAuthenticated: boolean = false;
 
-  menuItems: MenuItem[] = [
-    {
-      id: 1,
-      name: 'hotel',
-      icon: 'home',
-      url: '/hotel',
-      parentId: null
-    },
-    {
-      id: 2,
-      name: 'room',
-      icon: 'room',
-      url: '/room',
-      parentId: null
-    },
-    {
-      id: 3,
-      name: 'users',
-      icon: 'user',
-      url: '/users',
-      parentId: null
-    },
-    {
-      id: 4,
-      name: 'roles',
-      icon: 'role',
-      url: '/users/roles',
-      parentId: 3
-    }
-  ];
+  // menuItems: MenuItem[] = [
+  //   {
+  //     id: 1,
+  //     name: 'hotel',
+  //     icon: 'home',
+  //     url: '/hotel',
+  //     parentId: null
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'room',
+  //     icon: 'room',
+  //     url: '/room',
+  //     parentId: null
+  //   },
+  //   {
+  //     id: 3,
+  //     name: 'users',
+  //     icon: 'user',
+  //     url: '/users',
+  //     parentId: null
+  //   },
+  //   {
+  //     id: 4,
+  //     name: 'roles',
+  //     icon: 'role',
+  //     url: '/users/roles',
+  //     parentId: 3
+  //   }
+  // ];
+
+  private subscription!: Subscription;
+  
+  protected menuItems$!: Observable<MenuNodeResponse[]>;
+
   protected hotels!: HotelResponse[];
   protected selected: number = -1;
 
-  constructor(private translateService: TranslateService,
-              private observer: BreakpointObserver,
+  constructor(
+    private translateService: TranslateService,
+    private readonly menuService: MenuService,
+    private observer: BreakpointObserver,
   ) {
 
   }
@@ -65,15 +75,16 @@ export class AppShellComponent implements OnInit {
       this.isMobile = screenSize.matches;
     });
     this.currentLanguage = localStorage.getItem('language') || 'en';
-
-    // this.selected = parseInt(localStorage.getItem('selected_hotel') || '-1');
-    // if (this.selected > -1) {
-    //   return;
-    // }
-
-    this.isUserAuthenticated();
+  
+    if (this.isUserAuthenticated() && (this.menuItems$ === undefined || this.menuItems$ === null)) {
+      this.loadMenuItems();
+    }
   }
 
+  loadMenuItems() {
+ 
+    this.menuItems$ = this.menuService.apiMenuMenuNodesGet$Json();
+  }
 
   toggleMenu() {
     if (this.isMobile) {
@@ -91,10 +102,9 @@ export class AppShellComponent implements OnInit {
       this.isAuthenticated = false;
       return false;
     }
-
+  
     this.isAuthenticated = true;
-    //this.getHotels();
-
+  
     return true;
   }
 
@@ -116,25 +126,5 @@ export class AppShellComponent implements OnInit {
     window.location.reload();
   }
 
-  changeHotel(event:any) {
-    console.log(event.value)
-  }
 
-  getHotels() {
-    if (this.selected === -1) {
-      this.selected = parseInt(localStorage.getItem('selected_hotel') || '-1');
-      if (this.selected > -1) {
-        return;
-      }
-    }
-
-    // this.hotelService.apiHotelGet$Json().subscribe({
-    //   next: (response) => {
-    //     this.hotels = response;
-    //   },
-    //   error: (error) => {
-    //     console.log(error)
-    //   }
-    // });
-  }
 }

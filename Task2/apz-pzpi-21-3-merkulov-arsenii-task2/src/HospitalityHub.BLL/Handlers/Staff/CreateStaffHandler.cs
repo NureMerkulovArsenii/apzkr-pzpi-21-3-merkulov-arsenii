@@ -20,7 +20,7 @@ public class CreateStaffHandler : BaseHandler
         _userManager = userManager;
     }
     
-    public async Task<int> HandleAsync(CreateStaffRequest request)
+    public async Task<int> HandleAsync(UpsertStaffRequest request)
     {
         var userExists = await _userManager.Users.AnyAsync(x => x.Id == request.UserId);
         if (!userExists)

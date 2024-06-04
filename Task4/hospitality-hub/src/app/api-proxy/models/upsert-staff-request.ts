@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-export interface CreateStaffRequest {
+export interface UpsertStaffRequest {
   firstName?: string | null;
   hotelId?: number;
   lastName?: string | null;

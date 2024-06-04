@@ -6,11 +6,11 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { UpdateStaffRequest } from '../../models/update-staff-request';
+import { UpsertStaffRequest } from '../../models/upsert-staff-request';
 
 export interface ApiStaffStaffIdUpdatePut$Params {
   staffId: number;
-      body?: UpdateStaffRequest
+      body?: UpsertStaffRequest
 }
 
 export function apiStaffStaffIdUpdatePut(http: HttpClient, rootUrl: string, params: ApiStaffStaffIdUpdatePut$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {

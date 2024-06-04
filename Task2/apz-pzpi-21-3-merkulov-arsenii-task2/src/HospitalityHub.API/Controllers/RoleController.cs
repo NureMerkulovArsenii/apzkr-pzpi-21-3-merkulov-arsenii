@@ -15,9 +15,9 @@ namespace HospitalityHub.API.Controllers;
 public class RoleController : BaseApiController
 {
     private readonly UserManager<User> _userManager;
-    private readonly RoleManager<IdentityRole<int>> _roleManager;
+    private readonly RoleManager<Role> _roleManager;
 
-    public RoleController(UserManager<User> userManager, RoleManager<IdentityRole<int>> roleManager)
+    public RoleController(UserManager<User> userManager, RoleManager<Role> roleManager)
     {
         _userManager = userManager;
         _roleManager = roleManager;
@@ -65,7 +65,7 @@ public class RoleController : BaseApiController
     [HttpPost("create-role")]
     public async Task<IActionResult> CreateRole([FromBody] AddRoleRequest request)
     {
-        var role = new IdentityRole<int>(request.RoleName);
+        var role = new Role(request.RoleName);
 
         var result = await _roleManager.CreateAsync(role);
 

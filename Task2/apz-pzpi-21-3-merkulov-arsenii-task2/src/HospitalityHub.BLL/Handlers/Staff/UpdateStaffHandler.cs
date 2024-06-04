@@ -14,7 +14,7 @@ public class UpdateStaffHandler : BaseHandler
         _unitOfWork = unitOfWork;
     }
     
-    public async Task<bool> HandleAsync(int staffId, UpdateStaffRequest request)
+    public async Task<bool> HandleAsync(int staffId, UpsertStaffRequest request)
     {
         var staffExists = await _unitOfWork.StaffRepository.ExistAsync(x => x.Id == staffId);
         if (!staffExists)
@@ -24,6 +24,7 @@ public class UpdateStaffHandler : BaseHandler
             calls => calls.SetProperty(staff => staff.FirstName, request.FirstName)
                 .SetProperty(staff => staff.SecondName, request.SecondName)
                 .SetProperty(staff => staff.HotelId, request.HotelId)
+                .SetProperty(staff => staff.UserId, request.UserId)
                 .SetProperty(staff => staff.LastName, request.LastName)
                 .SetProperty(staff => staff.Position, request.Position));
         

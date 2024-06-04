@@ -7,7 +7,6 @@ using HospitalityHub.BLL.Services;
 using HospitalityHub.Core.Entities;
 using HospitalityHub.DAL;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
@@ -37,12 +36,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //Todo: figure out how to save DateTime with Local Kind in PostgreSQL
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-
 builder.Services.AddControllers();
 
 
 builder.Services.AddIdentityApiEndpoints<User>()
-    .AddRoles<IdentityRole<int>>()
+    .AddRoles<Role>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
