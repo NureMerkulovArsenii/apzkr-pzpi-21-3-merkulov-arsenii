@@ -53,13 +53,13 @@ export class RoleListComponent implements OnInit {
   }
 
   editRole(id: number) {
-    // const dialogRef = this.dialog.open(RoleDetailsComponent, {
-    //   data: {data: id, isEdit: true} as DialogData<number, null>,
-    // });
-    //
-    // dialogRef.afterClosed().subscribe(result => {
-    //   this.loadRoles();
-    // });
+    const dialogRef = this.dialog.open(RoleDetailsComponent, {
+      data: {data: id, isEdit: true} as DialogData<number, null>,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadRoles();
+    });
   }
 
   deleteRole(roleName: string) {

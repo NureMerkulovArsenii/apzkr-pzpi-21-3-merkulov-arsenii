@@ -39,5 +39,6 @@ export { UpdateRoomPlaceRequest } from './models/update-room-place-request';
 export { UpdateRoomRequest } from './models/update-room-request';
 export { UpdateTodoTaskRequest } from './models/update-todo-task-request';
 export { UpdateUserProfileRequest } from './models/update-user-profile-request';
+export { UpsertRoleRequest } from './models/upsert-role-request';
 export { UpsertStaffRequest } from './models/upsert-staff-request';
 export { UserResponseDto } from './models/user-response-dto';

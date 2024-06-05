@@ -5,23 +5,62 @@
   </button>
 </div>
 
+
+
+
 <div mat-dialog-content class="form-container">
-  <form [formGroup]="roleForm" class="section-detail-form row" #form="ngForm" name="roleForm">
-    <div class="row">
-      <mat-card-content>
-        <div class="col-6">
-          <mat-form-field>
-            <mat-label>Role</mat-label>
-            <input matInput placeholder="Manager" formControlName="roleName"/>
-          </mat-form-field>
-        </div>
-      </mat-card-content>
-    </div>
-  </form>
+
+  <ng-container *ngIf="!this.data.isEdit">
+    <form [formGroup]="roleForm" class="section-detail-form row" #form="ngForm" name="roleForm">
+      <div class="row">
+        <mat-card-content>
+          <div class="col-6">
+            <mat-form-field>
+              <mat-label>Role</mat-label>
+              <input matInput placeholder="Manager" formControlName="roleName" />
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </div>
+    </form>
+  </ng-container>
+
+  <ng-container *ngIf="this.data.isEdit">
+    <form [formGroup]="roleForm" class="section-detail-form row" #form="ngForm" name="roleForm">
+      <div class="row">
+        <mat-card-content>
+          <div class="col-6">
+            <mat-form-field>
+              <mat-label>Role</mat-label>
+              <input matInput placeholder="Manager" formControlName="roleName" [readonly]="true" />
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </div>
+    </form>
+  </ng-container>
+
+  <div class="row">
+    <mat-card-content>
+      <div class="col-6">
+        <mat-form-field>
+          <mat-label>Menu Items</mat-label>
+          <mat-select [formControl]="selectedMenuItems" multiple>
+            <mat-option *ngFor="let menuItem of menuItems" [value]="menuItem.id">{{menuItem.title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </div>
 </div>
+
+
+
+
+
 
 <div mat-dialog-actions [align]="'end'">
   <button mat-raised-button color="primary" type="submit" class="col-2" [disabled]="!roleForm.valid"
-          (click)="apply()">Apply
+    (click)="apply()">Apply
   </button>
 </div>

@@ -4,6 +4,11 @@ namespace HospitalityHub.Core.Entities;
 
 public class Role : IdentityRole<int>, IBaseEntity
 {
+    
+    public Role()
+    {
+    }
+    
     public Role(string name)
     {
         Name = name;

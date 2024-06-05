@@ -6,10 +6,10 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { AddRoleRequest } from '../../models/add-role-request';
+import { UpsertRoleRequest } from '../../models/upsert-role-request';
 
 export interface ApiRoleCreateRolePost$Params {
-      body?: AddRoleRequest
+      body?: UpsertRoleRequest
 }
 
 export function apiRoleCreateRolePost(http: HttpClient, rootUrl: string, params?: ApiRoleCreateRolePost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {

@@ -1,4 +1,6 @@
+using HospitalityHub.BLL.Handlers.Role;
 using HospitalityHub.Core.DTOs.Account;
+using HospitalityHub.Core.DTOs.Role;
 using HospitalityHub.Core.Entities;
 using HospitalityHub.Core.Exceptions;
 using HospitalityHub.Core.Extensions;
@@ -63,17 +65,21 @@ public class RoleController : BaseApiController
 
     [Authorize(Roles = "Admin")]
     [HttpPost("create-role")]
-    public async Task<IActionResult> CreateRole([FromBody] AddRoleRequest request)
+    public async Task<IActionResult> CreateRole([FromBody] UpsertRoleRequest request)
     {
-        var role = new Role(request.RoleName);
+        // var role = new Role(request.RoleName);
+        //
+        // var result = await _roleManager.CreateAsync(role);
+        //
+        // if (result.Succeeded)
+        //     return Ok();
+        //
+        // throw new HospitalityHubException(result.Errors.Select(x => x.Description)
+        //     .ToList().JoinBy("; "));
 
-        var result = await _roleManager.CreateAsync(role);
+        await Resolve<CreateRoleHandler>().HandleAsync(request);
 
-        if (result.Succeeded)
-            return Ok();
-
-        throw new HospitalityHubException(result.Errors.Select(x => x.Description)
-            .ToList().JoinBy("; "));
+        return Ok();
     }
 
     [Authorize(Roles = "Admin")]
@@ -94,7 +100,6 @@ public class RoleController : BaseApiController
             .ToList().JoinBy("; "));
     }
 
-    
 
     [Authorize(Roles = "Admin")]
     [HttpGet("roles")]
@@ -125,21 +130,25 @@ public class RoleController : BaseApiController
 
     [Authorize(Roles = "Admin")]
     [HttpPatch("update-role/{id:int}")]
-    public async Task<IActionResult> UpdateRole(int id, [FromBody] string roleName)
+    public async Task<IActionResult> UpdateRole(int id, [FromBody] UpsertRoleRequest roleRequest)
     {
-        var role = await _roleManager.FindByIdAsync(id.ToString());
+        // var role = await _roleManager.FindByIdAsync(id.ToString());
+        //
+        // if (role == null)
+        //     return BadRequest(Resources.Get("ROLE_NOT_FOUND"));
+        //
+        // role.Name = roleRequest.RoleName;
+        //
+        // var result = await _roleManager.UpdateAsync(role);
+        //
+        // if (result.Succeeded)
+        //     return Ok();
+        //
+        // throw new HospitalityHubException(result.Errors.Select(x => x.Description)
+        //     .ToList().JoinBy("; "));
 
-        if (role == null)
-            return BadRequest(Resources.Get("ROLE_NOT_FOUND"));
+        await Resolve<UpdateRoleHandler>().HandleAsync(id, roleRequest);
 
-        role.Name = roleName;
-
-        var result = await _roleManager.UpdateAsync(role);
-
-        if (result.Succeeded)
-            return Ok();
-
-        throw new HospitalityHubException(result.Errors.Select(x => x.Description)
-            .ToList().JoinBy("; "));
+        return Ok();
     }
 }

@@ -19,4 +19,13 @@ public class MenuController : BaseApiController
         return Ok(menuNodes);
     }
     
+    [HttpGet("menu-nodes/{roleId:int}")]
+    [ProducesResponseType<IEnumerable<MenuNodeResponse>>(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetMenuNodesByRole(int? roleId)
+    {
+        var menuNodes = await Resolve<GetMenuNodesByRoleHandler>().HandleAsync(roleId);
+
+        return Ok(menuNodes);
+    }
+    
 }

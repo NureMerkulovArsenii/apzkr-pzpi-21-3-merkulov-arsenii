@@ -6,10 +6,11 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { UpsertRoleRequest } from '../../models/upsert-role-request';
 
 export interface ApiRoleUpdateRoleIdPatch$Params {
   id: number;
-      body?: string
+      body?: UpsertRoleRequest
 }
 
 export function apiRoleUpdateRoleIdPatch(http: HttpClient, rootUrl: string, params: ApiRoleUpdateRoleIdPatch$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {

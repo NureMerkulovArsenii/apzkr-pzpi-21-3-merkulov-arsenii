@@ -19,7 +19,7 @@ import { StaffDialogComponent } from './staff-dialog/staff-dialog.component';
 @NgModule({
   declarations: [
     StaffListComponent,
-    StaffDialogComponent
+    StaffDialogComponent,
   ],
   imports: [
     CommonModule,
