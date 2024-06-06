@@ -1,0 +1,48 @@
+<!--
+    bookingId: [null, [Validators.required]],
+    checkIn: [null, [Validators.required]],
+    checkOut: [null, [Validators.required]],
+    customerId: [null, [Validators.required]],
+    isPaid: [null, [Validators.required]],
+    numberOfAdults: [null, [Validators.required]],
+    numberOfChildren: [null, [Validators.required]],
+    roomId: [null, [Validators.required]],
+    roomType: [null, [Validators.required]],
+    totalDiscountPercent: [null, [Validators.required]],
+    totalPrice: [null, [Validators.required]],
+ -->
+
+
+
+<div class="d-flex justify-content-between m-3 h-25">
+    <h1 mat-dialog-title class="d-block">Hotel</h1>
+    <button mat-icon-button mat-dialog-close class="m-3">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+<div mat-dialog-content class="form-container">
+    <form [formGroup]="bookingForm" class="section-detail-form row" #form="ngForm" name="bookingForm">
+        <div class="row">
+            <mat-card-content>
+
+                <div class="row d-flex">
+                    <div class="col-4">
+                        <mat-form-field>
+                            <mat-label>Name</mat-label>
+                            <input matInput placeholder="Sample job" formControlName="name" />
+                        </mat-form-field>
+                    </div>
+                    
+
+            </mat-card-content>
+        </div>
+        <div class="row">
+            <mat-divider></mat-divider>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions [align]="'end'">
+    <button mat-raised-button color="primary" type="submit" class="col-2" [disabled]="!hotelForm.valid"
+        (click)="apply()">Apply
+    </button>
+</div>

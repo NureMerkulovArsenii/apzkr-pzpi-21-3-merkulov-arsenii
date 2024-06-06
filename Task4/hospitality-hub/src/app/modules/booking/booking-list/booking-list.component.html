@@ -1,0 +1,120 @@
+<div class="col-12 row">
+    <form class="form" (ngSubmit)="applyFilter()">
+        <div class="row flex-row gap-3">
+            <div class="col-2">
+                <mat-form-field>
+                    <mat-select [(value)]="selectedHotelId" class="hotel-toggle"
+                        style="font-size: 14px; width: fit-content; min-width: 150px">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
+                            {{ hotel.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-2">
+                <mat-form-field>
+                    <mat-select [(value)]="selectedRoomType" class="room-type-toggle"
+                        style="font-size: 14px; width: fit-content; min-width: 150px">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let roomType of roomTypes" [value]="roomType.id">
+                            {{ roomType.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-2">
+                <mat-form-field>
+                    <mat-label>Check In</mat-label>
+                    <input matInput [matDatepicker]="picker1" [formControl]="checkInDate">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div class="col-3" style="margin-left: 35px;">
+                <mat-form-field>
+                    <mat-label>Check Out</mat-label>
+                    <input matInput [matDatepicker]="picker2" [formControl]="checkOutDate">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row d-flex">
+            <div class="col-1" style="margin: 10px;">
+                <button mat-flat-button type="submit" color="primary">Apply Filter</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="mat-elevation-z8">
+
+    <table mat-table [dataSource]="bookings$" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="bookingId">
+            <th mat-header-cell *matHeaderCellDef>{{ 'number' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="checkIn">
+            <th mat-header-cell *matHeaderCellDef>{{ 'checkIn' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.checkIn | date: 'dd/MM/yyyy' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="checkOut">
+            <th mat-header-cell *matHeaderCellDef>{{ 'checkOut' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.checkOut | date: 'dd/MM/yyyy' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="isPaid">
+            <th mat-header-cell *matHeaderCellDef>{{ 'isPaid' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.isPaid }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="numberOfAdults">
+            <th mat-header-cell *matHeaderCellDef>{{ 'numberOfAdults' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.numberOfAdults }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="numberOfChildren">
+            <th mat-header-cell *matHeaderCellDef>{{ 'numberOfChildren' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.numberOfChildren }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalPrice">
+            <th mat-header-cell *matHeaderCellDef>{{ 'totalPrice' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.totalPrice }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalDiscountPercent">
+            <th mat-header-cell *matHeaderCellDef>{{ 'totalDiscountPercent' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.totalDiscountPercent }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>{{ 'actions' | translate }}</th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-button (click)="editRoom(element.id)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-button (click)="deleteRoom(element.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+    </table>
+</div>
+
+<button mat-raised-button color="primary" class="add-button" (click)="addRoom()">
+    <mat-icon>add</mat-icon>
+    Add
+</button>
