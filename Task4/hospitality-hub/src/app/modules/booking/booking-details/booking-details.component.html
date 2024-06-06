@@ -1,5 +1,4 @@
 <!--
-    bookingId: [null, [Validators.required]],
     checkIn: [null, [Validators.required]],
     checkOut: [null, [Validators.required]],
     customerId: [null, [Validators.required]],
@@ -24,16 +23,23 @@
     <form [formGroup]="bookingForm" class="section-detail-form row" #form="ngForm" name="bookingForm">
         <div class="row">
             <mat-card-content>
-
                 <div class="row d-flex">
                     <div class="col-4">
                         <mat-form-field>
-                            <mat-label>Name</mat-label>
-                            <input matInput placeholder="Sample job" formControlName="name" />
+                            <input matInput formControlName="checkIn" placeholder="Check In" [matDatepicker]="checkIn">
+                            <mat-datepicker-toggle matSuffix [for]="checkIn"></mat-datepicker-toggle>
+                            <mat-datepicker #checkIn></mat-datepicker>                            
+                        </mat-form-field>
+                    </div>
+                    <div class="col-4">
+                        <mat-form-field>
+                            <input matInput formControlName="checkOut" placeholder="Check Out" [matDatepicker]="checkOut">
+                            <mat-datepicker-toggle matSuffix [for]="checkOut"></mat-datepicker-toggle>
+                            <mat-datepicker #checkOut></mat-datepicker>
                         </mat-form-field>
                     </div>
                     
-
+                </div>
             </mat-card-content>
         </div>
         <div class="row">
@@ -42,7 +48,7 @@
     </form>
 </div>
 <div mat-dialog-actions [align]="'end'">
-    <button mat-raised-button color="primary" type="submit" class="col-2" [disabled]="!hotelForm.valid"
+    <button mat-raised-button color="primary" type="submit" class="col-2" [disabled]="!bookingForm.valid"
         (click)="apply()">Apply
     </button>
 </div>

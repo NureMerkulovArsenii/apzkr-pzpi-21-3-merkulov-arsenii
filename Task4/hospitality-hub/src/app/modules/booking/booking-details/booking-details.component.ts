@@ -6,6 +6,7 @@ import { HotelService } from "../../../api-proxy/services/hotel.service";
 import { ToastrService } from "ngx-toastr";
 import { HotelDetailsComponent } from '../../hotel/hotel-details/hotel-details.component';
 import { BookingService, RoomService } from 'src/app/api-proxy/services';
+import { RoomResponse } from 'src/app/api-proxy/models';
 
 @Component({
   selector: 'app-booking-details',
@@ -14,22 +15,7 @@ import { BookingService, RoomService } from 'src/app/api-proxy/services';
 })
 export class BookingDetailsComponent implements OnInit {
 
-  /*
-  bookingId?: number;
-  checkIn?: string;
-  checkOut?: string;
-  customerId?: number;
-  isPaid?: boolean;
-  numberOfAdults?: number;
-  numberOfChildren?: number;
-  roomId?: number;
-  roomType?: ERoomType;
-  totalDiscountPercent?: number;
-  totalPrice?: number;
-  */
-
   protected bookingForm: FormGroup = this.formBuilder.group({
-    bookingId: [null, [Validators.required]],
     checkIn: [null, [Validators.required]],
     checkOut: [null, [Validators.required]],
     customerId: [null, [Validators.required]],
@@ -41,6 +27,8 @@ export class BookingDetailsComponent implements OnInit {
     totalDiscountPercent: [null, [Validators.required]],
     totalPrice: [null, [Validators.required]],
   });
+
+  rooms: RoomResponse[] | null = null;
 
   constructor(
     private readonly formBuilder: FormBuilder,
@@ -79,8 +67,8 @@ export class BookingDetailsComponent implements OnInit {
   loadRooms() {
     this.roomService.apiRoomHotelHotelIdGet$Json({ hotelId: this.data.additionalData! })
       .subscribe({
-        next: (booking) => {
-          this.bookingForm.patchValue(booking);
+        next: (rooms) => {
+          this.rooms = rooms;
         },
         error: (error) => {
           this.toastr.error(error);

@@ -110,7 +110,7 @@ export class BookingListComponent implements OnInit {
     });
   }
 
-  deleteRoom(id: number) {
+  deleteBooking(id: number) {
     this.dialogService.openDialog({
       data: {
         title: "Delete room",
