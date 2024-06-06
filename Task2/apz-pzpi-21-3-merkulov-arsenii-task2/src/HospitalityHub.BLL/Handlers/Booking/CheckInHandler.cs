@@ -18,14 +18,15 @@ public class CheckInHandler : BaseHandler
         _doorLockServiceProxy = doorLockServiceProxy;
     }
 
-    public async Task<bool> HandleAsync(int userId, int bookingId, string code)
+    public async Task<bool> HandleAsync(int customerId, int bookingId, string code)
     {
-        var bookingExists = await _unitOfWork.BookingRepository.ExistAsync(x => x.Id == bookingId && x.Customer.UserId == userId);
+        var bookingExists =
+            await _unitOfWork.BookingRepository.ExistAsync(x => x.Id == bookingId && x.Customer.Id == customerId);
         if (!bookingExists)
             throw new HospitalityHubException(Resources.Get("BOOKING_NOT_FOUND"));
-        
+
         var res = await _unitOfWork.BookingRepository.ExecuteUpdateAsync(
-            x => x.Id == bookingId && x.Customer.UserId == userId,
+            x => x.Id == bookingId && x.Customer.Id == customerId,
             calls => calls
                 .SetProperty(booking => booking.CheckInDate, DateTime.Now));
 
@@ -47,10 +48,11 @@ public class CheckInHandler : BaseHandler
             .AsNoTracking()
             .FirstOrDefaultAsync();
 
-        if (!string.IsNullOrEmpty(room.ApiKey)) return await _doorLockServiceProxy.SetDoorLockCodeAsync(room.BaseLockUri, code);
-        
+        if (!string.IsNullOrEmpty(room.ApiKey))
+            return await _doorLockServiceProxy.SetDoorLockCodeAsync(room.BaseLockUri, code);
+
         var apiKey = Guid.NewGuid().ToString();
-        
+
         await _doorLockServiceProxy.SetApiKeyAsync(room.BaseLockUri, apiKey);
         await _unitOfWork.RoomRepository.ExecuteUpdateAsync(x => x.Id == room.RoomId,
             calls => calls
@@ -58,6 +60,4 @@ public class CheckInHandler : BaseHandler
 
         return await _doorLockServiceProxy.SetDoorLockCodeAsync(room.BaseLockUri, code);
     }
-    
-    
 }

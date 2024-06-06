@@ -72,4 +72,7 @@
     <data name="RESET_YOUR_PASSWORD_CODE_MESSAGE" xml:space="preserve">
         <value>Ваш код для відновлення: {0}</value>
     </data>
+    <data name="CUSTOMER_ALREADY_EXISTS">
+        <value>Користувач вже існує</value>
+    </data>
 </root>

@@ -13,7 +13,7 @@ public class BookingController : BaseApiController
     [HttpPost("create")]
     public async Task<IActionResult> CreateBooking([FromBody] CreateBookingRequest request)
     {
-        await Resolve<CreateBookingHandler>().HandleAsync(UserId, request);
+        await Resolve<CreateBookingHandler>().HandleAsync(request);
 
         return Ok();
     }
@@ -28,10 +28,10 @@ public class BookingController : BaseApiController
     }
     
 
-    [HttpDelete("cancel/{id:int}")]
-    public async Task<IActionResult> CancelBooking(int id)
+    [HttpDelete("cancel{customerId:int}/booking{bookingId:int}")]
+    public async Task<IActionResult> CancelBooking([FromQuery] int customerId, [FromQuery] int bookingId)
     {
-        await Resolve<CancelBookingHandler>().HandleAsync(UserId, id);
+        await Resolve<CancelBookingHandler>().HandleAsync(customerId, bookingId);
 
         return Ok();
     }
@@ -39,7 +39,6 @@ public class BookingController : BaseApiController
     
     [HttpGet("filter")]
     [ProducesResponseType<IEnumerable<FilterBookingResponse>>(StatusCodes.Status200OK)]
-    
     public async Task<IActionResult> FilterBookings([FromQuery] FilterBookingRequest request)
     {
         var bookings = await Resolve<FilterBookingHandler>().HandleAsync(request);
@@ -56,18 +55,18 @@ public class BookingController : BaseApiController
         return Ok(booking);
     }
     
-    [HttpGet("checkin/{bookingId:int}/code/{code}")]
-    public async Task<IActionResult> CheckIn([FromRoute] int bookingId, string code)
+    [HttpGet("checkin/{bookingId:int}/code/{code}/customer/{customerId:int}")]
+    public async Task<IActionResult> CheckIn([FromRoute] int bookingId, string code, int customerId)
     {
-        var res = await Resolve<CheckInHandler>().HandleAsync(UserId, bookingId, code);
+        var res = await Resolve<CheckInHandler>().HandleAsync(customerId, bookingId, code);
 
         return Ok(res);
     }
     
-    [HttpGet("checkout/{bookingId:int}")]
-    public async Task<IActionResult> CheckOut([FromRoute] int bookingId)
+    [HttpGet("checkout/{bookingId:int}/customer/{customerId:int}")]
+    public async Task<IActionResult> CheckOut([FromRoute] int bookingId, int customerId)
     {
-        var res = await Resolve<CheckOutHandler>().HandleAsync(UserId, bookingId);
+        var res = await Resolve<CheckOutHandler>().HandleAsync(customerId, bookingId);
 
         return Ok(res);
     }

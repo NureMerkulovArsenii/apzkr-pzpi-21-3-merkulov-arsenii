@@ -18,14 +18,14 @@ public class CheckOutHandler : BaseHandler
         _doorLockServiceProxy = doorLockServiceProxy;
     }
 
-    public async Task<bool> HandleAsync(int userId, int bookingId)
+    public async Task<bool> HandleAsync(int customerId, int bookingId)
     {
-        var bookingExists = await _unitOfWork.BookingRepository.ExistAsync(x => x.Id == bookingId && x.Customer.UserId == userId);
+        var bookingExists = await _unitOfWork.BookingRepository.ExistAsync(x => x.Id == bookingId && x.Customer.Id == customerId);
         if (!bookingExists)
             throw new HospitalityHubException(Resources.Get("BOOKING_NOT_FOUND"));
         
         var res = await _unitOfWork.BookingRepository.ExecuteUpdateAsync(
-            x => x.Id == bookingId && x.Customer.UserId == userId,
+            x => x.Id == bookingId && x.Customer.Id == customerId,
             calls => calls
                 .SetProperty(booking => booking.CheckOutDate, DateTime.Now));
         

@@ -72,4 +72,7 @@
     <data name="RESET_YOUR_PASSWORD_CODE_MESSAGE" xml:space="preserve">
         <value>Your reset code is: {0}</value>
     </data>
+    <data name="CUSTOMER_ALREADY_EXISTS">
+        <value>Customer with this email already exists</value>        
+    </data>
 </root>

@@ -1,6 +1,5 @@
 using HospitalityHub.BLL.Handlers.Base;
 using HospitalityHub.Core.DTOs.Booking;
-using HospitalityHub.Core.Entities;
 using HospitalityHub.DAL.UnitOfWork;
 using HospitalityHub.Localization;
 
@@ -15,7 +14,7 @@ public class CreateBookingHandler : BaseHandler
         _unitOfWork = unitOfWork;
     }
 
-    public async Task HandleAsync(int userId, CreateBookingRequest request)
+    public async Task HandleAsync(CreateBookingRequest request)
     {
         var hotel = await _unitOfWork.HotelRepository.GetByIdAsync(request.HotelId);
 
@@ -28,13 +27,7 @@ public class CreateBookingHandler : BaseHandler
             throw new Exception(Resources.Get("ROOM_NOT_FOUND"));
 
         var customer = await _unitOfWork.CustomerRepository
-            .FirstOrDefaultAsync(x => x.UserId == userId);
-
-        customer ??= new Customer()
-        {
-            UserId = userId,
-            IsEnabled = true
-        };
+            .FirstOrDefaultAsync(x => x.Id == request.CustomerId);
 
         var isRoomAvailable =
             room.Bookings.Any(x => x.CheckInBooking >= request.CheckIn && x.CheckOutBooking <= request.CheckOut);

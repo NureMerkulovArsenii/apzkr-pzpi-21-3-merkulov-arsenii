@@ -51,10 +51,10 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, int>
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.Entity<User>()
-            .HasOne(u => u.Customer)
-            .WithOne(c => c.User)
-            .HasForeignKey<Customer>(c => c.UserId);
+        // builder.Entity<User>()
+        //     .HasOne(u => u.Customer)
+        //     .WithOne(c => c.User)
+        //     .HasForeignKey<Customer>(c => c.UserId);
         
         builder.Entity<User>()
             .HasOne(u => u.Staff)

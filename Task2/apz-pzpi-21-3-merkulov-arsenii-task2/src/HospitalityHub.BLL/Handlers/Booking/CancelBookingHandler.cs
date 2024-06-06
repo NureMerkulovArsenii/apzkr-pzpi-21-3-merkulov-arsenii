@@ -13,14 +13,14 @@ public class CancelBookingHandler : BaseHandler
         _unitOfWork = unitOfWork;
     }
 
-    public async Task HandleAsync(int userId, int bookingId)
+    public async Task HandleAsync(int customerId, int bookingId)
     {
         var booking = await _unitOfWork.BookingRepository.GetByIdAsync(bookingId);
 
         if (booking == null)
             throw new Exception(Resources.Get("BOOKING_NOT_FOUND"));
 
-        if (booking.Customer.UserId != userId)
+        if (booking.Customer.Id != customerId)
             throw new Exception(Resources.Get("UNAUTHORIZED"));
 
         _unitOfWork.BookingRepository.Delete(booking);

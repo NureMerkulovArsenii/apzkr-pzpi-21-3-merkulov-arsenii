@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalityHub.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240604214528_Initial")]
+    [Migration("20240606195741_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
