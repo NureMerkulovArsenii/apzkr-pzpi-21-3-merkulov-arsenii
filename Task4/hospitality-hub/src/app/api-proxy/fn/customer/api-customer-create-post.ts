@@ -6,17 +6,16 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { UpsertCustomerRequest } from '../../models/upsert-customer-request';
 
-export interface ApiBookingCheckinBookingIdCodeCodeGet$Params {
-  bookingId: number;
-  code: string;
+export interface ApiCustomerCreatePost$Params {
+      body?: UpsertCustomerRequest
 }
 
-export function apiBookingCheckinBookingIdCodeCodeGet(http: HttpClient, rootUrl: string, params: ApiBookingCheckinBookingIdCodeCodeGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, apiBookingCheckinBookingIdCodeCodeGet.PATH, 'get');
+export function apiCustomerCreatePost(http: HttpClient, rootUrl: string, params?: ApiCustomerCreatePost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  const rb = new RequestBuilder(rootUrl, apiCustomerCreatePost.PATH, 'post');
   if (params) {
-    rb.path('bookingId', params.bookingId, {"style":"simple"});
-    rb.path('code', params.code, {"style":"simple"});
+    rb.body(params.body, 'application/*+json');
   }
 
   return http.request(
@@ -29,4 +28,4 @@ export function apiBookingCheckinBookingIdCodeCodeGet(http: HttpClient, rootUrl:
   );
 }
 
-apiBookingCheckinBookingIdCodeCodeGet.PATH = '/api/Booking/checkin/{bookingId}/code/{code}';
+apiCustomerCreatePost.PATH = '/api/Customer/create';

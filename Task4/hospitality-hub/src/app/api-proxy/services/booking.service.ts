@@ -9,12 +9,12 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
-import { apiBookingCancelIdDelete } from '../fn/booking/api-booking-cancel-id-delete';
-import { ApiBookingCancelIdDelete$Params } from '../fn/booking/api-booking-cancel-id-delete';
-import { apiBookingCheckinBookingIdCodeCodeGet } from '../fn/booking/api-booking-checkin-booking-id-code-code-get';
-import { ApiBookingCheckinBookingIdCodeCodeGet$Params } from '../fn/booking/api-booking-checkin-booking-id-code-code-get';
-import { apiBookingCheckoutBookingIdGet } from '../fn/booking/api-booking-checkout-booking-id-get';
-import { ApiBookingCheckoutBookingIdGet$Params } from '../fn/booking/api-booking-checkout-booking-id-get';
+import { apiBookingCancelCustomerIdBookingBookingIdDelete } from '../fn/booking/api-booking-cancel-customer-id-booking-booking-id-delete';
+import { ApiBookingCancelCustomerIdBookingBookingIdDelete$Params } from '../fn/booking/api-booking-cancel-customer-id-booking-booking-id-delete';
+import { apiBookingCheckinBookingIdCodeCodeCustomerCustomerIdGet } from '../fn/booking/api-booking-checkin-booking-id-code-code-customer-customer-id-get';
+import { ApiBookingCheckinBookingIdCodeCodeCustomerCustomerIdGet$Params } from '../fn/booking/api-booking-checkin-booking-id-code-code-customer-customer-id-get';
+import { apiBookingCheckoutBookingIdCustomerCustomerIdGet } from '../fn/booking/api-booking-checkout-booking-id-customer-customer-id-get';
+import { ApiBookingCheckoutBookingIdCustomerCustomerIdGet$Params } from '../fn/booking/api-booking-checkout-booking-id-customer-customer-id-get';
 import { apiBookingCreatePost } from '../fn/booking/api-booking-create-post';
 import { ApiBookingCreatePost$Params } from '../fn/booking/api-booking-create-post';
 import { apiBookingFilterGet$Json } from '../fn/booking/api-booking-filter-get-json';
@@ -85,27 +85,27 @@ export class BookingService extends BaseService {
     );
   }
 
-  /** Path part for operation `apiBookingCancelIdDelete()` */
-  static readonly ApiBookingCancelIdDeletePath = '/api/Booking/cancel/{id}';
+  /** Path part for operation `apiBookingCancelCustomerIdBookingBookingIdDelete()` */
+  static readonly ApiBookingCancelCustomerIdBookingBookingIdDeletePath = '/api/Booking/cancel{customerId}/booking{bookingId}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiBookingCancelIdDelete()` instead.
+   * To access only the response body, use `apiBookingCancelCustomerIdBookingBookingIdDelete()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiBookingCancelIdDelete$Response(params: ApiBookingCancelIdDelete$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return apiBookingCancelIdDelete(this.http, this.rootUrl, params, context);
+  apiBookingCancelCustomerIdBookingBookingIdDelete$Response(params: ApiBookingCancelCustomerIdBookingBookingIdDelete$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return apiBookingCancelCustomerIdBookingBookingIdDelete(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiBookingCancelIdDelete$Response()` instead.
+   * To access the full response (for headers, for example), `apiBookingCancelCustomerIdBookingBookingIdDelete$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiBookingCancelIdDelete(params: ApiBookingCancelIdDelete$Params, context?: HttpContext): Observable<void> {
-    return this.apiBookingCancelIdDelete$Response(params, context).pipe(
+  apiBookingCancelCustomerIdBookingBookingIdDelete(params: ApiBookingCancelCustomerIdBookingBookingIdDelete$Params, context?: HttpContext): Observable<void> {
+    return this.apiBookingCancelCustomerIdBookingBookingIdDelete$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
@@ -204,52 +204,52 @@ export class BookingService extends BaseService {
     );
   }
 
-  /** Path part for operation `apiBookingCheckinBookingIdCodeCodeGet()` */
-  static readonly ApiBookingCheckinBookingIdCodeCodeGetPath = '/api/Booking/checkin/{bookingId}/code/{code}';
+  /** Path part for operation `apiBookingCheckinBookingIdCodeCodeCustomerCustomerIdGet()` */
+  static readonly ApiBookingCheckinBookingIdCodeCodeCustomerCustomerIdGetPath = '/api/Booking/checkin/{bookingId}/code/{code}/customer/{customerId}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiBookingCheckinBookingIdCodeCodeGet()` instead.
+   * To access only the response body, use `apiBookingCheckinBookingIdCodeCodeCustomerCustomerIdGet()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiBookingCheckinBookingIdCodeCodeGet$Response(params: ApiBookingCheckinBookingIdCodeCodeGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return apiBookingCheckinBookingIdCodeCodeGet(this.http, this.rootUrl, params, context);
+  apiBookingCheckinBookingIdCodeCodeCustomerCustomerIdGet$Response(params: ApiBookingCheckinBookingIdCodeCodeCustomerCustomerIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return apiBookingCheckinBookingIdCodeCodeCustomerCustomerIdGet(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiBookingCheckinBookingIdCodeCodeGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiBookingCheckinBookingIdCodeCodeCustomerCustomerIdGet$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiBookingCheckinBookingIdCodeCodeGet(params: ApiBookingCheckinBookingIdCodeCodeGet$Params, context?: HttpContext): Observable<void> {
-    return this.apiBookingCheckinBookingIdCodeCodeGet$Response(params, context).pipe(
+  apiBookingCheckinBookingIdCodeCodeCustomerCustomerIdGet(params: ApiBookingCheckinBookingIdCodeCodeCustomerCustomerIdGet$Params, context?: HttpContext): Observable<void> {
+    return this.apiBookingCheckinBookingIdCodeCodeCustomerCustomerIdGet$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 
-  /** Path part for operation `apiBookingCheckoutBookingIdGet()` */
-  static readonly ApiBookingCheckoutBookingIdGetPath = '/api/Booking/checkout/{bookingId}';
+  /** Path part for operation `apiBookingCheckoutBookingIdCustomerCustomerIdGet()` */
+  static readonly ApiBookingCheckoutBookingIdCustomerCustomerIdGetPath = '/api/Booking/checkout/{bookingId}/customer/{customerId}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiBookingCheckoutBookingIdGet()` instead.
+   * To access only the response body, use `apiBookingCheckoutBookingIdCustomerCustomerIdGet()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiBookingCheckoutBookingIdGet$Response(params: ApiBookingCheckoutBookingIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return apiBookingCheckoutBookingIdGet(this.http, this.rootUrl, params, context);
+  apiBookingCheckoutBookingIdCustomerCustomerIdGet$Response(params: ApiBookingCheckoutBookingIdCustomerCustomerIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return apiBookingCheckoutBookingIdCustomerCustomerIdGet(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiBookingCheckoutBookingIdGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiBookingCheckoutBookingIdCustomerCustomerIdGet$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiBookingCheckoutBookingIdGet(params: ApiBookingCheckoutBookingIdGet$Params, context?: HttpContext): Observable<void> {
-    return this.apiBookingCheckoutBookingIdGet$Response(params, context).pipe(
+  apiBookingCheckoutBookingIdCustomerCustomerIdGet(params: ApiBookingCheckoutBookingIdCustomerCustomerIdGet$Params, context?: HttpContext): Observable<void> {
+    return this.apiBookingCheckoutBookingIdCustomerCustomerIdGet$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );
   }

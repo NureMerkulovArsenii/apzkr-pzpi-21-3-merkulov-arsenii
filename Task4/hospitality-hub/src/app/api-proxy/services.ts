@@ -1,5 +1,6 @@
 export { AccountService } from './services/account.service';
 export { BookingService } from './services/booking.service';
+export { CustomerService } from './services/customer.service';
 export { DataAdministrationService } from './services/data-administration.service';
 export { HospitalityHubApiService } from './services/hospitality-hub-api.service';
 export { HotelService } from './services/hotel.service';

@@ -16,7 +16,7 @@ public class CreateCustomerHandler : BaseHandler
         _unitOfWork = unitOfWork;
     }
 
-    public async Task HandleAsync(int userId, UpsertCustomerRequest request)
+    public async Task HandleAsync(UpsertCustomerRequest request)
     {
         var customer = await _unitOfWork.CustomerRepository
             .FirstOrDefaultAsync(x => x.Email == request.Email);

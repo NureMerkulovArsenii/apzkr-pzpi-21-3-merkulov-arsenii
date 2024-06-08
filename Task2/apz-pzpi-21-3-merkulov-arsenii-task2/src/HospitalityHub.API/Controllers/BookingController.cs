@@ -22,14 +22,14 @@ public class BookingController : BaseApiController
     [HttpPut("update")]
     public async Task<IActionResult> UpdateBooking([FromBody] UpdateBookingRequest request)
     {
-        await Resolve<UpdateBookingHandler>().HandleAsync(UserId, request);
+        await Resolve<UpdateBookingHandler>().HandleAsync(request);
 
         return Ok();
     }
     
 
     [HttpDelete("cancel{customerId:int}/booking{bookingId:int}")]
-    public async Task<IActionResult> CancelBooking([FromQuery] int customerId, [FromQuery] int bookingId)
+    public async Task<IActionResult> CancelBooking([FromRoute] int customerId, [FromRoute] int bookingId)
     {
         await Resolve<CancelBookingHandler>().HandleAsync(customerId, bookingId);
 

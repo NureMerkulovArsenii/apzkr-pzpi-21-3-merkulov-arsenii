@@ -7,14 +7,14 @@ import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
 
-export interface ApiBookingCancelIdDelete$Params {
-  id: number;
+export interface ApiCustomerDeleteCustomerIdDelete$Params {
+  customerId: number;
 }
 
-export function apiBookingCancelIdDelete(http: HttpClient, rootUrl: string, params: ApiBookingCancelIdDelete$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, apiBookingCancelIdDelete.PATH, 'delete');
+export function apiCustomerDeleteCustomerIdDelete(http: HttpClient, rootUrl: string, params: ApiCustomerDeleteCustomerIdDelete$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  const rb = new RequestBuilder(rootUrl, apiCustomerDeleteCustomerIdDelete.PATH, 'delete');
   if (params) {
-    rb.path('id', params.id, {"style":"simple"});
+    rb.path('customerId', params.customerId, {"style":"simple"});
   }
 
   return http.request(
@@ -27,4 +27,4 @@ export function apiBookingCancelIdDelete(http: HttpClient, rootUrl: string, para
   );
 }
 
-apiBookingCancelIdDelete.PATH = '/api/Booking/cancel/{id}';
+apiCustomerDeleteCustomerIdDelete.PATH = '/api/Customer/delete/{customerId}';

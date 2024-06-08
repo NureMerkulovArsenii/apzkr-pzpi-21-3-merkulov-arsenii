@@ -63,7 +63,7 @@ export class RoleDetailsComponent implements OnInit {
   }
 
   loadMenuItems(roleId: number | null) {
-    this.menuService.apiMenuMenuNodesRoleIdGet$Json({ roleId: roleId })
+    this.menuService.apiMenuMenuNodesRoleIdGet$Json({ roleId: roleId! })
       .subscribe({
         next: (menuItems: MenuNodeResponse[]) => {
           this.menuItems = menuItems;

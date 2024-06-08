@@ -1,5 +1,6 @@
 using HospitalityHub.BLL.Handlers.Base;
 using HospitalityHub.Core.DTOs.Booking;
+using HospitalityHub.Core.Enums;
 using HospitalityHub.DAL.UnitOfWork;
 using HospitalityHub.Localization;
 
@@ -14,14 +15,14 @@ public class UpdateBookingHandler : BaseHandler
         _unitOfWork = unitOfWork;
     }
 
-    public async Task HandleAsync(int userId, UpdateBookingRequest request)
+    public async Task HandleAsync(UpdateBookingRequest request)
     {
         var booking = await _unitOfWork.BookingRepository.GetByIdAsync(request.BookingId);
 
         if (booking == null)
             throw new Exception(Resources.Get("BOOKING_NOT_FOUND"));
         
-        var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(userId);
+        var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(request.CustomerId);
         
         if (customer == null)
             throw new Exception(Resources.Get("CUSTOMER_NOT_FOUND"));
@@ -29,7 +30,7 @@ public class UpdateBookingHandler : BaseHandler
         if (booking.CustomerId != customer.Id)
             throw new Exception(Resources.Get("UNAUTHORIZED"));
 
-        var room = await _unitOfWork.RoomRepository.GetByIdAsync(booking.RoomId);
+        var room = await _unitOfWork.RoomRepository.GetByIdAsync(request.RoomId);
 
         if (room == null)
             throw new Exception(Resources.Get("ROOM_NOT_FOUND"));
@@ -45,6 +46,7 @@ public class UpdateBookingHandler : BaseHandler
         booking.NumberOfChildren = request.NumberOfChildren;
         booking.TotalPrice = room.BasePrice * (request.CheckOut - request.CheckIn).Days;
         booking.TotalDiscountPercent = room.DiscountPercent;
+        room.Status = ERoomStatus.Reserved;
 
         _unitOfWork.BookingRepository.Update(booking);
         await _unitOfWork.SaveAsync();

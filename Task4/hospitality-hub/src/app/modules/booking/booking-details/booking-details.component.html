@@ -28,17 +28,75 @@
                         <mat-form-field>
                             <input matInput formControlName="checkIn" placeholder="Check In" [matDatepicker]="checkIn">
                             <mat-datepicker-toggle matSuffix [for]="checkIn"></mat-datepicker-toggle>
-                            <mat-datepicker #checkIn></mat-datepicker>                            
+                            <mat-datepicker #checkIn></mat-datepicker>
                         </mat-form-field>
                     </div>
                     <div class="col-4">
                         <mat-form-field>
-                            <input matInput formControlName="checkOut" placeholder="Check Out" [matDatepicker]="checkOut">
+                            <input matInput formControlName="checkOut" placeholder="Check Out"
+                                [matDatepicker]="checkOut">
                             <mat-datepicker-toggle matSuffix [for]="checkOut"></mat-datepicker-toggle>
                             <mat-datepicker #checkOut></mat-datepicker>
                         </mat-form-field>
                     </div>
-                    
+
+                    <div class="col-4">
+                        <mat-form-field>
+                            <mat-label>Customer</mat-label>
+                            <input type="text" matInput formControlName="customer" [matAutocomplete]="customerAuto">
+                            <mat-autocomplete #customerAuto="matAutocomplete" [displayWith]="displayFn">
+                                <mat-option *ngFor="let option of customers$ | async" [value]="option">
+                                    {{option.firstName + ' ' + option.lastName}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row d-flex">
+
+                    <div class="col-4">
+                        <mat-form-field>
+                            <mat-label>Number of Adults</mat-label>
+                            <input matInput formControlName="numberOfAdults" />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-4">
+                        <mat-form-field>
+                            <mat-label>Number of Children</mat-label>
+                            <input matInput formControlName="numberOfChildren" />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-4">
+                        <mat-form-field>
+                            <mat-label>Room</mat-label>
+                            <input type="text" matInput formControlName="room" [matAutocomplete]="roomAuto">
+                            <mat-autocomplete #roomAuto="matAutocomplete" [displayWith]="displayRoomFn">
+                                <mat-option *ngFor="let option of rooms" [value]="option">
+                                    {{ getRoomDisplayName(option) }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row d-flex">
+
+                    <div class="col-4">
+                        <mat-form-field>
+                            <mat-label>Total Price</mat-label>
+                            <input matInput formControlName="totalPrice" />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-4">
+                        <mat-form-field>
+                            <mat-label>Total Discount Percent</mat-label>
+                            <input matInput formControlName="totalDiscountPercent" />
+                        </mat-form-field>
+                    </div>
                 </div>
             </mat-card-content>
         </div>

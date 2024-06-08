@@ -3,6 +3,7 @@
 export interface CreateBookingRequest {
   checkIn?: string;
   checkOut?: string;
+  customerId?: number;
   hotelId?: number;
   numberOfAdults?: number;
   numberOfChildren?: number;

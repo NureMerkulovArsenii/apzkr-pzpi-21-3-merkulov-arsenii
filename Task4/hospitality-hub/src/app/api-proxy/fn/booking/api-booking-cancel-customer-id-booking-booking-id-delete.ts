@@ -7,13 +7,15 @@ import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
 
-export interface ApiBookingCheckoutBookingIdGet$Params {
+export interface ApiBookingCancelCustomerIdBookingBookingIdDelete$Params {
+  customerId: number;
   bookingId: number;
 }
 
-export function apiBookingCheckoutBookingIdGet(http: HttpClient, rootUrl: string, params: ApiBookingCheckoutBookingIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, apiBookingCheckoutBookingIdGet.PATH, 'get');
+export function apiBookingCancelCustomerIdBookingBookingIdDelete(http: HttpClient, rootUrl: string, params: ApiBookingCancelCustomerIdBookingBookingIdDelete$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  const rb = new RequestBuilder(rootUrl, apiBookingCancelCustomerIdBookingBookingIdDelete.PATH, 'delete');
   if (params) {
+    rb.path('customerId', params.customerId, {"style":"simple"});
     rb.path('bookingId', params.bookingId, {"style":"simple"});
   }
 
@@ -27,4 +29,4 @@ export function apiBookingCheckoutBookingIdGet(http: HttpClient, rootUrl: string
   );
 }
 
-apiBookingCheckoutBookingIdGet.PATH = '/api/Booking/checkout/{bookingId}';
+apiBookingCancelCustomerIdBookingBookingIdDelete.PATH = '/api/Booking/cancel{customerId}/booking{bookingId}';

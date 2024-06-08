@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalityHub.API.Controllers;
 
+[ApiController]
+[Route("api/[controller]")]
 public class CustomerController : BaseApiController
 {
     [HttpPost("create")]
     public async Task<IActionResult> CreateCustomer([FromBody] UpsertCustomerRequest request)
     {
-        await Resolve<CreateCustomerHandler>().HandleAsync(UserId, request);
+        await Resolve<CreateCustomerHandler>().HandleAsync(request);
 
         return Ok();
     }

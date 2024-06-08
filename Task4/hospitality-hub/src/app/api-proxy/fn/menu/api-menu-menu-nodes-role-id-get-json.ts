@@ -9,7 +9,7 @@ import { RequestBuilder } from '../../request-builder';
 import { MenuNodeResponse } from '../../models/menu-node-response';
 
 export interface ApiMenuMenuNodesRoleIdGet$Json$Params {
-  roleId: number | null;
+  roleId: number;
 }
 
 export function apiMenuMenuNodesRoleIdGet$Json(http: HttpClient, rootUrl: string, params: ApiMenuMenuNodesRoleIdGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<MenuNodeResponse>>> {

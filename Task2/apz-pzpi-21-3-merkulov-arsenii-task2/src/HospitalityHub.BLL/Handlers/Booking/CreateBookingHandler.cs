@@ -1,5 +1,6 @@
 using HospitalityHub.BLL.Handlers.Base;
 using HospitalityHub.Core.DTOs.Booking;
+using HospitalityHub.Core.Enums;
 using HospitalityHub.DAL.UnitOfWork;
 using HospitalityHub.Localization;
 
@@ -46,6 +47,8 @@ public class CreateBookingHandler : BaseHandler
             TotalPrice = room.BasePrice * (request.CheckOut - request.CheckIn).Days,
             TotalDiscountPercent = room.DiscountPercent,
         };
+
+        room.Status = ERoomStatus.Reserved;
 
         await _unitOfWork.BookingRepository.AddAsync(booking);
         await _unitOfWork.SaveAsync();

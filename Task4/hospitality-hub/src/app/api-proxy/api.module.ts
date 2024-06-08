@@ -6,6 +6,7 @@ import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { AccountService } from './services/account.service';
 import { BookingService } from './services/booking.service';
+import { CustomerService } from './services/customer.service';
 import { DataAdministrationService } from './services/data-administration.service';
 import { HospitalityHubApiService } from './services/hospitality-hub-api.service';
 import { HotelService } from './services/hotel.service';
@@ -25,6 +26,7 @@ import { StatsService } from './services/stats.service';
   providers: [
     AccountService,
     BookingService,
+    CustomerService,
     DataAdministrationService,
     HospitalityHubApiService,
     HotelService,

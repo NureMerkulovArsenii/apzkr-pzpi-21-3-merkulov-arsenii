@@ -5,8 +5,9 @@ import { DialogData } from "../../../core/models/dialog-data";
 import { HotelService } from "../../../api-proxy/services/hotel.service";
 import { ToastrService } from "ngx-toastr";
 import { HotelDetailsComponent } from '../../hotel/hotel-details/hotel-details.component';
-import { BookingService, RoomService } from 'src/app/api-proxy/services';
-import { RoomResponse } from 'src/app/api-proxy/models';
+import { BookingService, CustomerService, RoomService } from 'src/app/api-proxy/services';
+import { ERoomType, FilterCustomerResponse, RoomResponse } from 'src/app/api-proxy/models';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-booking-details',
@@ -18,17 +19,24 @@ export class BookingDetailsComponent implements OnInit {
   protected bookingForm: FormGroup = this.formBuilder.group({
     checkIn: [null, [Validators.required]],
     checkOut: [null, [Validators.required]],
-    customerId: [null, [Validators.required]],
-    isPaid: [null, [Validators.required]],
-    numberOfAdults: [null, [Validators.required]],
-    numberOfChildren: [null, [Validators.required]],
-    roomId: [null, [Validators.required]],
-    roomType: [null, [Validators.required]],
-    totalDiscountPercent: [null, [Validators.required]],
+    customer: [null, [Validators.required]],
+    numberOfAdults: [1, [Validators.required]],
+    numberOfChildren: [0, [Validators.required]],
+    room: [null, [Validators.required]],
+    totalDiscountPercent: [null],
     totalPrice: [null, [Validators.required]],
   });
 
-  rooms: RoomResponse[] | null = null;
+  customers$!: Observable<FilterCustomerResponse[]>;
+
+  rooms!: RoomResponse[];
+
+  roomTypes = [
+    { id: ERoomType.Economy, name: 'Economy' },
+    { id: ERoomType.Standard, name: 'Standard' },
+    { id: ERoomType.Deluxe, name: 'Deluxe' }
+  ];
+
 
   constructor(
     private readonly formBuilder: FormBuilder,
@@ -37,12 +45,35 @@ export class BookingDetailsComponent implements OnInit {
     private readonly hotelService: HotelService,
     private readonly bookingService: BookingService,
     private readonly roomService: RoomService,
+    private readonly customerService: CustomerService,
     private readonly toastr: ToastrService,
   ) {
   }
 
+
   ngOnInit(): void {
     this.loadData();
+
+    this.bookingForm.get('customer')?.valueChanges.subscribe((value) => {
+      if (typeof value === 'string') {
+        this.filterCustumers(value);
+        this.bookingForm.patchValue({
+          customerId: value
+        });
+      }
+    });
+
+    this.bookingForm.get('room')?.valueChanges.subscribe((value) => {
+      const room = this.rooms.find(r => r.number === value);
+      if (room) {
+        this.bookingForm.patchValue({
+          totalPrice: room.basePrice! - room.basePrice! * room.discountPercent! / 100,
+          totalDiscountPercent: room.discountPercent,
+          roomId: room.id
+        });
+      }
+    });
+
   }
 
   loadData() {
@@ -64,6 +95,22 @@ export class BookingDetailsComponent implements OnInit {
       });
   }
 
+  filterCustumers(searchRequest: string) {
+    this.customers$ = this.customerService.apiCustomerFilterGet$Json({ searchRequest: searchRequest });
+  }
+
+  displayFn(customer: FilterCustomerResponse): string {
+    return customer ? customer.firstName + ' ' + customer.lastName : '';
+  }
+
+  displayRoomFn(room: RoomResponse): string {
+    return room && room.number ? room.number.toString() : '';
+  }
+
+  getRoomDisplayName(room: RoomResponse): string {
+    return room.number?.toString() + ' - ' + this.roomTypes.find(r => r.id === room.roomType)?.name;
+  }
+
   loadRooms() {
     this.roomService.apiRoomHotelHotelIdGet$Json({ hotelId: this.data.additionalData! })
       .subscribe({
@@ -77,8 +124,20 @@ export class BookingDetailsComponent implements OnInit {
   }
 
   apply() {
+    const customer = this.bookingForm.get('customer')?.value;
+    const room = this.bookingForm.get('room')?.value;
     if (this.data.isEdit) {
-      this.hotelService.apiHotelUpdateIdPut({ id: this.data.data!, body: this.bookingForm.value })
+
+      this.bookingService.apiBookingUpdatePut({
+        body: {
+          bookingId: this.data.data!,
+          checkIn: this.bookingForm.get('checkIn')?.value,
+          checkOut: this.bookingForm.get('checkOut')?.value,
+          numberOfAdults: this.bookingForm.get('numberOfAdults')?.value,
+          numberOfChildren: this.bookingForm.get('numberOfChildren')?.value,
+          roomId: room.id
+        }
+      })
         .subscribe({
           next: () => {
             this.toastr.success('Booking updated successfully');
@@ -89,7 +148,17 @@ export class BookingDetailsComponent implements OnInit {
           }
         });
     } else {
-      this.hotelService.apiHotelCreatePost({ body: this.bookingForm.value })
+      this.bookingService.apiBookingCreatePost({
+        body: {
+          hotelId: this.data.additionalData!,
+          checkIn: this.bookingForm.get('checkIn')?.value,
+          checkOut: this.bookingForm.get('checkOut')?.value,
+          customerId: customer.id,
+          numberOfAdults: this.bookingForm.get('numberOfAdults')?.value,
+          numberOfChildren: this.bookingForm.get('numberOfChildren')?.value,
+          roomId: room.id
+        }
+      })
         .subscribe({
           next: () => {
             this.toastr.success('Booking added successfully');

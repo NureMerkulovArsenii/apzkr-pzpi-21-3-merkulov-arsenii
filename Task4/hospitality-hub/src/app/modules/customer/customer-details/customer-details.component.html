@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-between m-3 h-25">
+    <h1 mat-dialog-title class="d-block">Customer</h1>
+    <button mat-icon-button mat-dialog-close class="m-3">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<div mat-dialog-content class="form-container">
+    <form [formGroup]="customerForm" class="section-detail-form row" #form="ngForm" name="jobForm">
+        <div class="row">
+            <mat-card-content>
+
+                <div class="row d-flex">
+                    <div class="col-6">
+                        <mat-form-field>
+                            <mat-label>Last Name</mat-label>
+                            <input matInput placeholder="Doe" formControlName="lastName" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-6">
+                        <mat-form-field>
+                            <mat-label>First Name</mat-label>
+                            <input matInput placeholder="John" formControlName="firstName" />
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row d-flex">
+                    <div class="col-6">
+                        <mat-form-field>
+                            <mat-label>Email</mat-label>
+                            <input matInput placeholder="mail@example.com" formControlName="email" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-6">
+                        <mat-form-field>
+                            <mat-label>Phone Number</mat-label>
+                            <input matInput placeholder="123456789" formControlName="phone" />
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </mat-card-content>
+        </div>
+    </form>
+</div>
+
+<div mat-dialog-actions [align]="'end'">
+    <button mat-raised-button color="primary" type="submit" class="col-2" [disabled]="!customerForm.valid"
+        (click)="apply()">Apply
+    </button>
+</div>

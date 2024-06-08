@@ -1,4 +1,5 @@
 using HospitalityHub.BLL.Handlers.Base;
+using HospitalityHub.Core.Enums;
 using HospitalityHub.DAL.UnitOfWork;
 using HospitalityHub.Localization;
 
@@ -22,6 +23,8 @@ public class CancelBookingHandler : BaseHandler
 
         if (booking.Customer.Id != customerId)
             throw new Exception(Resources.Get("UNAUTHORIZED"));
+        
+        booking.Room.Status = ERoomStatus.Available;
 
         _unitOfWork.BookingRepository.Delete(booking);
         await _unitOfWork.SaveAsync();

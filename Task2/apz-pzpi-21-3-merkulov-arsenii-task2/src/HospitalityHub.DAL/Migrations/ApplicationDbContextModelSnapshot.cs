@@ -95,16 +95,22 @@ namespace HospitalityHub.DAL.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<string>("LastName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("Customer");
                 });
@@ -607,17 +613,6 @@ namespace HospitalityHub.DAL.Migrations
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("HospitalityHub.Core.Entities.Customer", b =>
-                {
-                    b.HasOne("HospitalityHub.Core.Entities.User", "User")
-                        .WithOne("Customer")
-                        .HasForeignKey("HospitalityHub.Core.Entities.Customer", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("HospitalityHub.Core.Entities.Photo", b =>
                 {
                     b.HasOne("HospitalityHub.Core.Entities.Room", null)
@@ -769,8 +764,6 @@ namespace HospitalityHub.DAL.Migrations
 
             modelBuilder.Entity("HospitalityHub.Core.Entities.User", b =>
                 {
-                    b.Navigation("Customer");
-
                     b.Navigation("Staff");
                 });
 #pragma warning restore 612, 618

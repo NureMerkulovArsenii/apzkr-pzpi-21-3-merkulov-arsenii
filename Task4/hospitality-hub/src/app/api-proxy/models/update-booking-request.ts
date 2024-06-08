@@ -6,4 +6,5 @@ export interface UpdateBookingRequest {
   checkOut?: string;
   numberOfAdults?: number;
   numberOfChildren?: number;
+  roomId?: number;
 }
