@@ -74,5 +74,8 @@
     </data>
     <data name="CUSTOMER_ALREADY_EXISTS">
         <value>Користувач вже існує</value>
+    </data>    
+    <data name="TASK_NOT_FOUND">
+        <value>Задачу не знайдено</value>
     </data>
 </root>

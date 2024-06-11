@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export interface TodoTasksResponse {
-  completedDate?: string;
+  completedDate?: string | null;
   description?: string | null;
   dueDate?: string | null;
   id?: number;

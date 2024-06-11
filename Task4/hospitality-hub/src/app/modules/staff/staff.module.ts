@@ -13,13 +13,17 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
-import { StaffDialogComponent } from './staff-dialog/staff-dialog.component';
+import { StaffDetailsComponent } from './staff-details/staff-details.component';
+import { TaskDialogComponent } from './task-dialog/task-dialog.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
   declarations: [
     StaffListComponent,
-    StaffDialogComponent,
+    StaffDetailsComponent,
+    TaskDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -34,7 +38,9 @@ import { StaffDialogComponent } from './staff-dialog/staff-dialog.component';
     MatDialogModule,
     MatDividerModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ]
 })
 export class StaffModule { }

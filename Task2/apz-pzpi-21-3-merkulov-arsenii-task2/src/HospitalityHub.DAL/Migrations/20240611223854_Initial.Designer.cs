@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalityHub.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240608150451_Initial")]
+    [Migration("20240611223854_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -370,7 +370,7 @@ namespace HospitalityHub.DAL.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CompletedDate")
+                    b.Property<DateTime?>("CompletedDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DateCreated")

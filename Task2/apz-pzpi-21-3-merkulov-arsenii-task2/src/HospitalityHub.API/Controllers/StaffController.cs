@@ -99,6 +99,15 @@ namespace HospitalityHub.API.Controllers
 
             return Ok(tasks);
         }
+        
+        [HttpGet("todoTask/{todoTaskId:int}")]
+        [ProducesResponseType<TodoTasksResponse>(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetTask(int todoTaskId)
+        {
+            var task = await Resolve<GetTodoTaskHandler>().HandleAsync(todoTaskId);
+
+            return Ok(task);
+        }
 
         [HttpPut("{oldStaffId}/tasks/{todoTaskId}/reassign/{newStaffId}")]
         public async Task<IActionResult> ReassignTask(int oldStaffId, int todoTaskId, int newStaffId)

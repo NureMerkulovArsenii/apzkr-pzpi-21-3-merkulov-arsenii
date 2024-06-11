@@ -367,7 +367,7 @@ namespace HospitalityHub.DAL.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CompletedDate")
+                    b.Property<DateTime?>("CompletedDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DateCreated")

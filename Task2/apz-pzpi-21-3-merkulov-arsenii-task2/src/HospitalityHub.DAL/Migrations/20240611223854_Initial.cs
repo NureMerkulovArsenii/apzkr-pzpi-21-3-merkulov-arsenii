@@ -391,7 +391,7 @@ namespace HospitalityHub.DAL.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Description = table.Column<string>(type: "text", nullable: true),
-                    CompletedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CompletedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     DueDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     IssuedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     IsCompleted = table.Column<bool>(type: "boolean", nullable: false),

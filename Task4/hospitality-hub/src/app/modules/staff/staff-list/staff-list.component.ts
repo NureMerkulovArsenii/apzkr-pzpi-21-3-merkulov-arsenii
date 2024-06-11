@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { RecordResponseDto, StaffResponse } from 'src/app/api-proxy/models';
 import { HotelService, StaffService } from 'src/app/api-proxy/services';
 import { DialogService } from 'src/app/core/services/dialog.service';
-import { StaffDialogComponent } from '../staff-dialog/staff-dialog.component';
+import { StaffDetailsComponent } from '../staff-details/staff-details.component';
 import { DialogData } from 'src/app/core/models/dialog-data';
 
 @Component({
@@ -57,25 +57,12 @@ export class StaffListComponent implements OnInit {
   }
 
   addStaff() {
-    const dialogRef = this.dialog.open(StaffDialogComponent, {
-      data: { data: null, isEdit: false } as DialogData<number, null>,
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.loadStaff();
-    });
+    this.router.navigate(['staff', 'new']);
 
   }
 
-
   editStaff(id: number) {
-    const dialogRef = this.dialog.open(StaffDialogComponent, {
-      data: { data: id, isEdit: true } as DialogData<number, null>,
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.loadStaff();
-    });
+    this.router.navigate([`staff/${id}`]);
   }
 
   deleteStaff(id: number) {

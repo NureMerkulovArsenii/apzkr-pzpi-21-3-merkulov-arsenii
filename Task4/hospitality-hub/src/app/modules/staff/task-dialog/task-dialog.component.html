@@ -1,0 +1,78 @@
+<div class="d-flex justify-content-between m-3 h-25">
+    <h1 mat-dialog-title class="d-block">Task</h1>
+    <button mat-icon-button mat-dialog-close class="m-3">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<div mat-dialog-content class="form-container">
+    <form [formGroup]="taskForm" class="section-detail-form row" #form="ngForm" name="jobForm">
+        <div class="row">
+            <mat-card-content>
+                <div class="row d-flex">
+                    
+                    <div class="col-4">
+                        <mat-form-field>
+                            <mat-label>Description</mat-label>
+                            <input matInput placeholder="Description" formControlName="description" />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-4">
+                        <mat-form-field>
+                            <mat-label>Due Date</mat-label>
+                            <input matInput [matDatepicker]="dueDate" formControlName="dueDate" />
+                            <mat-hint>DD/MM/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="dueDate"></mat-datepicker-toggle>
+                            <mat-datepicker #dueDate></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-4" >
+                        <mat-form-field *ngIf="this.data.isEdit"> 
+                            <mat-label>Issued Date</mat-label>
+                            <input matInput formControlName="issuedDate" [readonly]="true"/>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row d-flex">
+                    <div class="col-4">
+                        <mat-form-field>
+                            <mat-label>Is Completed</mat-label>
+                            <mat-select formControlName="isFinished">
+                                <mat-option value="true">Yes</mat-option>
+                                <mat-option value="false">No</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-4">
+                        <mat-form-field>
+                            <mat-label>Is Finished</mat-label>
+                            <input matInput placeholder="Is Finished" formControlName="isFinished" [readonly]="true" />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-4" >
+                        <mat-form-field *ngIf="this.data.isEdit">
+                            <mat-label>Completed Date</mat-label>
+                            <input matInput formControlName="completedDate" [readonly]="true"/>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </mat-card-content>
+        </div>
+        <div class="row">
+            <mat-divider></mat-divider>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions [align]="'end'">
+    <button mat-raised-button color="primary" type="submit" class="col-2" [disabled]="!taskForm.valid"
+        (click)="markCompleted()">Mark Completed
+    </button>
+    <button mat-raised-button color="primary" type="submit" class="col-2" [disabled]="!taskForm.valid"
+        (click)="apply()">Apply
+    </button>
+</div>

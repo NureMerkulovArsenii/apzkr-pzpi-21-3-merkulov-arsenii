@@ -75,4 +75,7 @@
     <data name="CUSTOMER_ALREADY_EXISTS">
         <value>Customer with this email already exists</value>        
     </data>
+    <data name="TASK_NOT_FOUND">
+        <value>Task not found</value>
+    </data>
 </root>

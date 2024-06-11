@@ -90,7 +90,7 @@ public class DbSeeder
             {
                 Title = "Bookings",
                 Url = "/bookings",
-                Icon = "fas fa-calendar-alt",
+                Icon = "fa fa-regular fa-bookmark",
                 Roles = roles
 
             },
@@ -106,7 +106,7 @@ public class DbSeeder
             {
                 Title = "Staff",
                 Url = "/staff",
-                Icon = "fas fa-user-tie",
+                Icon = "fa fa-user",
                 Roles = roles
 
             },
@@ -114,7 +114,7 @@ public class DbSeeder
             {
                 Title = "Administration",
                 Url = "/administration",
-                Icon = "fas fa-bars",
+                Icon = "fa fa-solid fa-gears",
                 Roles = roles
 
             },
