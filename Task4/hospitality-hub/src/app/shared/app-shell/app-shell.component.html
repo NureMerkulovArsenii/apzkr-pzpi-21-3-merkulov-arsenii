@@ -31,9 +31,8 @@
         <ng-container *ngFor="let menuItem of menuItems$ | async">
           <a mat-list-item [routerLink]="menuItem.url" > 
             <span class="entry">
-              <!-- <mat-icon>{{ menuItem.icon }}</mat-icon> -->
-              <!-- fa icon -->
-              <i class="{{ menuItem.icon }}"></i>
+              <!-- <i [className]="menuItem.icon"></i> -->
+               <i [ngClass]="menuItem.icon"></i>
               <span *ngIf="!isCollapsed">{{ menuItem.title!| translate }}</span>
             </span>
           </a>

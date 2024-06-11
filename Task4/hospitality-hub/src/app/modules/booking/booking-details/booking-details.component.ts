@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { DialogData } from "../../../core/models/dialog-data";
 import { HotelService } from "../../../api-proxy/services/hotel.service";
@@ -25,7 +25,9 @@ export class BookingDetailsComponent implements OnInit {
     room: [null, [Validators.required]],
     totalDiscountPercent: [null],
     totalPrice: [null, [Validators.required]],
+    doorLockCode: [null],
   });
+
 
   customers$!: Observable<FilterCustomerResponse[]>;
 
@@ -88,6 +90,37 @@ export class BookingDetailsComponent implements OnInit {
       .subscribe({
         next: (booking) => {
           this.bookingForm.patchValue(booking);
+          this.getCustomerForEdit(booking.customerId!);
+          this.getRoomForEdit(booking.roomId!);
+        },
+        error: (error) => {
+          this.toastr.error(error);
+        }
+      });
+  }
+
+  getCustomerForEdit(id: number) {
+    this.customerService.apiCustomerIdGet$Json({ id: id })
+      .subscribe({
+        next: (customer) => {
+          this.bookingForm.patchValue({
+            customer: customer
+          });
+        },
+        error: (error) => {
+          this.toastr.error(error);
+        }
+      });
+
+  }
+
+  getRoomForEdit(id: number) {
+    this.roomService.apiRoomIdGet$Json({ id: id })
+      .subscribe({
+        next: (room) => {
+          this.bookingForm.patchValue({
+            room: room
+          });
         },
         error: (error) => {
           this.toastr.error(error);
@@ -169,6 +202,58 @@ export class BookingDetailsComponent implements OnInit {
           }
         });
     }
+  }
+
+  processCheckIn() {
+    this.bookingService.apiBookingCheckinBookingIdCodeCodeCustomerCustomerIdGet({
+      bookingId: this.data.data!,
+      code: this.bookingForm.get('doorLockCode')?.value!,
+      customerId: this.bookingForm.get('customer')?.value.id!
+    }).subscribe({
+      next: () => {
+        this.toastr.success('Check in successful');
+        this.dialogRef.close();
+      },
+      error: (error) => {
+        this.toastr.error(error.error.title);
+      }
+
+    });
+
+  }
+
+  processCheckOut() {
+    this.bookingService.apiBookingCheckoutBookingIdCustomerCustomerIdGet({
+      bookingId: this.data.data!,
+      customerId: this.bookingForm.get('customer')?.value.id!,
+    }).subscribe({
+      next: () => {
+        this.toastr.success('Check out successful');
+        this.dialogRef.close();
+      },
+      error: (error) => {
+        this.toastr.error(error.error.title);
+      }
+
+    });
+
+  }
+
+  cancelBooking(){
+    this.bookingService.apiBookingCancelCustomerIdBookingBookingIdDelete({
+      bookingId: this.data.data!,
+      customerId: this.bookingForm.get('customer')?.value.id!,
+    }).subscribe({
+      next: () => {
+        this.toastr.success('Booking canceled successfully');
+        this.dialogRef.close();
+      },
+      error: (error) => {
+        this.toastr.error(error.error.title);
+      }
+
+    });
+
   }
 
 }

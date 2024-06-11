@@ -1,24 +1,10 @@
-<!--
-    checkIn: [null, [Validators.required]],
-    checkOut: [null, [Validators.required]],
-    customerId: [null, [Validators.required]],
-    isPaid: [null, [Validators.required]],
-    numberOfAdults: [null, [Validators.required]],
-    numberOfChildren: [null, [Validators.required]],
-    roomId: [null, [Validators.required]],
-    roomType: [null, [Validators.required]],
-    totalDiscountPercent: [null, [Validators.required]],
-    totalPrice: [null, [Validators.required]],
- -->
-
-
-
 <div class="d-flex justify-content-between m-3 h-25">
     <h1 mat-dialog-title class="d-block">Hotel</h1>
     <button mat-icon-button mat-dialog-close class="m-3">
         <mat-icon>close</mat-icon>
     </button>
 </div>
+
 <div mat-dialog-content class="form-container">
     <form [formGroup]="bookingForm" class="section-detail-form row" #form="ngForm" name="bookingForm">
         <div class="row">
@@ -96,6 +82,25 @@
                             <mat-label>Total Discount Percent</mat-label>
                             <input matInput formControlName="totalDiscountPercent" />
                         </mat-form-field>
+                    </div>
+
+                    <div class="col-3">
+                        <mat-form-field>
+                            <mat-label>Door lock code</mat-label>
+                            <input matInput formControlName="doorLockCode" />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-2">
+                        <button mat-raised-button color="primary" (click)="processCheckIn()">Check In</button>
+                    </div>
+
+                    <div class="col-2">
+                        <button mat-raised-button color="primary" (click)="processCheckOut()">Check Out</button>
+                    </div>
+
+                    <div class="col-2">
+                        <button mat-raised-button color="primary" (click)="cancelBooking()">Cancel</button>
                     </div>
                 </div>
             </mat-card-content>

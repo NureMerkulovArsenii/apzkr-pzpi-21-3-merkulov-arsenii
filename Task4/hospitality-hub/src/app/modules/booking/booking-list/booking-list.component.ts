@@ -8,7 +8,7 @@ import { DialogData } from "../../../core/models/dialog-data";
 import { HotelResponse } from "../../../api-proxy/models/hotel-response";
 import { ERoomType } from "../../../api-proxy/models/e-room-type";
 import { ToastrService } from "ngx-toastr";
-import { ERoomStatus } from "../../../api-proxy/models";
+import { ERoomStatus, FilterBookingResponse } from "../../../api-proxy/models";
 import { HotelService } from "../../../api-proxy/services/hotel.service";
 import { BookingService } from 'src/app/api-proxy/services';
 import { FormControl } from '@angular/forms';
@@ -20,12 +20,10 @@ import { BookingDetailsComponent } from '../booking-details/booking-details.comp
   styleUrls: ['./booking-list.component.scss']
 })
 export class BookingListComponent implements OnInit {
-  bookings$!: Observable<RoomResponse[]>;
+  bookings$!: Observable<FilterBookingResponse[]>;
 
   selectedHotelId: number | undefined;
   selectedRoomType: number | undefined;
-  //checkInDate: Date | undefined;
-  //checkoutDate: Date | undefined ;
 
   checkInDate = new FormControl<Date | null>(null);
   checkOutDate = new FormControl<Date | null>(null);

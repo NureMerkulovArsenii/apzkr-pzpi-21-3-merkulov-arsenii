@@ -56,7 +56,7 @@ public class BookingController : BaseApiController
     }
     
     [HttpGet("checkin/{bookingId:int}/code/{code}/customer/{customerId:int}")]
-    public async Task<IActionResult> CheckIn([FromRoute] int bookingId, string code, int customerId)
+    public async Task<IActionResult> CheckIn([FromRoute] int bookingId, [FromRoute]string code, [FromRoute]int customerId)
     {
         var res = await Resolve<CheckInHandler>().HandleAsync(customerId, bookingId, code);
 

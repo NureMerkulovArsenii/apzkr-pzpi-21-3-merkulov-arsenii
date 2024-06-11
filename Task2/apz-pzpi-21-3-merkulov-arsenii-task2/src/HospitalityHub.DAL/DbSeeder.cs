@@ -112,8 +112,8 @@ public class DbSeeder
             },
             new MenuItem
             {
-                Title = "Menu",
-                Url = "/menu",
+                Title = "Administration",
+                Url = "/administration",
                 Icon = "fas fa-bars",
                 Roles = roles
 

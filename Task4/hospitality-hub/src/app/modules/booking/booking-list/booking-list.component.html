@@ -100,10 +100,10 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>{{ 'actions' | translate }}</th>
             <td mat-cell *matCellDef="let element">
-                <button mat-button (click)="editBooking(element.id)">
+                <button mat-button (click)="editBooking(element.bookingId)">
                     <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-button (click)="deleteBooking(element.id)">
+                <button mat-button (click)="deleteBooking(element.bookingId)">
                     <mat-icon>delete</mat-icon>
                 </button>
             </td>
