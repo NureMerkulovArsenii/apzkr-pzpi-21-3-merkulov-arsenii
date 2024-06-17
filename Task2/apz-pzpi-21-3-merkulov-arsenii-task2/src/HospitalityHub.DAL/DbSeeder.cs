@@ -82,7 +82,7 @@ public class DbSeeder
             {
                 Title = "Rooms",
                 Url = "/room",
-                Icon = "fas fa-bed",
+                Icon = "fa fa-room",
                 Roles = roles
 
             },
@@ -98,7 +98,7 @@ public class DbSeeder
             {
                 Title = "Customers",
                 Url = "/customers",
-                Icon = "fas fa-users",
+                Icon = "fa fa-users",
                 Roles = roles
 
             },
@@ -129,7 +129,7 @@ public class DbSeeder
             {
                 Title = "Roles",
                 Url = "/users/roles",
-                Icon = "fas fa-bars",
+                Icon = "fa fa-bars",
                 Roles = roles
             }
         };

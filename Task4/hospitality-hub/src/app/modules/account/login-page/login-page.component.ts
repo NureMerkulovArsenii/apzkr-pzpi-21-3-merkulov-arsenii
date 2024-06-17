@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {LoginRequest} from "../../../api-proxy/models/login-request";
 import {AccountService} from "../../../core/services/account.service";
+import { RegisterRequest } from 'src/app/api-proxy/models';
 
 @Component({
   selector: 'app-login-page',
@@ -52,8 +53,7 @@ export class LoginPageComponent implements OnInit {
     this.hide = !this.hide;
   }
 
-  onSubmit() {
-    console.log('login form submitted');
+  login() {
     if (this.loginForm.valid) {
       const email = this.loginForm.get('email')?.value;
       const password = this.loginForm.get('password')?.value;
@@ -78,5 +78,23 @@ export class LoginPageComponent implements OnInit {
         });
 
     }
+  }
+
+  register() {
+    if(this.loginForm.valid) {
+      const email = this.loginForm.get('email')?.value;
+      const password = this.loginForm.get('password')?.value;
+      const registerModel: RegisterRequest = {email, password}
+
+      this.accountService.register(registerModel).subscribe({
+        next: () => {
+          this.toastr.success('User registered successfully');
+        },
+        error: () => {
+          this.toastr.error('User registration failed');
+        }
+      });
+    }
+
   }
 }
