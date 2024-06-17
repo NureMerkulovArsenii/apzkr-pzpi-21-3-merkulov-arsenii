@@ -1,20 +1,17 @@
-# Use an official Node.js runtime as the base image
-FROM node:18.2
 
-# Set the working directory inside the container
-WORKDIR /app
+FROM node:18.20-alpine
 
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+# Set the working directory to /usr/src/app
+WORKDIR /usr/src/app
 
-# Install the application dependencies
-RUN npm install
-
-# Copy the rest of the application code to the working directory
+# Copy the project files into the container at /usr/src/app
 COPY . .
 
-# Expose the port on which the application will run
-EXPOSE 3000
+# Install project dependencies
+RUN npm install
 
-# Start the application
-CMD [ "npm", "start" ]
+EXPOSE 4200
+
+# Start the Angular app
+CMD ["npm", "start"]
+

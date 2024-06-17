@@ -28,3 +28,27 @@ README.md
 !.git/config
 !.git/packed-refs
 !.git/refs/heads/**
+
+
+# Ignore node_modules directory
+node_modules
+
+# Ignore build artifacts
+dist
+
+# Ignore development files
+src/**/*.spec.ts
+src/**/*.e2e.ts
+
+# Ignore configuration files
+.angular.json
+tsconfig.json
+tslint.json
+
+# Ignore editor-specific files
+.vscode
+.idea
+
+# Ignore version control files
+.git
+.gitignore

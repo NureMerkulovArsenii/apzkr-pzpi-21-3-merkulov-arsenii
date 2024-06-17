@@ -41,6 +41,17 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
     volumes:
       - pgadmin_data:/root/.pgadmin
+
+  hospitality-hub.web:
+    container_name: hospitality-hub-web
+    image: ${DOCKER_REGISTRY-}hospitality-hub-web
+    build:
+      context: ./../../Task4/hospitality-hub
+      dockerfile: ./../../Task4/hospitality-hub/Dockerfile
+    ports:
+      - "8087:4200"
+    # depends_on:
+    # - hospitality-hub.api
     
 volumes:
     rabbitmq_data:
