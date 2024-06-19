@@ -7,7 +7,7 @@
   "number": "Number",
   "enabled": "Enabled",
   "deviceUri": "Device URI",
-  "actions": "Дії",
+  "actions": "Actions",
   "edit": "Edit",
   "delete": "Delete",
   "add": "Add",
@@ -19,5 +19,58 @@
   "zipCode": "Zip code",
   "phone": "Phone",
   "lockServiceUri": "Lock service URI",
-  "title": "Title"
+  "title": "Title",
+  "applyFilter": "Apply filter",
+  "apply": "Apply",
+
+  "Hotels": "Hotels",
+  "Rooms": "Rooms",
+  "Bookings": "Bookings",
+  "Customers": "Customers",
+  "Staff": "Staff",
+  "Administration": "Administration",
+  "Users": "Users",
+  "Roles": "Roles",
+  "hotel": "Hotel",
+  "room": "Room",
+  "booking": "Booking",
+  "customer": "Customer",
+  "staff": "Staff",
+
+  "stage": "Stage",
+  "roomType": "Room Type",
+  "status": "Status",
+  "basePrice": "Base Price",
+  "discountPercent": "Discount Percent",
+  "baseLockUri": "Base Lock URI",
+  "roomNumber": "Room Number",
+
+  "checkIn": "Check In Date",
+  "checkOut": "Check Out Date",
+  "isPaid": "Is Paid",
+  "numberOfAdults": "Number Of Adults",
+  "numberOfChildren": "Number Of Children",
+  "totalPrice": "Total Price",
+  "totalDiscountPercent": "Total Discount Percent",
+
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "email": "Email",
+
+  "userFullName": "User Full Name",
+  "position": "Position",
+  "activeTasksCount": "Active Tasks Count",
+
+  "createDatabaseBackup": "Create Database Backup",
+  "dataAdministration": "Data Administration",
+
+  "emailConfirmed": "Email Confirmed",
+  "phoneNumber": "Phone Number",
+  "twoFactorEnabled": "Two Factor Enabled",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
+  "role": "Role"
+  
 }
+
+

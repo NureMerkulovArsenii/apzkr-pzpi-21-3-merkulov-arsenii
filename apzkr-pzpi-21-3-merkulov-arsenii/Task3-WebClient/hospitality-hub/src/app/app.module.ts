@@ -16,6 +16,8 @@ import {ToastrModule} from "ngx-toastr";
 import {MAT_DIALOG_DEFAULT_OPTIONS} from "@angular/material/dialog";
 import {I18nInterceptor} from "./core/interceptors/i18n.interceptor";
 import {BearerTokenInterceptor} from "./core/interceptors/bearer-token.interceptor";
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -49,11 +51,14 @@ export function HttpLoaderFactory(http: HttpClient) {
         preventDuplicates: true,
       }
     ),
+    MatDatepickerModule,
+    MatNativeDateModule 
   ],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false,}},
     {provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: BearerTokenInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: BearerTokenInterceptor, multi: true},
+    {provide: MAT_DATE_LOCALE, useValue: 'uk-UA'},
   ],
   bootstrap: [AppComponent]
 })

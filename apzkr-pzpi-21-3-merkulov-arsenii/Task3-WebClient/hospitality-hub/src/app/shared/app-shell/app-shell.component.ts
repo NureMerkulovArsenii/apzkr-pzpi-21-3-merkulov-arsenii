@@ -7,6 +7,7 @@ import { HotelResponse } from "../../api-proxy/models/hotel-response";
 import { MenuService } from 'src/app/api-proxy/services';
 import { MenuNodeResponse } from 'src/app/api-proxy/models';
 import { Observable, Subscription } from 'rxjs';
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-app-shell',
@@ -23,45 +24,13 @@ export class AppShellComponent implements OnInit {
   currentLanguage: string = '';
   isAuthenticated: boolean = false;
 
-  // menuItems: MenuItem[] = [
-  //   {
-  //     id: 1,
-  //     name: 'hotel',
-  //     icon: 'home',
-  //     url: '/hotel',
-  //     parentId: null
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'room',
-  //     icon: 'room',
-  //     url: '/room',
-  //     parentId: null
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'users',
-  //     icon: 'user',
-  //     url: '/users',
-  //     parentId: null
-  //   },
-  //   {
-  //     id: 4,
-  //     name: 'roles',
-  //     icon: 'role',
-  //     url: '/users/roles',
-  //     parentId: 3
-  //   }
-  // ];
-
-  private subscription!: Subscription;
-
   protected menuItems$!: Observable<MenuNodeResponse[]>;
 
   protected hotels!: HotelResponse[];
   protected selected: number = -1;
 
   constructor(
+    private dateAdapter: DateAdapter<any>,
     private translateService: TranslateService,
     private readonly menuService: MenuService,
     private observer: BreakpointObserver,
@@ -130,11 +99,10 @@ export class AppShellComponent implements OnInit {
   }
 
   changeLanguage = (lang: string): void => {
-    console.log('change language')
     this.currentLanguage = lang;
     this.translateService.use(lang);
+    this.dateAdapter.setLocale(lang);
     localStorage.setItem('language', lang);
-    console.log(lang)
   }
 
   getCurrentUserName(): string {

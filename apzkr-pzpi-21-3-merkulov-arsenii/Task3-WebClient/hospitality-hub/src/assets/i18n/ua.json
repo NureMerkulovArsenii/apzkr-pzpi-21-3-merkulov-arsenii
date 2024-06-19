@@ -19,5 +19,56 @@
   "zipCode": "Поштовий індекс",
   "phone": "Телефон",
   "lockServiceUri": "URI сервісу замків",
-  "title": "Назва"
+  "title": "Назва",
+  "applyFilter": "Застосувати фільтр",
+  "apply": "Застосувати",
+
+  "Hotels": "Готелі",
+  "Rooms": "Номери",
+  "Bookings": "Бронювання",
+  "Customers": "Клієнти",
+  "Staff": "Персонал",
+  "Administration": "Адміністрування",
+  "Users": "Користувачі",
+  "Roles": "Ролі",
+  "hotel": "Готель",
+  "room": "Номер",
+  "booking": "Бронювання",
+  "customer": "Клієнт",
+  "staff": "Персонал",
+
+  "stage": "Поверх",
+  "roomType": "Тип номеру",
+  "status": "Статус",
+  "basePrice": "Базова ціна",
+  "discountPercent": "Відсоток знижки",
+  "baseLockUri": "URI базового замка",
+  "roomNumber": "Номер",
+
+  "checkIn": "Дата заїзду",
+  "checkOut": "Дата виїзду",
+  "isPaid": "Оплачено",
+  "numberOfAdults": "Кількість дорослих",
+  "numberOfChildren": "Кількість дітей",
+  "totalPrice": "Загальна ціна",
+  "totalDiscountPercent": "Загальний відсоток знижки",
+
+  "firstName": "Ім'я",
+  "lastName": "Прізвище",
+  "email": "Електронна пошта",
+
+  "userFullName": "Ім'я користувача",
+  "position": "Посада",
+  "activeTasksCount": "Кількість активних завдань",
+
+  "createDatabaseBackup": "Створити резервну копію бази даних",
+  "dataAdministration": "Адміністрування даних",
+
+  "emailConfirmed": "Електронна пошта підтверджена",
+  "phoneNumber": "Номер телефону",
+  "twoFactorEnabled": "Двофакторна аутентифікація",
+  "password": "Пароль",
+  "confirmPassword": "Підтвердити пароль",
+  "role": "Роль"
+
 }

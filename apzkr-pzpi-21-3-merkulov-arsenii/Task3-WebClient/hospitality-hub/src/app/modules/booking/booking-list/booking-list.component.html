@@ -29,7 +29,7 @@
                 <mat-form-field>
                     <mat-label>Check In</mat-label>
                     <input matInput [matDatepicker]="picker1" [formControl]="checkInDate">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-hint>DD/MM/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                 </mat-form-field>
@@ -39,7 +39,7 @@
                 <mat-form-field>
                     <mat-label>Check Out</mat-label>
                     <input matInput [matDatepicker]="picker2" [formControl]="checkOutDate">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-hint>DD/MM/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
@@ -47,7 +47,7 @@
         </div>
         <div class="row d-flex">
             <div class="col-1" style="margin: 10px;">
-                <button mat-flat-button type="submit" color="primary">Apply Filter</button>
+                <button mat-flat-button type="submit" color="primary">{{'applyFilter' | translate}}</button>
             </div>
         </div>
     </form>
@@ -116,5 +116,5 @@
 
 <button mat-raised-button color="primary" class="add-button" (click)="addBooking()">
     <mat-icon>add</mat-icon>
-    Add
+    {{ 'add' | translate }}
 </button>
