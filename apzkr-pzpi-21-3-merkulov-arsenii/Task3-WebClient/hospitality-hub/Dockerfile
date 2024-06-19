@@ -1,17 +1,12 @@
 
 FROM node:18.20-alpine
 
-# Set the working directory to /usr/src/app
 WORKDIR /usr/src/app
 
-# Copy the project files into the container at /usr/src/app
-COPY . .
+COPY . /usr/src/app
 
-# Install project dependencies
+RUN npm install -g @angular/cli
+
 RUN npm install
 
-EXPOSE 4200
-
-# Start the Angular app
-CMD ["npm", "start"]
-
+CMD ["ng", "serve", "--host", "0.0.0.0"]

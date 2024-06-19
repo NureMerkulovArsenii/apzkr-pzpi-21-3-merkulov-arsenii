@@ -75,14 +75,14 @@ public class DbSeeder
             {
                 Title = "Hotels",
                 Url = "/hotel",
-                Icon = "fas fa-hotel",
+                Icon = "fa fa-industry",
                 Roles = roles
             },
             new MenuItem
             {
                 Title = "Rooms",
                 Url = "/room",
-                Icon = "fa fa-room",
+                Icon = "fa fa-bed",
                 Roles = roles
 
             },
@@ -106,7 +106,7 @@ public class DbSeeder
             {
                 Title = "Staff",
                 Url = "/staff",
-                Icon = "fa fa-user",
+                Icon = "fa fa-bath",
                 Roles = roles
 
             },
@@ -122,14 +122,14 @@ public class DbSeeder
             {
                 Title = "Users",
                 Url = "/users",
-                Icon = "fas fa-bars",
+                Icon = "fa fa-user",
                 Roles = roles
             },
             new MenuItem
             {
                 Title = "Roles",
                 Url = "/users/roles",
-                Icon = "fa fa-bars",
+                Icon = "fa fa-address-book",
                 Roles = roles
             }
         };
